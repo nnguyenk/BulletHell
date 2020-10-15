@@ -6,21 +6,21 @@ import java.awt.Color;
 import java.util.*;
 
 import BulletHell.Bullets;
-import BulletHell.Utility;
 
 
-public class RedBullet implements Bullets {
+public class PlayerBullet implements Bullets {
     private Ellipse shape;
-    private static final double RADIUS = 20;
+    private static final double RADIUS = 40;
     private Random random;
     private double xCenter, yCenter, xSpeed, ySpeed;
     // Reference points, slightly outside of the bullet
     private Point top, left, bottom, right;
     private CanvasWindow canvas;
+    
 
-    public RedBullet(CanvasWindow canvas, double initialAngle, double initialSpeed) {
-        shape = new Ellipse(Utility.randomX(canvas), Utility.randomY(canvas), RADIUS, RADIUS);
-        shape.setFillColor(Color.RED);
+    public PlayerBullet(CanvasWindow canvas, double initialAngle, double initialSpeed) {
+        shape = new Ellipse(150, 275, RADIUS, RADIUS);
+        shape.setFillColor(Color.BLUE);
         shape.setStrokeColor(null);
         canvas.add(shape);
 
@@ -113,5 +113,14 @@ public class RedBullet implements Bullets {
             }
         }
         return Collections.unmodifiableList(collidedElements);
+    }
+
+    /*
+     * Removes any other bullet if this bullet hits something 
+     */
+    public void bulletHitsBullet(Bullets bullet) {
+        if (bullet.hit().contains(shape)) {
+                canvas.remove(bullet.getShape());
+        }
     }
 }

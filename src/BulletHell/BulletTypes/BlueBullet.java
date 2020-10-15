@@ -78,14 +78,14 @@ public class BlueBullet implements Bullets {
     /**
      * Changes the direction if the ball collides with a horizontal surface.
      */
-    private void deflectHorizontal() {
+    public void deflectHorizontal() {
         ySpeed = -ySpeed;
     }
 
     /**
      * Changes the direction if the ball collides with a vertical surface.
      */
-    private void deflectVertical() {
+    public void deflectVertical() {
         xSpeed = -xSpeed;
     }
 

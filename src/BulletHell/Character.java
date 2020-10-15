@@ -27,11 +27,28 @@ public class Character {
      *
      * @return true If the given ball intersects this bubble (even tangentially).
      */
-    public void bulletHitsCharacter(Bullets bullet) {
+    public boolean bulletHitsCharacter(Bullets bullet) {
         if (bullet.hit().contains(characterShape)) {
-                canvas.remove(characterShape);
+            return true;
         }
+        return false;
     }
+
+    /**
+     * Checks if bullet hits character, and if so removes a life.
+     */
+    // public void bulletHitsCharacterAlt(Bullets bullet, int lives) {
+    //     if (bullet.hit().contains(characterShape)) {
+    //         lives = lives - 1 * lifeCounter;
+    //         //  Since this method is constantly called, lives continously gets reset to 3
+    //         System.out.println("lives left: " + lives);
+    //         lifeCounter = lifeCounter + 1;
+    //         if(lives == 0){
+    //             canvas.remove(characterShape);
+    //         } 
+    //     }
+    // }
+    
 
     /**
      * Moves the character left by a set amount when called
@@ -78,5 +95,13 @@ public class Character {
      */
     public Rectangle getcharacterShape() {
         return characterShape;
+    }
+
+    public double getCharacterX(){
+        return this.leftX;
+    }
+
+    public double getCharacterY(){
+        return this.topY;
     }
 }

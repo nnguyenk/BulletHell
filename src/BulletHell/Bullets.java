@@ -7,6 +7,7 @@ import edu.macalester.graphics.GraphicsObject;
 public interface Bullets {
     public void updatePosition();
     public List<GraphicsObject> hit();
+    public GraphicsObject getShape();
 }
 
 // GraphicsGroup to contain all the bullet objects
