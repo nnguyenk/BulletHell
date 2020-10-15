@@ -1,17 +1,16 @@
 package BulletHell;
 
-import BulletHell.BulletTypes.BlueBullet;
-import BulletHell.BulletTypes.PlayerBullet;
-import BulletHell.BulletTypes.RedBullet;
+import BulletHell.BulletTypes.*;
+
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.events.Key;
 
 public class BulletHell {
     private CanvasWindow canvas;
-    private Character character;
+    private Player player;
     private int currentLife;
 
-    // private int characterLives = 3;
+    // private int playerLives = 3;
     private static final int MAX_LIFE = 3;
 
     public BulletHell(){
@@ -24,7 +23,7 @@ public class BulletHell {
     }
 
     public void start(){
-        createCharacter(0.1);
+        createPlayer(0.1);
         BlueBullet bullet = new BlueBullet(canvas, Utility.randomInt(0, 360), 5);
         canvas.add(bullet.getShape());
         RedBullet bullet2 = new RedBullet(canvas, Utility.randomInt(0, 360), 8);
@@ -41,20 +40,20 @@ public class BulletHell {
 
                 bullet3.updatePosition();
                 
-                character.bulletHitsCharacter(bullet);
-                character.bulletHitsCharacter(bullet2);
+                player.bulletHitsPlayer(bullet);
+                player.bulletHitsPlayer(bullet2);
 
-                // character.bulletHitsCharacterAlt(bullet, characterLives);
-                // character.bulletHitsCharacterAlt(bullet2, characterLives);
+                // player.bulletHitsplayerAlt(bullet, playerLives);
+                // player.bulletHitsplayerAlt(bullet2, playerLives);
 
                 // bullet3.bulletHitsBullet(bullet);
                 // bullet3.bulletHitsBullet(bullet2);
-                if (character.bulletHitsCharacter(bullet)) { //if the player gets hit
+                if (player.bulletHitsPlayer(bullet)) { //if the player gets hit
                     currentLife -= 1;
                     bullet.deflectHorizontal();
                     bullet.deflectVertical();
-                    // canvas.remove(character.getcharacterShape());
-                    // createCharacter(0.1);
+                    // canvas.remove(player.getplayerShape());
+                    // createplayer(0.1);
                     // bullet.wait(2000);
                     // wait
                     // player goes translucent for 1 second 
@@ -73,21 +72,21 @@ public class BulletHell {
         });
     }
 
-    public void createCharacter(double dt){
-        character = new Character(canvas);
-        canvas.add(character.getcharacterShape());
+    public void createPlayer(double dt){
+        player = new Player(canvas);
+        canvas.add(player.getPlayerShape());
         canvas.onKeyDown(event -> {
             if (event.getKey() == Key.LEFT_ARROW) {
-                character.moveLeft(dt);
+                player.moveLeft(dt);
             }
             if (event.getKey() == Key.RIGHT_ARROW) {
-                character.moveRight(dt);
+                player.moveRight(dt);
             }
             if (event.getKey() == Key.UP_ARROW) {
-                character.moveUp(dt);
+                player.moveUp(dt);
             }
             if (event.getKey() == Key.DOWN_ARROW) {
-                character.moveDown(dt);
+                player.moveDown(dt);
             }
         });
     }

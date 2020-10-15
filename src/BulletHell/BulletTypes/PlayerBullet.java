@@ -11,7 +11,6 @@ import BulletHell.Bullets;
 public class PlayerBullet implements Bullets {
     private Ellipse shape;
     private static final double RADIUS = 40;
-    private Random random;
     private double xCenter, yCenter, xSpeed, ySpeed;
     // Reference points, slightly outside of the bullet
     private Point top, left, bottom, right;

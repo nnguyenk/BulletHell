@@ -10,11 +10,11 @@ import BulletHell.Utility;
 
 
 public class RedBullet implements Bullets {
-    private Ellipse shape;
+    
     private static final double RADIUS = 20;
-    private Random random;
     private double xCenter, yCenter, xSpeed, ySpeed;
     // Reference points, slightly outside of the bullet
+    private Ellipse shape;
     private Point top, left, bottom, right;
     private CanvasWindow canvas;
 

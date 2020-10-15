@@ -6,11 +6,6 @@ import edu.macalester.graphics.CanvasWindow;
 
 public class Utility {
     private static Random rand = new Random();
-    private CanvasWindow canvas;
-
-    public Utility(CanvasWindow canvas){
-        this.canvas = canvas;
-    }
 
     public static int randomX(CanvasWindow canvas){
         int x;
