@@ -24,7 +24,7 @@ public class Player {
     }
 
     /**
-     * Returns true if the bullet hits player.
+     * Returns true if the bullet hits the player.
      * @param bullets The list of bullets that will kill the player.
      */
     public boolean isHit(List<Bullet> bullets) {
@@ -34,7 +34,6 @@ public class Player {
             }
         return false;
     }
-    
 
     /**
      * Moves the player left by a set amount when called.

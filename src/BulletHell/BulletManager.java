@@ -2,9 +2,7 @@ package BulletHell;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import BulletHell.BulletTypes.*;
 
@@ -13,12 +11,10 @@ import edu.macalester.graphics.CanvasWindow;
 public class BulletManager {
     private CanvasWindow canvas;
     private List<Bullet> bullets = new ArrayList<>();
-    private Map<Integer, Bullet> bulletTypes = new HashMap<>();
+    private List<Bullet> bulletsToRemove = new ArrayList<>();
 
     public BulletManager(CanvasWindow canvas) {
         this.canvas = canvas;
-        bulletTypes.put(1, new RedBullet(canvas));
-        bulletTypes.put(2, new BlueBullet(canvas));
     }
 
     /**
@@ -26,10 +22,31 @@ public class BulletManager {
      */
     public void spawnBullets(int bulletsNumber) {
         for (int i = 0; i < bulletsNumber; i++) {
-            Bullet bullet = bulletTypes.get(Utility.randomInt(1, bulletTypes.size()));
+            Bullet bullet = createRandomBullet();
             canvas.add(bullet.getShape());
             bullets.add(bullet);
         }
+    }
+
+    /**
+     * Generates a random number and creates the corresponding bullet.
+     */
+    private Bullet createRandomBullet() {
+        Bullet randomBullet;
+        int i = Utility.randomInt(1, 2);
+
+        switch (i) {
+            case 1: 
+                randomBullet = new RedBullet(canvas);
+                break;
+            case 2:
+                randomBullet = new BlueBullet(canvas);
+                break;
+            default:
+                randomBullet = null;
+                break;
+        }
+        return randomBullet;
     }
 
     /**
@@ -37,24 +54,23 @@ public class BulletManager {
      * Deletes any bullet that collids with the player or the player's bullet.
      */
     public void updateBulletState(Player player) {
-        List<Bullet> bulletsToRemove = new ArrayList<>();
         for (Bullet bullet : bullets) {
             bullet.updatePosition();
             if (bullet.collidePlayer(player)) { // Add collide with player bullet
                 bulletsToRemove.add(bullet);
             }
         }
-        for (Bullet bulletToRemove : bulletsToRemove) {
-            removeBullet(bulletToRemove);
-        }
     }
 
     /**
      * Removes the bullet from tha canvas and the list
      */
-    private void removeBullet(Bullet bullet) {
-        canvas.remove(bullet.getShape());
-        bullets.remove(bullet);
+    public void removeBullets() {
+        for (Bullet bulletToRemove : bulletsToRemove){
+            canvas.remove(bulletToRemove.getShape());
+            bullets.remove(bulletToRemove);
+        }
+        bulletsToRemove.clear();
     }
     
     /**

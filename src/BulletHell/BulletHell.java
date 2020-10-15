@@ -1,9 +1,5 @@
 package BulletHell;
 
-import BulletHell.BulletTypes.*;
-
-import java.awt.Color;
-
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.events.Key;
 
@@ -31,9 +27,8 @@ public class BulletHell {
 
     public void start(){
         createPlayer(0.1);
-        manager.spawnBullets(3);
+        manager.spawnBullets(5);
 
-        // PlayerBullet bullet3 = new PlayerBullet(canvas, 575, 7);
         currentLife = MAX_LIFE;
 
         canvas.animate(() -> {
@@ -48,6 +43,7 @@ public class BulletHell {
                 // bullet3.bulletHitsBullet(bullet);
                 // bullet3.bulletHitsBullet(bullet2);
                 if (player.isHit(manager.getAllBullets())) { //if the player gets hit
+                    manager.removeBullets();
                     currentLife -= 1;
                     // canvas.remove(player.getplayerShape());
                     // createplayer(0.1);
