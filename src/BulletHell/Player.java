@@ -23,15 +23,10 @@ public class Player {
     }
 
     /**
-     * Tests for intersections between game ball and a specific paddle.
-     *
-     * @return true If the given ball intersects this bubble (even tangentially).
+     * Tests for intersections between the player and the bullet.
      */
     public boolean bulletHitsPlayer(Bullets bullet) {
-        if (bullet.hit().contains(playerShape)) {
-            return true;
-        }
-        return false;
+        return bullet.collidePlayer(this);
     }
 
     /**

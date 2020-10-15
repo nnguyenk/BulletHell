@@ -5,6 +5,9 @@ import BulletHell.BulletTypes.*;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.events.Key;
 
+/**
+ * The game of Bullet Hell
+ */
 public class BulletHell {
     private CanvasWindow canvas;
     private Player player;
@@ -24,12 +27,12 @@ public class BulletHell {
 
     public void start(){
         createPlayer(0.1);
-        BlueBullet bullet = new BlueBullet(canvas, Utility.randomInt(0, 360), 5);
+        BlueBullet bullet = new BlueBullet(canvas, Utility.randomInt(0, 360), 2);
         canvas.add(bullet.getShape());
-        RedBullet bullet2 = new RedBullet(canvas, Utility.randomInt(0, 360), 8);
+        RedBullet bullet2 = new RedBullet(canvas, Utility.randomInt(0, 360), 5);
         canvas.add(bullet2.getShape());
 
-        PlayerBullet bullet3 = new PlayerBullet(canvas, 575, 7);
+        // PlayerBullet bullet3 = new PlayerBullet(canvas, 575, 7);
         currentLife = MAX_LIFE;
         
 
@@ -38,20 +41,15 @@ public class BulletHell {
                 bullet.updatePosition();
                 bullet2.updatePosition();
 
-                bullet3.updatePosition();
-                
-                player.bulletHitsPlayer(bullet);
-                player.bulletHitsPlayer(bullet2);
+                // bullet3.updatePosition();
 
                 // player.bulletHitsplayerAlt(bullet, playerLives);
                 // player.bulletHitsplayerAlt(bullet2, playerLives);
 
                 // bullet3.bulletHitsBullet(bullet);
                 // bullet3.bulletHitsBullet(bullet2);
-                if (player.bulletHitsPlayer(bullet)) { //if the player gets hit
+                if (bullet.collidePlayer(player)) { //if the player gets hit
                     currentLife -= 1;
-                    bullet.deflectHorizontal();
-                    bullet.deflectVertical();
                     // canvas.remove(player.getplayerShape());
                     // createplayer(0.1);
                     // bullet.wait(2000);
@@ -72,6 +70,11 @@ public class BulletHell {
         });
     }
 
+    /**
+     * Adds the player to the canvas and enables control with the mouse
+     * 
+     * @param dt The movement rate of the player
+     */
     public void createPlayer(double dt){
         player = new Player(canvas);
         canvas.add(player.getPlayerShape());
