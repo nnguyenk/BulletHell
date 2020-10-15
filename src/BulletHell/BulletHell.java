@@ -2,6 +2,8 @@ package BulletHell;
 
 import BulletHell.BulletTypes.*;
 
+import java.awt.Color;
+
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.events.Key;
 
@@ -12,12 +14,14 @@ public class BulletHell {
     private CanvasWindow canvas;
     private Player player;
     private int currentLife;
+    private BulletManager manager;
 
     // private int playerLives = 3;
-    private static final int MAX_LIFE = 3;
+    public static final int MAX_LIFE = 3;
 
     public BulletHell(){
         canvas = new CanvasWindow("Stage 1", 800, 800);
+        manager = new BulletManager(canvas);
     }
 
     public static void main(String[] args) {
@@ -27,19 +31,14 @@ public class BulletHell {
 
     public void start(){
         createPlayer(0.1);
-        BlueBullet bullet = new BlueBullet(canvas, Utility.randomInt(0, 360), 2);
-        canvas.add(bullet.getShape());
-        RedBullet bullet2 = new RedBullet(canvas, Utility.randomInt(0, 360), 5);
-        canvas.add(bullet2.getShape());
+        manager.spawnBullets(3);
 
         // PlayerBullet bullet3 = new PlayerBullet(canvas, 575, 7);
         currentLife = MAX_LIFE;
-        
 
         canvas.animate(() -> {
             if (currentLife > 0) {
-                bullet.updatePosition();
-                bullet2.updatePosition();
+                manager.updateBulletState(player);
 
                 // bullet3.updatePosition();
 
@@ -48,7 +47,7 @@ public class BulletHell {
 
                 // bullet3.bulletHitsBullet(bullet);
                 // bullet3.bulletHitsBullet(bullet2);
-                if (bullet.collidePlayer(player)) { //if the player gets hit
+                if (player.isHit(manager.getAllBullets())) { //if the player gets hit
                     currentLife -= 1;
                     // canvas.remove(player.getplayerShape());
                     // createplayer(0.1);

@@ -6,15 +6,16 @@ import java.awt.Color;
 
 import edu.macalester.graphics.*;
 
-public abstract class Bullets {
+public abstract class Bullet {
     public static final double RADIUS = 20;
+    public static final int SPEED = 2;
 
     protected Ellipse shape;
     protected double xCenter, yCenter, xSpeed, ySpeed;
     protected Point top, left, bottom, right;  // Reference points, slightly outside of the bullet
     protected CanvasWindow canvas;
 
-    public Bullets(CanvasWindow canvas, double initialSpeed, Color color) {
+    public Bullet(CanvasWindow canvas, Color color) {
         shape = new Ellipse(Utility.randomX(canvas), Utility.randomY(canvas), RADIUS, RADIUS);
         shape.setFillColor(color);
         shape.setStroked(false);
@@ -24,8 +25,8 @@ public abstract class Bullets {
         setPoints();
 
         double angleToRadians = Math.toRadians(Utility.randomInt(0, 360));
-        xSpeed = Math.cos(angleToRadians) * initialSpeed;
-        ySpeed = -Math.sin(angleToRadians) * initialSpeed;
+        xSpeed = Math.cos(angleToRadians) * SPEED;
+        ySpeed = -Math.sin(angleToRadians) * SPEED;
 
         this.canvas = canvas;
     }
@@ -104,13 +105,7 @@ public abstract class Bullets {
         setPoints();
         for (Point point : List.of(top, bottom, left, right)) {
             if (canvas.getElementAt(point) == player.getPlayerShape()) {
-                if (point == top || point == bottom) {
-                    deflectHorizontal();
-                }
-                else {
-                    deflectVertical();
-                }
-            return true;
+                return true;
             }
         }
         return false;

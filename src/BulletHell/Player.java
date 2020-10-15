@@ -1,6 +1,7 @@
 package BulletHell;
 
 import java.awt.Color;
+import java.util.List;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Rectangle;
@@ -23,30 +24,20 @@ public class Player {
     }
 
     /**
-     * Tests for intersections between the player and the bullet.
+     * Returns true if the bullet hits player.
+     * @param bullets The list of bullets that will kill the player.
      */
-    public boolean bulletHitsPlayer(Bullets bullet) {
-        return bullet.collidePlayer(this);
+    public boolean isHit(List<Bullet> bullets) {
+        for (Bullet bullet : bullets)
+            if (bullet.collidePlayer(this)) {
+                return true;
+            }
+        return false;
     }
-
-    /**
-     * Checks if bullet hits player, and if so removes a life.
-     */
-    // public void bulletHitsplayerAlt(Bullets bullet, int lives) {
-    //     if (bullet.hit().contains(playerShape)) {
-    //         lives = lives - 1 * lifeCounter;
-    //         //  Since this method is constantly called, lives continously gets reset to 3
-    //         System.out.println("lives left: " + lives);
-    //         lifeCounter = lifeCounter + 1;
-    //         if(lives == 0){
-    //             canvas.remove(playerShape);
-    //         } 
-    //     }
-    // }
     
 
     /**
-     * Moves the player left by a set amount when called
+     * Moves the player left by a set amount when called.
      */
     public void moveLeft(double dt) {
         if (playerShape.getX() > 0) {
@@ -56,7 +47,7 @@ public class Player {
     }
 
     /**
-     * Moves the player right by a set amount when called
+     * Moves the player right by a set amount when called.
      */
     public void moveRight(double dt) {
         if (playerShape.getX() < canvas.getWidth() - PLAYER_WIDTH){
@@ -66,7 +57,7 @@ public class Player {
     }
 
     /**
-     * Moves the player up by a set amount when called
+     * Moves the player up by a set amount when called.
      */
     public void moveUp(double dt) {
         if (playerShape.getY() > 0) {
@@ -76,7 +67,7 @@ public class Player {
     }
 
     /**
-     * Moves the player down by a set amount when called
+     * Moves the player down by a set amount when called.
      */
     public void moveDown(double dt) {
         if (playerShape.getY() < canvas.getHeight() - PLAYER_HEIGHT){
@@ -86,7 +77,7 @@ public class Player {
     }
 
     /*
-     * Gets the playerShape of the player
+     * Gets the playerShape of the player.
      */
     public Rectangle getPlayerShape() {
         return playerShape;

@@ -4,10 +4,10 @@ import edu.macalester.graphics.*;
 
 import java.awt.Color;
 
-import BulletHell.Bullets;
+import BulletHell.Bullet;
 
-public class RedBullet extends Bullets {
-    public RedBullet(CanvasWindow canvas, double initialSpeed) {
-        super(canvas, initialSpeed, Color.RED);
+public class RedBullet extends Bullet {
+    public RedBullet(CanvasWindow canvas) {
+        super(canvas, Color.RED);
     }
 }

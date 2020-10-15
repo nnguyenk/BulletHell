@@ -5,10 +5,10 @@ import edu.macalester.graphics.*;
 import java.awt.Color;
 import java.util.*;
 
-import BulletHell.Bullets;
+import BulletHell.Bullet;
 
 
-public class PlayerBullet implements Bullets {
+public class PlayerBullet implements Bullet {
     private Ellipse shape;
     private static final double RADIUS = 40;
     private double xCenter, yCenter, xSpeed, ySpeed;
@@ -117,7 +117,7 @@ public class PlayerBullet implements Bullets {
     /*
      * Removes any other bullet if this bullet hits something 
      */
-    public void bulletHitsBullet(Bullets bullet) {
+    public void bulletHitsBullet(Bullet bullet) {
         if (bullet.hit().contains(shape)) {
                 canvas.remove(bullet.getShape());
         }
