@@ -10,10 +10,10 @@ public abstract class Bullet {
     public static final double RADIUS = 20;
     public static final int SPEED = 2;
 
-    protected Ellipse shape;
-    protected double xCenter, yCenter, xSpeed, ySpeed;
-    protected Point top, left, bottom, right;  // Reference points, slightly outside of the bullet
-    protected CanvasWindow canvas;
+    private Ellipse shape;
+    private double xCenter, yCenter, xSpeed, ySpeed;
+    private Point top, left, bottom, right;  // Reference points, slightly outside of the bullet
+    private CanvasWindow canvas;
 
     public Bullet(CanvasWindow canvas, Color color) {
         shape = new Ellipse(Utility.randomX(canvas), Utility.randomY(canvas), RADIUS, RADIUS);
@@ -38,15 +38,15 @@ public abstract class Bullet {
         return shape;
     }
 
-    protected void setCenter(double x, double y) {
+    private void setCenter(double x, double y) {
         shape.setCenter(x, y);
     }
 
-    protected double getCenterX() {
+    private double getCenterX() {
         return xCenter;
     }
 
-    protected double getCenterY() {
+    private double getCenterY() {
         return yCenter;
     }
 
@@ -65,7 +65,7 @@ public abstract class Bullet {
     /**
      * Set the reference points based on the current coordinates of the bullet.
      */
-    protected void setPoints() {
+    private void setPoints() {
         top = new Point(getCenterX(), getCenterY() - RADIUS - 0.001);
         left = new Point(getCenterX() - RADIUS - 0.001, getCenterY());
         bottom = new Point(getCenterX(), getCenterY() + RADIUS + 0.001);
