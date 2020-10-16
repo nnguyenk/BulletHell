@@ -55,7 +55,7 @@ public class BulletManager {
      * 
      * @return true if the player was hit with any bullets
      */
-    public boolean bulletsInteract(Player player) {
+    public boolean bulletsIntersect(Player player) {
         for (Bullet bullet : bullets) {
             bullet.updatePosition();
             if (bullet.collidePlayer(player)) {

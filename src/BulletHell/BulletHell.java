@@ -33,18 +33,18 @@ public class BulletHell {
         canvas.animate(dt -> {
             if (currentLife > 0) {            
                 player.reduceImmunity(dt);
-                if (manager.bulletsInteract(player)) {
+
+                if (manager.bulletsIntersect(player)) {
                     if (!player.stillImmune()) {
-                        // Removes one life if the player is not immune, and begins immunity until the timer wears off.
                         currentLife -= 1;
                         player.startImmunity();
                     }
+                }
 
-                    if (!manager.bulletsLeft()) { 
-                        System.out.println("Congratulations! You have WON!");
-                        canvas.closeWindow();
-                        //go to next room?
-                    }
+                if (!manager.bulletsLeft()) { 
+                    System.out.println("Congratulations! You have WON!");
+                    canvas.closeWindow();
+                    //go to next room?
                 }
             }
             else { // breaks out of the animation loop
