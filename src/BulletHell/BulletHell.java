@@ -1,5 +1,6 @@
 package BulletHell;
 
+import BulletHell.BulletTypes.PlayerBullet;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.events.Key;
 
@@ -11,8 +12,8 @@ public class BulletHell {
     private Player player;
     private int currentLife;
     private BulletManager manager;
+    private PlayerBullet newPlayerBullet;
 
-    // private int playerLives = 3;
     public static final int MAX_LIFE = 3;
 
     public BulletHell(){
@@ -27,36 +28,25 @@ public class BulletHell {
 
     public void start(){
         createPlayer(0.1);
-        manager.spawnBullets(5);
+        manager.spawnBullets(2);
 
         currentLife = MAX_LIFE;
 
         canvas.animate(() -> {
             if (currentLife > 0) {
-                manager.updateBulletState(player);
+                manager.updateBulletState(player, newPlayerBullet);
+                // newPlayerBullet.updatePosition(manager.getAllBullets());
 
-                // bullet3.updatePosition();
-
-                // player.bulletHitsplayerAlt(bullet, playerLives);
-                // player.bulletHitsplayerAlt(bullet2, playerLives);
-
-                // bullet3.bulletHitsBullet(bullet);
-                // bullet3.bulletHitsBullet(bullet2);
                 if (player.isHit(manager.getAllBullets())) { //if the player gets hit
                     manager.removeBullets();
                     currentLife -= 1;
-                    // canvas.remove(player.getplayerShape());
-                    // createplayer(0.1);
-                    // bullet.wait(2000);
-                    // wait
-                    // player goes translucent for 1 second 
-                    // if (!brickManager.bricksStillExist()){ //win condition
-                    //     animating = false;
-                    //     System.out.println("Congratulations! You have WON!");
-                    //     canvas.closeWindow();
-                    // }
+                    if (!manager.bulletsLeft()){ 
+                        System.out.println("Congratulations! You have WON!");
+                        canvas.closeWindow();
+                        //go to next room?
                     }
                 }
+            }
             else { //breaks out of the animation loop
                 canvas.removeAll();
                 System.out.println("You have LOST!");
@@ -88,4 +78,25 @@ public class BulletHell {
             }
         });
     }
+    
+    // public void shootBullet(){
+    //     canvas.onKeyDown(event -> {
+    //         if (event.getKey() == Key.W) {
+    //             newPlayerBullet = new PlayerBullet(canvas, 90);
+    //             canvas.add(newPlayerBullet.getShape());
+    //         }
+    //         if (event.getKey() == Key.A) {
+    //             newPlayerBullet = new PlayerBullet(canvas, 90);
+    //             canvas.add(newPlayerBullet.getShape());
+    //         }
+    //         if (event.getKey() == Key.S) {
+    //             newPlayerBullet = new PlayerBullet(canvas, 90);
+    //             canvas.add(newPlayerBullet.getShape());
+    //         }
+    //         if (event.getKey() == Key.D) {
+    //             newPlayerBullet = new PlayerBullet(canvas, 90);
+    //             canvas.add(newPlayerBullet.getShape());
+    //         }
+    //     });
+    // }
 }

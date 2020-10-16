@@ -2,6 +2,8 @@ package BulletHell;
 
 import java.util.List;
 
+import BulletHell.BulletTypes.PlayerBullet;
+
 import java.awt.Color;
 
 import edu.macalester.graphics.*;
@@ -65,7 +67,7 @@ public abstract class Bullet {
     /**
      * Set the reference points based on the current coordinates of the bullet.
      */
-    private void setPoints() {
+    protected void setPoints() {
         top = new Point(getCenterX(), getCenterY() - RADIUS - 0.001);
         left = new Point(getCenterX() - RADIUS - 0.001, getCenterY());
         bottom = new Point(getCenterX(), getCenterY() + RADIUS + 0.001);
@@ -92,9 +94,11 @@ public abstract class Bullet {
     private void collideWalls() {
         if ((top.getY() <= 0) || bottom.getY() >= canvas.getHeight()) {
             deflectHorizontal();
+            ySpeed *= 1.75;
         }
         if ((left.getX() <= 0) || (right.getX() >= canvas.getWidth())) {
             deflectVertical();
+            xSpeed *= 1.75;
         }
     }
 
@@ -105,6 +109,19 @@ public abstract class Bullet {
         setPoints();
         for (Point point : List.of(top, bottom, left, right)) {
             if (canvas.getElementAt(point) == player.getPlayerShape()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+     * Returns true if the bullet hits the player's bullet, and bounces the bullet
+     */
+    public boolean collidePlayerBullet(PlayerBullet playerBullet) {
+        setPoints();
+        for (Point point : List.of(top, bottom, left, right)) {
+            if (canvas.getElementAt(point) == playerBullet.getShape()) {
                 return true;
             }
         }
