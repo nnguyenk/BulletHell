@@ -6,12 +6,16 @@ import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Rectangle;
 
 public class Player {
-    private static final double PLAYER_WIDTH = 40, PLAYER_HEIGHT = 50, PLAYER_SPEED = 200;
+    public static final int PLAYER_WIDTH = 40; 
+    public static final int PLAYER_HEIGHT = 50; 
+    public static final int PLAYER_SPEED = 200;
+    public static final double MAX_IMMUNITY = 2; // The maximum number of seconds the player is immuned.
 
     private Rectangle playerShape;
     private CanvasWindow canvas;
     private double leftX;
     private double topY;
+    public double remainingImmunity;
 
 
     public Player(CanvasWindow canvas){
@@ -62,10 +66,43 @@ public class Player {
         }
     }
 
-    /*
-     * Gets the playerShape of the player.
+    /**
+     * Gets the shape of the player.
      */
     public Rectangle getPlayerShape() {
         return playerShape;
+    }
+
+    /**
+     * Starts the immunity timer of the player. 
+     * The frames of immunity are indicated by the purple color.
+     */
+    public void startImmunity() {
+        remainingImmunity = MAX_IMMUNITY;
+        playerShape.setFillColor(Color.MAGENTA);
+    }
+
+    /**
+     * Returns true if the player is still immune, 
+     * and calculates the remaining time.
+     */
+    public boolean stillImmune() {
+        if (remainingImmunity > 0) {
+            return true;
+        }
+        // Resets the color once the immunity is over.
+        playerShape.setFillColor(Color.BLUE);
+        return false;
+    }
+
+    /**
+     * Reduces the remaining time of the immunity.
+     * 
+     * @param dt The number of seconds that will be deducted from the remaining immunity.
+     */
+    public void reduceImmunity(double dt) {
+        if (stillImmune()) {
+            remainingImmunity -= dt;
+        }
     }
 }

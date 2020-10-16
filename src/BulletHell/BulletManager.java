@@ -53,9 +53,9 @@ public class BulletManager {
      * Updates the position of all bullets.
      * Deletes any bullet that collides with the player.
      * 
-     * @return Whether the player was hit with any bullets
+     * @return true if the player was hit with any bullets
      */
-    public boolean updateBulletState(Player player) {
+    public boolean bulletsInteract(Player player) {
         for (Bullet bullet : bullets) {
             bullet.updatePosition();
             if (bullet.collidePlayer(player)) {
