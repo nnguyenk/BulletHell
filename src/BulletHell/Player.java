@@ -1,7 +1,6 @@
 package BulletHell;
 
 import java.awt.Color;
-import java.util.List;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Rectangle;
@@ -21,18 +20,6 @@ public class Player {
         playerShape.setFillColor(Color.BLUE);
         leftX = playerShape.getX();
         topY = playerShape.getY();
-    }
-
-    /**
-     * Returns true if the bullet hits the player.
-     * @param bullets The list of bullets that will kill the player.
-     */
-    public boolean isHit(List<Bullet> bullets) {
-        for (Bullet bullet : bullets)
-            if (bullet.collidePlayer(this)) {
-                return true;
-            }
-        return false;
     }
 
     /**
