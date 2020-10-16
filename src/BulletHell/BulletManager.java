@@ -51,15 +51,14 @@ public class BulletManager {
 
     /**
      * Updates the position of all bullets.
-     * Deletes any bullet that collids with the player or the player's bullet.
+     * Deletes any bullet that collides with the player.
      */
-    public void updateBulletState(Player player, PlayerBullet playerBullet) {
+    public void updateBulletState(Player player) {
         for (Bullet bullet : bullets) {
             bullet.updatePosition();
-            // if (bullet.collidePlayer(player) 
-            //     || (playerBullet != null && bullet.collidePlayerBullet(playerBullet))) {
-            //     bulletsToRemove.add(bullet);
-            // }
+            if (bullet.collidePlayer(player)) {
+                bulletsToRemove.add(bullet);
+            }
         }
     }
 

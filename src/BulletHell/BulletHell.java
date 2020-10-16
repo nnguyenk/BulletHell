@@ -1,6 +1,5 @@
 package BulletHell;
 
-import BulletHell.BulletTypes.PlayerBullet;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.events.Key;
 
@@ -12,7 +11,6 @@ public class BulletHell {
     private Player player;
     private int currentLife;
     private BulletManager manager;
-    private PlayerBullet newPlayerBullet;
 
     public static final int MAX_LIFE = 3000;
 
@@ -34,18 +32,15 @@ public class BulletHell {
 
         canvas.animate((dt) -> {
             if (currentLife > 0) {
-                manager.updateBulletState(player, newPlayerBullet);
-                // newPlayerBullet.updatePosition(manager.getAllBullets());
-
-                // if (player.isHit(manager.getAllBullets())) { //if the player gets hit
-                //     manager.removeBullets();
-                //     currentLife -= 1;
-                //     if (!manager.bulletsLeft()){ 
-                //         System.out.println("Congratulations! You have WON!");
-                //         canvas.closeWindow();
-                //         //go to next room?
-                //     }
-                // }
+                if (player.isHit(manager.getAllBullets())) { //if the player gets hit
+                    manager.removeBullets();
+                    currentLife -= 1;
+                    if (!manager.bulletsLeft()){ 
+                        System.out.println("Congratulations! You have WON!");
+                        canvas.closeWindow();
+                        //go to next room?
+                    }
+                }
             }
             else { // breaks out of the animation loop
                 canvas.removeAll();

@@ -2,8 +2,6 @@ package BulletHell;
 
 import java.util.List;
 
-import BulletHell.BulletTypes.PlayerBullet;
-
 import java.awt.Color;
 
 import edu.macalester.graphics.*;
@@ -114,21 +112,7 @@ public abstract class Bullet {
         }
         return false;
     }
-
-    /*
-     * Returns true if the bullet hits the player's bullet, and bounces the bullet
-     */
-    public boolean collidePlayerBullet(PlayerBullet playerBullet) {
-        setPoints();
-        for (Point point : List.of(top, bottom, left, right)) {
-            if (canvas.getElementAt(point) == playerBullet.getShape()) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
-
 
 // GraphicsGroup to contain all the bullet objects
 // BulletManager
