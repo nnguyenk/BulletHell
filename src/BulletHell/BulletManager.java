@@ -56,10 +56,10 @@ public class BulletManager {
     public void updateBulletState(Player player, PlayerBullet playerBullet) {
         for (Bullet bullet : bullets) {
             bullet.updatePosition();
-            if (bullet.collidePlayer(player) 
-                || (playerBullet != null && bullet.collidePlayerBullet(playerBullet))) {
-                bulletsToRemove.add(bullet);
-            }
+            // if (bullet.collidePlayer(player) 
+            //     || (playerBullet != null && bullet.collidePlayerBullet(playerBullet))) {
+            //     bulletsToRemove.add(bullet);
+            // }
         }
     }
 

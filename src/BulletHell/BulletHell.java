@@ -14,7 +14,7 @@ public class BulletHell {
     private BulletManager manager;
     private PlayerBullet newPlayerBullet;
 
-    public static final int MAX_LIFE = 3;
+    public static final int MAX_LIFE = 3000;
 
     public BulletHell(){
         canvas = new CanvasWindow("Stage 1", 800, 800);
@@ -28,26 +28,26 @@ public class BulletHell {
 
     public void start(){
         createPlayer(0.1);
-        manager.spawnBullets(2);
+        manager.spawnBullets(1000);
 
         currentLife = MAX_LIFE;
 
-        canvas.animate(() -> {
+        canvas.animate((dt) -> {
             if (currentLife > 0) {
                 manager.updateBulletState(player, newPlayerBullet);
                 // newPlayerBullet.updatePosition(manager.getAllBullets());
 
-                if (player.isHit(manager.getAllBullets())) { //if the player gets hit
-                    manager.removeBullets();
-                    currentLife -= 1;
-                    if (!manager.bulletsLeft()){ 
-                        System.out.println("Congratulations! You have WON!");
-                        canvas.closeWindow();
-                        //go to next room?
-                    }
-                }
+                // if (player.isHit(manager.getAllBullets())) { //if the player gets hit
+                //     manager.removeBullets();
+                //     currentLife -= 1;
+                //     if (!manager.bulletsLeft()){ 
+                //         System.out.println("Congratulations! You have WON!");
+                //         canvas.closeWindow();
+                //         //go to next room?
+                //     }
+                // }
             }
-            else { //breaks out of the animation loop
+            else { // breaks out of the animation loop
                 canvas.removeAll();
                 System.out.println("You have LOST!");
                 canvas.closeWindow();

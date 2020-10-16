@@ -134,3 +134,5 @@ public abstract class Bullet {
 // BulletManager
 // Implement lives
 // Implement shoot?
+
+// Comb through code for dead logic/etc
