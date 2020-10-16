@@ -12,7 +12,7 @@ public class BulletHell {
     private int currentLife;
     private BulletManager manager;
 
-    public static final int MAX_LIFE = 3000;
+    public static final int MAX_LIFE = 3;
 
     public BulletHell(){
         canvas = new CanvasWindow("Stage 1", 800, 800);
@@ -26,16 +26,15 @@ public class BulletHell {
 
     public void start(){
         createPlayer(0.1);
-        manager.spawnBullets(1000);
+        manager.spawnBullets(10);
 
         currentLife = MAX_LIFE;
 
         canvas.animate((dt) -> {
-            if (currentLife > 0) {
-                if (player.isHit(manager.getAllBullets())) { //if the player gets hit
-                    manager.removeBullets();
+            if (currentLife > 0) {               
+                if (manager.updateBulletState(player)) {
                     currentLife -= 1;
-                    if (!manager.bulletsLeft()){ 
+                    if (!manager.bulletsLeft()) { 
                         System.out.println("Congratulations! You have WON!");
                         canvas.closeWindow();
                         //go to next room?
@@ -73,25 +72,4 @@ public class BulletHell {
             }
         });
     }
-    
-    // public void shootBullet(){
-    //     canvas.onKeyDown(event -> {
-    //         if (event.getKey() == Key.W) {
-    //             newPlayerBullet = new PlayerBullet(canvas, 90);
-    //             canvas.add(newPlayerBullet.getShape());
-    //         }
-    //         if (event.getKey() == Key.A) {
-    //             newPlayerBullet = new PlayerBullet(canvas, 90);
-    //             canvas.add(newPlayerBullet.getShape());
-    //         }
-    //         if (event.getKey() == Key.S) {
-    //             newPlayerBullet = new PlayerBullet(canvas, 90);
-    //             canvas.add(newPlayerBullet.getShape());
-    //         }
-    //         if (event.getKey() == Key.D) {
-    //             newPlayerBullet = new PlayerBullet(canvas, 90);
-    //             canvas.add(newPlayerBullet.getShape());
-    //         }
-    //     });
-    // }
 }

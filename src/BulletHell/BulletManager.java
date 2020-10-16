@@ -52,20 +52,27 @@ public class BulletManager {
     /**
      * Updates the position of all bullets.
      * Deletes any bullet that collides with the player.
+     * 
+     * @return Whether the player was hit with any bullets
      */
-    public void updateBulletState(Player player) {
+    public boolean updateBulletState(Player player) {
         for (Bullet bullet : bullets) {
             bullet.updatePosition();
             if (bullet.collidePlayer(player)) {
                 bulletsToRemove.add(bullet);
             }
         }
+        if (!bulletsToRemove.isEmpty()) {
+            removeBullets();
+            return true;
+        }
+        return false;
     }
 
     /**
-     * Removes the bullet from tha canvas and the list
+     * Removes the bullet from tha canvas and the list.
      */
-    public void removeBullets() {
+    private void removeBullets() {
         for (Bullet bulletToRemove : bulletsToRemove){
             canvas.remove(bulletToRemove.getShape());
             bullets.remove(bulletToRemove);
