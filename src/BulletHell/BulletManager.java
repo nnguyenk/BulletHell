@@ -55,10 +55,10 @@ public class BulletManager {
      * 
      * @return true if the player was hit with any bullets
      */
-    public boolean bulletsIntersect(Player player) {
+    public boolean bulletsIntersect(Player player, boolean playerImmunity) {
         for (Bullet bullet : bullets) {
             bullet.updatePosition();
-            if (bullet.collidePlayer(player)) {
+            if (bullet.collidePlayer(player) && playerImmunity == false) {
                 bulletsToRemove.add(bullet);
             }
         }
