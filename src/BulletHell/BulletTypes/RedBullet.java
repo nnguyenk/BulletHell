@@ -10,4 +10,9 @@ public class RedBullet extends Bullet {
     public RedBullet(CanvasWindow canvas) {
         super(canvas, Color.RED);
     }
+
+    @Override
+    public String getType() {
+        return "Red";
+    }
 }

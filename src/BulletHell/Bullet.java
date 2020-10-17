@@ -57,6 +57,11 @@ public abstract class Bullet {
     }
 
     /**
+     * Returns a string for the type of this bullet.
+     */
+    public abstract String getType();
+
+    /**
      * Check if the ball collides with a brick, the paddle, or the walls, and 
      * move the ball to its next position.
      */
