@@ -15,10 +15,11 @@ public class Player {
     private CanvasWindow canvas;
     private double leftX;
     private double topY;
-    public double remainingImmunity;
+    private double remainingImmunity;
+    private boolean frozen; // If true, prevents the character from moving. 
 
 
-    public Player(CanvasWindow canvas){
+    public Player(CanvasWindow canvas) {
         this.canvas = canvas;
         playerShape = new Rectangle(canvas.getWidth() / 2, canvas.getHeight() / 2, PLAYER_WIDTH, PLAYER_HEIGHT);
         playerShape.setFillColor(Color.BLUE);
@@ -30,7 +31,7 @@ public class Player {
      * Moves the player left by a set amount when called.
      */
     public void moveLeft(double dt) {
-        if (playerShape.getX() > 0) {
+        if (playerShape.getX() > 0 && !frozen) {
             leftX -= PLAYER_SPEED * dt;
             playerShape.setX(leftX);
         }
@@ -40,7 +41,7 @@ public class Player {
      * Moves the player right by a set amount when called.
      */
     public void moveRight(double dt) {
-        if (playerShape.getX() < canvas.getWidth() - PLAYER_WIDTH){
+        if (playerShape.getX() < canvas.getWidth() - PLAYER_WIDTH && !frozen){
             leftX += PLAYER_SPEED * dt;
             playerShape.setX(leftX);
         }
@@ -50,7 +51,7 @@ public class Player {
      * Moves the player up by a set amount when called.
      */
     public void moveUp(double dt) {
-        if (playerShape.getY() > 0) {
+        if (playerShape.getY() > 0 && !frozen) {
             topY -= PLAYER_SPEED * dt;
             playerShape.setY(topY);
         }
@@ -60,7 +61,7 @@ public class Player {
      * Moves the player down by a set amount when called.
      */
     public void moveDown(double dt) {
-        if (playerShape.getY() < canvas.getHeight() - PLAYER_HEIGHT){
+        if (playerShape.getY() < canvas.getHeight() - PLAYER_HEIGHT && !frozen){
             topY += PLAYER_SPEED * dt;
             playerShape.setY(topY);
         }
@@ -80,19 +81,24 @@ public class Player {
     public void startImmunity() {
         remainingImmunity = MAX_IMMUNITY;
         playerShape.setFillColor(Color.MAGENTA);
+        System.out.println("immune");
     }
 
     /**
      * Returns true if the player is still immune, 
      * and calculates the remaining time.
      */
-    public boolean stillImmune() {
-        if (remainingImmunity > 0) {
-            return true;
+    public boolean isImmune() {
+        if (remainingImmunity <= 0) {
+            if (frozen) {
+                frozen = false;
+                System.out.println("thawed");
+            }
+            // Resets the color once the immunity is over.
+            playerShape.setFillColor(Color.BLUE);
+            return false;
         }
-        // Resets the color once the immunity is over.
-        playerShape.setFillColor(Color.BLUE);
-        return false;
+        return true;
     }
 
     /**
@@ -101,8 +107,14 @@ public class Player {
      * @param dt The number of seconds that will be deducted from the remaining immunity.
      */
     public void reduceImmunity(double dt) {
-        if (stillImmune()) {
-            remainingImmunity -= dt;
-        }
+        remainingImmunity -= dt;
+    }    
+
+    /**
+     * Freezes the character.
+     */
+    public void freeze() {
+        frozen = true;
+        System.out.println("freeze");
     }
 }
