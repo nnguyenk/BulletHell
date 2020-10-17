@@ -12,6 +12,7 @@ public class BulletManager {
     private CanvasWindow canvas;
     private List<Bullet> bullets = new ArrayList<>();
     private List<Bullet> bulletsToRemove = new ArrayList<>();
+    private boolean hitPlayer;
 
     public BulletManager(CanvasWindow canvas) {
         this.canvas = canvas;
@@ -56,17 +57,21 @@ public class BulletManager {
      * @return true if the player was hit with any bullets
      */
     public boolean bulletsIntersect(Player player, boolean playerImmunity) {
+        hitPlayer = false;
         for (Bullet bullet : bullets) {
-            bullet.updatePosition();
-            if (bullet.collidePlayer(player) && playerImmunity == false) {
+            if (bullet.isAlive()) {
+                bullet.updatePosition();
+                if (bullet.collidePlayer(player) && playerImmunity == false) {
+                    bulletsToRemove.add(bullet);
+                    hitPlayer = true;
+                }
+            }
+            else {
                 bulletsToRemove.add(bullet);
             }
         }
-        if (!bulletsToRemove.isEmpty()) {
-            removeBullets();
-            return true;
-        }
-        return false;
+        removeBullets();
+        return hitPlayer;
     }
 
     /**

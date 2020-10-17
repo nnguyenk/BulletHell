@@ -9,11 +9,13 @@ import edu.macalester.graphics.*;
 public abstract class Bullet {
     public static final double RADIUS = 20;
     public static final int SPEED = 2;
+    private static int maxLives = 4; 
 
     private Ellipse shape;
     private double xCenter, yCenter, xSpeed, ySpeed;
     private Point top, left, bottom, right;  // Reference points, slightly outside of the bullet
     private CanvasWindow canvas;
+    private int currentLife;
 
     public Bullet(CanvasWindow canvas, Color color) {
         shape = new Ellipse(Utility.randomX(canvas), Utility.randomY(canvas), RADIUS, RADIUS);
@@ -29,6 +31,8 @@ public abstract class Bullet {
         ySpeed = -Math.sin(angleToRadians) * SPEED;
 
         this.canvas = canvas;
+
+        currentLife = maxLives;
     }
 
     /*
@@ -87,21 +91,24 @@ public abstract class Bullet {
     }
 
     /**
-     * Prevents the ball from getting out of the side walls and the ceiling. 
+     * Prevents the ball from getting out of the side walls and the ceiling.
+     * Subtracts one life from it every time it bounces. 
      */
     private void collideWalls() {
         if ((top.getY() <= 0) || bottom.getY() >= canvas.getHeight()) {
             deflectHorizontal();
+            currentLife--;
             ySpeed *= 1.75;
         }
         if ((left.getX() <= 0) || (right.getX() >= canvas.getWidth())) {
             deflectVertical();
+            currentLife--;
             xSpeed *= 1.75;
         }
     }
 
-    /*
-     * Returns true if the bullet hits it, and bounces the bullet
+    /**
+     * Returns true if the bullet hits the player.
      */
     public boolean collidePlayer(Player player) {
         setPoints();
@@ -112,11 +119,15 @@ public abstract class Bullet {
         }
         return false;
     }
+
+    /**
+     * Returns true if the bullet is still alive.
+     */
+    public boolean isAlive() {
+        return (currentLife > 0);
+    }
 }
 
-// GraphicsGroup to contain all the bullet objects
-// BulletManager
-// Implement lives
-// Implement shoot?
+
 
 // Comb through code for dead logic/etc
