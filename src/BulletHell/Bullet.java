@@ -97,7 +97,7 @@ public abstract class Bullet {
      * Subtracts one life from it every time it bounces. 
      */
     private void collideWalls() {
-        if ((top.getY() <= 0) || bottom.getY() >= canvas.getHeight()) {
+        if ((top.getY() <= 31) || bottom.getY() >= canvas.getHeight()) {
             deflectHorizontal();
             loseLife();
             ySpeed *= 1.75;
