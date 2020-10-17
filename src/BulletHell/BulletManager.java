@@ -7,6 +7,7 @@ import java.util.List;
 import BulletHell.BulletTypes.*;
 
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.Rectangle;
 
 public class BulletManager {
     private CanvasWindow canvas;
@@ -20,6 +21,7 @@ public class BulletManager {
 
     /**
      * Adds all bullets to the canvas.
+     * Adds the line demarcating the cieling and player info above
      */
     public void spawnBullets(int bulletsNumber) {
         for (int i = 0; i < bulletsNumber; i++) {
@@ -27,6 +29,8 @@ public class BulletManager {
             canvas.add(bullet.getShape());
             bullets.add(bullet);
         }
+
+        canvas.add(new Rectangle(0, 40, 800, 1));
     }
 
     /**
