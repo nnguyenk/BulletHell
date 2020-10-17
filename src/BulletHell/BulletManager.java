@@ -1,6 +1,5 @@
 package BulletHell;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -67,10 +66,13 @@ public class BulletManager {
             if (bullet.isAlive()) {
                 bullet.updatePosition();
 
-                if (bullet.collidePlayer(player) && !player.stillImmune()) {
+                if (!player.isImmune() && bullet.collidePlayer(player)) {
                     hitPlayer = true;
                     bulletsToRemove.add(bullet);
 
+                    if (bullet.getType().equalsIgnoreCase("Cyan")) {
+                        player.freeze();
+                    }
                 }
             }
             else {
