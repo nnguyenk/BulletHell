@@ -103,7 +103,6 @@ public abstract class Bullet {
      */
     private void collideWalls() {
         if ((top.getY() <= 31) || bottom.getY() >= canvas.getHeight()) {
-            deflectHorizontal();
             loseLife();
             if (isAlive()) {
                 deflectHorizontal();

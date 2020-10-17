@@ -51,15 +51,13 @@ public class BulletHell {
             if (currentLife > 0) {            
                 player.reduceImmunity(dt);
 
-                if (manager.bulletsIntersect(player, player.stillImmune())) {
-                    if (!player.stillImmune()) {
-                        removeHeart();
-                        currentLife -= 1;
-                        player.startImmunity();
-                    }
+                if (manager.bulletsIntersect(player)) {
+                    removeHeart();
+                    currentLife -= 1;
+                    player.startImmunity();
                 }
 
-                if (!manager.bulletsLeft()) { 
+                if (!manager.bulletsLeft()) {
                     System.out.println("Congratulations! You have WON!");
                     canvas.closeWindow();
                     //go to next room?
