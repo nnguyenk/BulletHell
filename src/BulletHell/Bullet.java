@@ -15,6 +15,7 @@ public abstract class Bullet {
     private double xCenter, yCenter, xSpeed, ySpeed;
     private Point top, left, bottom, right;  // Reference points, slightly outside of the bullet
     private CanvasWindow canvas;
+    private Color color;
     private int currentLife;
 
     public Bullet(CanvasWindow canvas, Color color) {
@@ -31,6 +32,7 @@ public abstract class Bullet {
         ySpeed = -Math.sin(angleToRadians) * SPEED;
 
         this.canvas = canvas;
+        this.color = color;
 
         currentLife = maxLives;
     }
@@ -97,12 +99,12 @@ public abstract class Bullet {
     private void collideWalls() {
         if ((top.getY() <= 0) || bottom.getY() >= canvas.getHeight()) {
             deflectHorizontal();
-            currentLife--;
+            loseLife();
             ySpeed *= 1.75;
         }
         if ((left.getX() <= 0) || (right.getX() >= canvas.getWidth())) {
             deflectVertical();
-            currentLife--;
+            loseLife();
             xSpeed *= 1.75;
         }
     }
@@ -125,6 +127,18 @@ public abstract class Bullet {
      */
     public boolean isAlive() {
         return (currentLife > 0);
+    }
+
+    /**
+     * Subtracts the current number of lives by 1.
+     * Indicates the remaining lives with a change in color.
+     */
+    private void loseLife() {
+        currentLife--;
+        shape.setFillColor(new Color(
+            color.getRed() * currentLife / maxLives,
+            color.getGreen() * currentLife / maxLives, 
+            color.getBlue() * currentLife / maxLives));
     }
 }
 
