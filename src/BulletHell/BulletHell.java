@@ -34,11 +34,9 @@ public class BulletHell {
             if (currentLife > 0) {            
                 player.reduceImmunity(dt);
 
-                if (manager.bulletsIntersect(player, player.stillImmune())) {
-                    if (!player.stillImmune()) {
-                        currentLife -= 1;
-                        player.startImmunity();
-                    }
+                if (manager.bulletsIntersect(player)) {
+                    currentLife -= 1;
+                    player.startImmunity();
                 }
 
                 if (!manager.bulletsLeft()) { 

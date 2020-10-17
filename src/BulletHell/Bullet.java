@@ -98,14 +98,18 @@ public abstract class Bullet {
      */
     private void collideWalls() {
         if ((top.getY() <= 0) || bottom.getY() >= canvas.getHeight()) {
-            deflectHorizontal();
             loseLife();
-            ySpeed *= 1.75;
+            if (isAlive()) {
+                deflectHorizontal();
+                ySpeed *= 1.75;
+            }
         }
         if ((left.getX() <= 0) || (right.getX() >= canvas.getWidth())) {
-            deflectVertical();
             loseLife();
-            xSpeed *= 1.75;
+            if (isAlive()) {
+                deflectVertical();
+                xSpeed *= 1.75;
+            }
         }
     }
 
@@ -135,10 +139,12 @@ public abstract class Bullet {
      */
     private void loseLife() {
         currentLife--;
-        shape.setFillColor(new Color(
-            color.getRed() * currentLife / maxLives,
-            color.getGreen() * currentLife / maxLives, 
-            color.getBlue() * currentLife / maxLives));
+        if (isAlive()) {
+            shape.setFillColor(new Color(
+                color.getRed() * currentLife / maxLives,
+                color.getGreen() * currentLife / maxLives, 
+                color.getBlue() * currentLife / maxLives));
+        }
     }
 }
 

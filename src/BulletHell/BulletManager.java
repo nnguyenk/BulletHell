@@ -1,5 +1,6 @@
 package BulletHell;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -56,14 +57,16 @@ public class BulletManager {
      * 
      * @return true if the player was hit with any bullets
      */
-    public boolean bulletsIntersect(Player player, boolean playerImmunity) {
+    public boolean bulletsIntersect(Player player) {
         hitPlayer = false;
         for (Bullet bullet : bullets) {
             if (bullet.isAlive()) {
                 bullet.updatePosition();
-                if (bullet.collidePlayer(player) && playerImmunity == false) {
-                    bulletsToRemove.add(bullet);
+
+                if (bullet.collidePlayer(player) && !player.stillImmune()) {
                     hitPlayer = true;
+                    bulletsToRemove.add(bullet);
+
                 }
             }
             else {
