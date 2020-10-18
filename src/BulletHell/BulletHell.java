@@ -50,6 +50,10 @@ public class BulletHell {
                     player.reduceImmunity(dt);
                 }
 
+                if (slow.isSlowed()) {
+                    slow.reduceSlow(dt, manager);
+                }
+
                 if (manager.bulletsIntersect(player, terrain, eraser)) {
                     removeHeart();
                     currentLife -= 1;
@@ -64,8 +68,6 @@ public class BulletHell {
                     //go to next room?
                 }
 
-                if (slow.isSlowed(manager)) {
-                    slow.reduceSlow(dt);
                 }
             }
             else { // breaks out of the animation loop
