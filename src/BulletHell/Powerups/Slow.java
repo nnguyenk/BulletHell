@@ -1,27 +1,32 @@
 package BulletHell.Powerups;
 
 import BulletHell.Bullet;
+import BulletHell.BulletHell;
 import BulletHell.BulletManager;
 
-public class Slow {
-    // all bullets on the screen slow down/come to a halt where they are.
-    public final static double MAX_IMMUNITY = 5; // The maximum number of seconds the player is immuned.
+public class Slow implements Powerups {
+    public final static double MAX_DURATION = 5; // The maximum number of seconds the power is active.
 
     private double remainingSlow;
-    private boolean activated;
+    private BulletHell mainGame;
 
+    public Slow(BulletHell bulletHell) {
+        mainGame = bulletHell;
+    }
+    
     /**
-     * Activate the slow, reducing the speed of all bullets on the screen;
+     * Activate the slow, reducing the speed of all bullets on the screen.
      */
-    public void startSlow(BulletManager manager) {
-        remainingSlow = MAX_IMMUNITY;
+    public void activate() {
+        BulletManager manager = mainGame.getBulletManager();
+        remainingSlow = MAX_DURATION;
         slowBullets(manager);
     }
 
     /**
-     * Returns true if slow is still in effect.
+     * Returns true if slow is in effect.
      */
-    public boolean isSlowed() {
+    public boolean inEffect() {
         return (remainingSlow > 0);
     }
 
@@ -31,20 +36,17 @@ public class Slow {
      * 
      * @param dt The number of seconds that will be deducted.
      */
-    public void reduceSlow(double dt, BulletManager manager) {
+    public void reduceDuration(double dt) {
+        BulletManager manager = mainGame.getBulletManager();
         remainingSlow -= dt;
-        if (!isSlowed()) {
-            endSlow(manager);
+        if (!inEffect()) {
+            restoreBullets(manager);
         }
     }
 
     /**
-     * Ends the slow and returns the speed of the bullets to normal.
+     * Slows all bullets in the manager.
      */
-    private void endSlow(BulletManager manager) {
-        restoreBullets(manager);
-    }
-
     private void slowBullets(BulletManager manager) {
         for (Bullet bullet : manager.getAllBullets()) {
             if (bullet.isAlive()) {
@@ -53,6 +55,9 @@ public class Slow {
         }
     }
 
+    /**
+     * Restores the speed of all bullets in the manager.
+     */
     private void restoreBullets(BulletManager manager) {
         for (Bullet bullet : manager.getAllBullets()) {
             if (bullet.isAlive()) {
