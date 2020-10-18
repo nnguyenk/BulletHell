@@ -5,15 +5,13 @@ import edu.macalester.graphics.Image;
 
 public class HeartManager {
     private CanvasWindow canvas;
-    private Player player;
 
     private Image heart = new Image("Heart-1.png");
     private Image heart2 = new Image("Heart-1.png");
     private Image heart3 = new Image("Heart-1.png");
 
-    public HeartManager(CanvasWindow canvas, Player player){
+    public HeartManager(CanvasWindow canvas){
         this.canvas = canvas;
-        this.player = player;
     }
 
     public void SummonHearts(){
@@ -30,6 +28,18 @@ public class HeartManager {
         canvas.add(heart);
         canvas.add(heart2);
         canvas.add(heart3);
+    }
+
+    public Image getHeart(){
+        return heart;
+    }
+
+    public Image getHeart2(){
+        return heart2;
+    }
+
+    public Image getHeart3(){
+        return heart3;
     }
 
     /**
