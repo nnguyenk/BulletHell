@@ -8,18 +8,24 @@ public class Slow {
     public final static double MAX_IMMUNITY = 5; // The maximum number of seconds the player is immuned.
 
     public double remainingSlow;
+    private boolean activated;
 
-    public void startSlow() {
+    public void startSlow(BulletManager manager) {
         remainingSlow = MAX_IMMUNITY;
-
+        activated = true;
+        slowBullets(manager);
     }
 
     /**
      * Returns true if the player is still immune, and calculates the remaining time.
      */
-    public boolean isSlowed() {
+    public boolean isSlowed(BulletManager manager) {
         if (remainingSlow > 0) {
             return true;
+        }
+        if (activated) {
+            activated = false;
+            restoreBullets(manager);
         }
         return false;
     }
@@ -33,14 +39,19 @@ public class Slow {
         remainingSlow -= dt;
     }
 
-    // public void slowBullets() {
-    //     for (Bullet bullet : BulletManager.getAllBullets()) {
-    //         if (bullet.isAlive()) {
-    //             bullet.changeSpeed(0);
-    //         }else{
-    //             bullet.changeSpeed(1);
-    //         }
-    //     }
-    // }
+    public void slowBullets(BulletManager manager) {
+        for (Bullet bullet : manager.getAllBullets()) {
+            if (bullet.isAlive()) {
+                bullet.reduceSpeed();
+            }
+        }
+    }
 
+    public void restoreBullets(BulletManager manager) {
+        for (Bullet bullet : manager.getAllBullets()) {
+            if (bullet.isAlive()) {
+                bullet.restoreSpeed();
+            }
+        }
+    }
 }

@@ -81,7 +81,6 @@ public class Player {
     public void startImmunity() {
         remainingImmunity = MAX_IMMUNITY;
         playerShape.setFillColor(Color.MAGENTA);
-        System.out.println("immune");
     }
 
     /**
@@ -92,7 +91,6 @@ public class Player {
         if (remainingImmunity <= 0) {
             if (frozen) {
                 frozen = false;
-                System.out.println("thawed");
             }
             // Resets the color once the immunity is over.
             playerShape.setFillColor(Color.BLUE);
@@ -115,6 +113,5 @@ public class Player {
      */
     public void freeze() {
         frozen = true;
-        System.out.println("freeze");
     }
 }

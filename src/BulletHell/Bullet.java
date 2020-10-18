@@ -8,7 +8,7 @@ import edu.macalester.graphics.*;
 
 public abstract class Bullet {
     public static final double RADIUS = 20;
-    public static final int SPEED = 2;
+    public static final int SPEED = 1;
     private static int maxLives = 4; 
 
     private Ellipse shape;
@@ -152,9 +152,14 @@ public abstract class Bullet {
         }
     }
 
-    public void changeSpeed(int i) {
-        xSpeed *= i;
-        ySpeed *= i;
+    public void reduceSpeed() {
+        xSpeed *= .5;
+        ySpeed *= .5;
+    }
+
+    public void restoreSpeed() {
+        xSpeed *= 2;
+        ySpeed *= 2;
     }
 }
 

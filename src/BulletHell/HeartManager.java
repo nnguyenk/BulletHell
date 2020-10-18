@@ -35,16 +35,16 @@ public class HeartManager {
     /**
      * Removes hearts based on the player's lives left
      */
-    public void removeHeart() {
-        if (player.getCurrentLife == 3) {
-            canvas.remove(heart3);
-        }
-        if (player.getCurrentLife == 2) {
-            canvas.remove(heart2);
-        }
-        if (player.getCurrentLife == 1) {
-            canvas.remove(heart);
-        }
-    }
+    // public void removeHeart() {
+    //     if (player.getCurrentLife == 3) {
+    //         canvas.remove(heart3);
+    //     }
+    //     if (player.getCurrentLife == 2) {
+    //         canvas.remove(heart2);
+    //     }
+    //     if (player.getCurrentLife == 1) {
+    //         canvas.remove(heart);
+    //     }
+    // }
 
 }

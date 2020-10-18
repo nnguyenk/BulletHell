@@ -1,5 +1,6 @@
 package BulletHell;
 
+import BulletHell.Powerups.Slow;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.events.Key;
 import edu.macalester.graphics.Image;
@@ -15,6 +16,7 @@ public class BulletHell {
     private Image heart = new Image("Heart-1.png");
     private Image heart2 = new Image("Heart-1.png");
     private Image heart3 = new Image("Heart-1.png");
+    private Slow slow = new Slow();
 
     public static final int MAX_LIFE = 3;
 
@@ -55,12 +57,16 @@ public class BulletHell {
                     removeHeart();
                     currentLife -= 1;
                     player.startImmunity();
+                    slow.startSlow(manager);
                 }
 
                 if (!manager.bulletsLeft()) {
                     System.out.println("Congratulations! You have WON!");
                     canvas.closeWindow();
                     //go to next room?
+                }
+                if(slow.isSlowed(manager)){
+                    slow.reduceSlow(dt);
                 }
             }
             else { // breaks out of the animation loop
