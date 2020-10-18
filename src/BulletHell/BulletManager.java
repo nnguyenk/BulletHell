@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import BulletHell.BulletTypes.*;
-
+import BulletHell.Powerups.Eraser;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Rectangle;
 
@@ -60,13 +60,13 @@ public class BulletManager {
      * 
      * @return true if the player was hit with any bullets
      */
-    public boolean bulletsIntersect(Player player) {
+    public boolean bulletsIntersect(Player player, Eraser eraser) {
         hitPlayer = false;
         for (Bullet bullet : bullets) {
             if (bullet.isAlive()) {
                 bullet.updatePosition();
 
-                if (!player.isImmune() && bullet.collidePlayer(player)) {
+                if ((!player.isImmune() && bullet.collidePlayer(player))) {
                     hitPlayer = true;
                     bulletsToRemove.add(bullet);
 
@@ -74,6 +74,9 @@ public class BulletManager {
                         player.freeze();
                         break;
                     }
+                }
+                if((eraser.isErasing(player)) && bullet.collidePlayer(player)){
+                    bulletsToRemove.add(bullet);
                 }
             }
             else {

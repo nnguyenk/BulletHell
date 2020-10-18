@@ -1,5 +1,6 @@
 package BulletHell;
 
+import BulletHell.Powerups.Eraser;
 import BulletHell.Powerups.Slow;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.events.Key;
@@ -17,6 +18,7 @@ public class BulletHell {
     private Image heart2 = new Image("Heart-1.png");
     private Image heart3 = new Image("Heart-1.png");
     private Slow slow = new Slow();
+    private Eraser eraser = new Eraser();
 
     public static final int MAX_LIFE = 3;
 
@@ -53,7 +55,9 @@ public class BulletHell {
             if (currentLife > 0) {            
                 player.reduceImmunity(dt);
 
-                if (manager.bulletsIntersect(player)) {
+                eraser.reduceErasing(dt);
+
+                if (manager.bulletsIntersect(player, eraser)) {
                     removeHeart();
                     currentLife -= 1;
                     player.startImmunity();
@@ -97,6 +101,9 @@ public class BulletHell {
             }
             if (event.getKey() == Key.DOWN_ARROW) {
                 player.moveDown(dt);
+            }
+            if (event.getKey() == Key.Q) {
+                eraser.StartErasing();
             }
         });
     }
