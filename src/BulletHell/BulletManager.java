@@ -5,14 +5,13 @@ import java.util.Collections;
 import java.util.List;
 
 import BulletHell.BulletTypes.*;
-import BulletHell.Powerups.Eraser;
 import edu.macalester.graphics.CanvasWindow;
-import edu.macalester.graphics.Rectangle;
 
 public class BulletManager {
     private CanvasWindow canvas;
     private List<Bullet> bullets = new ArrayList<>();
     private List<Bullet> bulletsToRemove = new ArrayList<>();
+
     private boolean hitPlayer;
 
     public BulletManager(CanvasWindow canvas) {
@@ -26,6 +25,7 @@ public class BulletManager {
     public void spawnBullets(int bulletsNumber) {
         for (int i = 0; i < bulletsNumber; i++) {
             Bullet bullet = createRandomBullet();
+
             canvas.add(bullet.getShape());
             bullets.add(bullet);
         }
@@ -54,26 +54,28 @@ public class BulletManager {
 
     /**
      * Updates the position of all bullets.
-     * Deletes any bullet that collides with the player.
+     * Deletes any bullet that collides with the player when immunity is inactive.
      * 
-     * @return true if the player was hit with any bullets
+     * @return true if the player was hit with any bullets, without eraser active.
      */
-    public boolean bulletsIntersect(Player player, Terrain terrain, Eraser eraser) {
+    public boolean bulletsIntersect(Player player, Terrain terrain) {
         hitPlayer = false;
         for (Bullet bullet : bullets) {
             if (bullet.isAlive()) {
                 bullet.updatePosition(terrain);
-
-                if ((!player.isImmune() && bullet.collidePlayer(player))) {
-                    hitPlayer = true;
-                    bulletsToRemove.add(bullet);
-
-                    if (bullet.getType().equalsIgnoreCase("Cyan")) {
-                        player.freeze();
+                if (bullet.collidePlayer(player)) {
+                    if (player.isErasing()) {
+                        bulletsToRemove.add(bullet);
                     }
-                }
-                if((eraser.isErasing(player)) && bullet.collidePlayer(player)){
-                    bulletsToRemove.add(bullet);
+                    else {
+                        if (!player.isImmune()) {
+                            hitPlayer = true;
+                            bulletsToRemove.add(bullet);
+                            if (bullet.getType().equalsIgnoreCase("Cyan")) {
+                                player.freeze();
+                            }
+                        }
+                    }
                 }
             }
             else {
@@ -103,7 +105,7 @@ public class BulletManager {
     }
 
     /**
-     * Returns the list of bullets currently on the screen.
+     * Returns an unmodifable list of bullets currently on the screen.
      */
     public List<Bullet> getAllBullets() {
         return Collections.unmodifiableList(bullets);

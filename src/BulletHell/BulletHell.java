@@ -54,20 +54,22 @@ public class BulletHell {
                     slow.reduceSlow(dt, manager);
                 }
 
-                if (manager.bulletsIntersect(player, terrain, eraser)) {
+                if (eraser.isErasing()) {
+                    eraser.reduceErasing(dt, player);
+                }
+
+                if (manager.bulletsIntersect(player, terrain)) {
                     removeHeart();
                     currentLife -= 1;
                     player.startImmunity();
                     slow.startSlow(manager);
-                    eraser.StartErasing();
+                    eraser.startErasing(player);
                 }
 
                 if (!manager.bulletsLeft()) {
                     System.out.println("Congratulations! You have WON!");
                     canvas.closeWindow();
                     //go to next room?
-                }
-
                 }
             }
             else { // breaks out of the animation loop
@@ -99,9 +101,9 @@ public class BulletHell {
             if (event.getKey() == Key.DOWN_ARROW) {
                 player.moveDown(dt);
             }
-            if (event.getKey() == Key.Q) {
-                eraser.StartErasing();
-            }
+            // if (event.getKey() == Key.Q) {
+            //     eraser.StartErasing();
+            // }
         });
     }
 
