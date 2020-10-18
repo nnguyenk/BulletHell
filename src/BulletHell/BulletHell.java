@@ -41,7 +41,12 @@ public class BulletHell {
         canvas.animate(dt -> {
             if (currentLife > 0) {
 
-                player.reduceImmunity(dt);
+                if (player.isImmune()) {
+                    player.reduceImmunity(dt);
+                    if (!player.isImmune()) {
+                        player.endImmunity();
+                    }
+                }
 
                 if (manager.bulletsIntersect(player, terrain)) {
                     removeHeart();

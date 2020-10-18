@@ -65,9 +65,10 @@ public abstract class Bullet {
      * Check if the ball collides with a brick, the paddle, or the walls, and 
      * move the ball to its next position.
      */
-    public void updatePosition() {
+    public void updatePosition(Terrain terrain) {
         setPoints();
         collideWalls();
+        collideTerrain(terrain);
         xCenter += xSpeed;
         yCenter += ySpeed;
         setCenter(xCenter, yCenter);
@@ -98,7 +99,7 @@ public abstract class Bullet {
     }
 
     /**
-     * Prevents the ball from getting out of the side walls and the ceiling.
+     * Prevents the bullet from getting out of the side walls and the ceiling.
      * Subtracts one life from it every time it bounces. 
      */
     private void collideWalls() {
@@ -129,6 +130,32 @@ public abstract class Bullet {
             }
         }
         return false;
+    }
+
+    /**
+     * Upon collision with terrain, bullets bounce without losing a life or gaining speed
+     * @param terrain
+     */
+    public void collideTerrain(Terrain terrain){
+        setPoints();
+        for (Point point : List.of(top, bottom, left, right)) {
+            if (canvas.getElementAt(point) == terrain.getTerrain1()) {
+                if (top.getY() <= 750 || bottom.getY() >= 720) {
+                    deflectHorizontal();
+                }
+                if (right.getX() <= 700 || left.getX() >= 790) {
+                    deflectVertical();
+                }
+            }
+            if (canvas.getElementAt(point) == terrain.getTerrain2()) {
+                if (top.getY() <= 580 || bottom.getY() >= 500) {
+                    deflectHorizontal();
+                }
+                if (right.getX() <= 120 || left.getX() >= 140) {
+                    deflectVertical();
+                }
+            }
+        }
     }
 
     /**
