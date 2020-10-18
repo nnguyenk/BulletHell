@@ -72,6 +72,7 @@ public class BulletManager {
 
                     if (bullet.getType().equalsIgnoreCase("Cyan")) {
                         player.freeze();
+                        break;
                     }
                 }
             }
