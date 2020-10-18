@@ -14,6 +14,7 @@ public class BulletHell {
     private int currentLife;
     private BulletManager manager;
     private HeartManager heartManagement;
+    private Terrain terrain;
     private Slow slow = new Slow();
 
     public static final int MAX_LIFE = 3;
@@ -22,6 +23,7 @@ public class BulletHell {
         canvas = new CanvasWindow("Stage 1", 800, 800);
         manager = new BulletManager(canvas);
         heartManagement = new HeartManager(canvas);
+        terrain = new Terrain(canvas);
     }
 
     public static void main(String[] args) {
@@ -31,6 +33,7 @@ public class BulletHell {
 
     public void start(){
         heartManagement.SummonHearts();
+        terrain.SummonTerrain();
         createPlayer(0.1);
         manager.spawnBullets(10);
 
