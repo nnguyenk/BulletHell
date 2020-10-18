@@ -45,7 +45,7 @@ public class BulletManager {
                 randomBullet = new RedBullet(canvas);
                 break;
             case 2:
-                randomBullet = new BlueBullet(canvas);
+                randomBullet = new CyanBullet(canvas);
                 break;
             default:
                 randomBullet = null;

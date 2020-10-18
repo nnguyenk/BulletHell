@@ -163,6 +163,4 @@ public abstract class Bullet {
     }
 }
 
-
-
 // Comb through code for dead logic/etc
