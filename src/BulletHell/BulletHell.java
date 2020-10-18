@@ -16,8 +16,8 @@ public class BulletHell {
     private BulletManager manager;
     private HeartManager heartManagement;
     private Terrain terrain;
-    private Slow slow = new Slow();
-    private Eraser eraser = new Eraser();
+    private Slow slow = new Slow(this);
+    private Eraser eraser = new Eraser(this);
 
     public static final int MAX_LIFE = 3;
 
@@ -50,20 +50,20 @@ public class BulletHell {
                     player.reduceImmunity(dt);
                 }
 
-                if (slow.isSlowed()) {
-                    slow.reduceSlow(dt, manager);
+                if (slow.inEffect()) {
+                    slow.reduceDuration(dt);
                 }
 
-                if (eraser.isErasing()) {
-                    eraser.reduceErasing(dt, player);
+                if (eraser.inEffect()) {
+                    eraser.reduceDuration(dt);
                 }
 
                 if (manager.bulletsIntersect(player, terrain)) {
                     removeHeart();
                     currentLife -= 1;
                     player.startImmunity();
-                    slow.startSlow(manager);
-                    eraser.startErasing(player);
+                    slow.activate();
+                    eraser.activate();
                 }
 
                 if (!manager.bulletsLeft()) {
@@ -120,5 +120,19 @@ public class BulletHell {
         if (currentLife == 1) {
             canvas.remove(heartManagement.getHeart3());
         }
+    }
+
+    /**
+     * Return the current player of the game.
+     */
+    public Player getPlayer() {
+        return player;
+    }
+
+    /**
+     * Return the bullet manager of the game.
+     */
+    public BulletManager getBulletManager() {
+        return manager;
     }
 }
