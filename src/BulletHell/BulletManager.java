@@ -29,8 +29,6 @@ public class BulletManager {
             canvas.add(bullet.getShape());
             bullets.add(bullet);
         }
-
-        canvas.add(new Rectangle(0, 40, 800, 1));
     }
 
     /**
@@ -45,7 +43,7 @@ public class BulletManager {
                 randomBullet = new RedBullet(canvas);
                 break;
             case 2:
-                randomBullet = new BlueBullet(canvas);
+                randomBullet = new CyanBullet(canvas);
                 break;
             default:
                 randomBullet = null;
@@ -60,11 +58,11 @@ public class BulletManager {
      * 
      * @return true if the player was hit with any bullets
      */
-    public boolean bulletsIntersect(Player player, Eraser eraser) {
+    public boolean bulletsIntersect(Player player, Terrain terrain) {
         hitPlayer = false;
         for (Bullet bullet : bullets) {
             if (bullet.isAlive()) {
-                bullet.updatePosition();
+                bullet.updatePosition(terrain);
 
                 if ((!player.isImmune() && bullet.collidePlayer(player))) {
                     hitPlayer = true;
@@ -72,7 +70,6 @@ public class BulletManager {
 
                     if (bullet.getType().equalsIgnoreCase("Cyan")) {
                         player.freeze();
-                        break;
                     }
                 }
                 if((eraser.isErasing(player)) && bullet.collidePlayer(player)){

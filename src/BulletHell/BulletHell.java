@@ -3,8 +3,8 @@ package BulletHell;
 import BulletHell.Powerups.Eraser;
 import BulletHell.Powerups.Slow;
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.events.Key;
-import edu.macalester.graphics.Image;
 
 /**
  * The game of Bullet Hell
@@ -14,9 +14,8 @@ public class BulletHell {
     private Player player;
     private int currentLife;
     private BulletManager manager;
-    private Image heart = new Image("Heart-1.png");
-    private Image heart2 = new Image("Heart-1.png");
-    private Image heart3 = new Image("Heart-1.png");
+    private HeartManager heartManagement;
+    private Terrain terrain;
     private Slow slow = new Slow();
     private Eraser eraser = new Eraser();
 
@@ -24,17 +23,11 @@ public class BulletHell {
 
     public BulletHell(){
         canvas = new CanvasWindow("Stage 1", 800, 800);
-        manager = new BulletManager(canvas);
+        canvas.add(new Rectangle(0, 40, 800, 1));
         
-        heart.setCenter(750, 130);
-        heart.setMaxHeight(80);
-        heart.setMaxWidth(80);
-        heart2.setCenter(790, 130);
-        heart2.setMaxHeight(80);
-        heart2.setMaxWidth(80);
-        heart3.setCenter(830, 130);
-        heart3.setMaxHeight(80);
-        heart3.setMaxWidth(80);
+        manager = new BulletManager(canvas);
+        heartManagement = new HeartManager(canvas);
+        terrain = new Terrain(canvas);
     }
 
     public static void main(String[] args) {
@@ -43,21 +36,24 @@ public class BulletHell {
     }
 
     public void start(){
-        canvas.add(heart);
-        canvas.add(heart2);
-        canvas.add(heart3);
+        heartManagement.SummonHearts();
+        terrain.SummonTerrain();
         createPlayer(0.1);
-        manager.spawnBullets(10);
+        manager.spawnBullets(5);
 
         currentLife = MAX_LIFE;
 
         canvas.animate(dt -> {
-            if (currentLife > 0) {            
-                player.reduceImmunity(dt);
+            if (currentLife > 0) {
 
-                eraser.reduceErasing(dt);
+                if (player.isImmune()) {
+                    player.reduceImmunity(dt);
+                    if (!player.isImmune()) {
+                        player.endImmunity();
+                    }
+                }
 
-                if (manager.bulletsIntersect(player, eraser)) {
+                if (manager.bulletsIntersect(player, terrain)) {
                     removeHeart();
                     currentLife -= 1;
                     player.startImmunity();
@@ -69,7 +65,8 @@ public class BulletHell {
                     canvas.closeWindow();
                     //go to next room?
                 }
-                if(slow.isSlowed(manager)){
+
+                if (slow.isSlowed(manager)) {
                     slow.reduceSlow(dt);
                 }
             }
@@ -113,13 +110,13 @@ public class BulletHell {
      */
     public void removeHeart() {
         if (currentLife == 3) {
-            canvas.remove(heart3);
+            canvas.remove(heartManagement.getHeart());
         }
         if (currentLife == 2) {
-            canvas.remove(heart2);
+            canvas.remove(heartManagement.getHeart2());
         }
         if (currentLife == 1) {
-            canvas.remove(heart);
+            canvas.remove(heartManagement.getHeart3());
         }
     }
 }

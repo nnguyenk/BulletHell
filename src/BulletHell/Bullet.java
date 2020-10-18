@@ -8,14 +8,15 @@ import edu.macalester.graphics.*;
 
 public abstract class Bullet {
     public static final double RADIUS = 20;
-    public static final int SPEED = 2;
-    private static int maxLives = 4; 
+    public static final int SPEED = 4;
+    
+    private int maxLives = 4; 
 
-    private Ellipse shape;
-    private double xCenter, yCenter, xSpeed, ySpeed;
     private Point top, left, bottom, right;  // Reference points, slightly outside of the bullet
     private CanvasWindow canvas;
     private Color color;
+    private Ellipse shape;
+    private double xCenter, yCenter, xSpeed, ySpeed;
     private int currentLife;
 
     public Bullet(CanvasWindow canvas, Color color) {
@@ -38,7 +39,7 @@ public abstract class Bullet {
     }
 
     /*
-     * Gets the shape of the bullet
+     * Gets the shape of the bullet.
      */
     public Ellipse getShape() {
         return shape;
@@ -65,9 +66,10 @@ public abstract class Bullet {
      * Check if the ball collides with a brick, the paddle, or the walls, and 
      * move the ball to its next position.
      */
-    public void updatePosition() {
+    public void updatePosition(Terrain terrain) {
         setPoints();
         collideWalls();
+        collideTerrain(terrain);
         xCenter += xSpeed;
         yCenter += ySpeed;
         setCenter(xCenter, yCenter);
@@ -98,7 +100,7 @@ public abstract class Bullet {
     }
 
     /**
-     * Prevents the ball from getting out of the side walls and the ceiling.
+     * Prevents the bullet from getting out of the side walls and the ceiling.
      * Subtracts one life from it every time it bounces. 
      */
     private void collideWalls() {
@@ -109,6 +111,7 @@ public abstract class Bullet {
                 ySpeed *= 1.75;
             }
         }
+        
         if ((left.getX() <= 0) || (right.getX() >= canvas.getWidth())) {
             loseLife();
             if (isAlive()) {
@@ -129,6 +132,27 @@ public abstract class Bullet {
             }
         }
         return false;
+    }
+
+    /**
+     * Upon collision with terrain, bullets bounce without losing a life or gaining speed.
+     * 
+     * @param terrain
+     */
+    private void collideTerrain(Terrain terrain) {
+        setPoints();
+        for (Point point : List.of(top, bottom, left, right)) {
+            if (terrain.getTerrain().contains(canvas.getElementAt(point))) {
+                
+                if (point == top || point == bottom) {
+                    deflectHorizontal();
+                }
+
+                else {
+                    deflectVertical();
+                }
+            }
+        }
     }
 
     /**
@@ -162,7 +186,5 @@ public abstract class Bullet {
         ySpeed *= 2;
     }
 }
-
-
 
 // Comb through code for dead logic/etc
