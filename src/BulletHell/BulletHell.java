@@ -34,13 +34,19 @@ public class BulletHell {
         heartManagement.SummonHearts();
         terrain.SummonTerrain();
         createPlayer(0.1);
-        manager.spawnBullets(10);
+        manager.spawnBullets(5);
 
         currentLife = MAX_LIFE;
 
         canvas.animate(dt -> {
-            if (currentLife > 0) {            
-                player.reduceImmunity(dt);
+            if (currentLife > 0) {
+
+                if (player.isImmune()) {
+                    player.reduceImmunity(dt);
+                    if (!player.isImmune()) {
+                        player.endImmunity();
+                    }
+                }
 
                 if (manager.bulletsIntersect(player, terrain)) {
                     removeHeart();
@@ -54,7 +60,8 @@ public class BulletHell {
                     canvas.closeWindow();
                     //go to next room?
                 }
-                if(slow.isSlowed(manager)){
+
+                if (slow.isSlowed(manager)) {
                     slow.reduceSlow(dt);
                 }
             }

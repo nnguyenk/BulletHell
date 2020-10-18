@@ -14,7 +14,7 @@ public class Terrain {
         this.canvas = canvas;
     }
 
-    public void SummonTerrain(){
+    public void SummonTerrain() {
         rectangle1.setFillColor(Color.ORANGE);
         rectangle1.setStrokeColor(null);
 
