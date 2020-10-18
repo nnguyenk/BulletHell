@@ -13,9 +13,7 @@ public class BulletHell {
     private Player player;
     private int currentLife;
     private BulletManager manager;
-    private Image heart = new Image("Heart-1.png");
-    private Image heart2 = new Image("Heart-1.png");
-    private Image heart3 = new Image("Heart-1.png");
+    private HeartManager heartManagement;
     private Slow slow = new Slow();
 
     public static final int MAX_LIFE = 3;
@@ -23,16 +21,7 @@ public class BulletHell {
     public BulletHell(){
         canvas = new CanvasWindow("Stage 1", 800, 800);
         manager = new BulletManager(canvas);
-        
-        heart.setCenter(750, 130);
-        heart.setMaxHeight(80);
-        heart.setMaxWidth(80);
-        heart2.setCenter(790, 130);
-        heart2.setMaxHeight(80);
-        heart2.setMaxWidth(80);
-        heart3.setCenter(830, 130);
-        heart3.setMaxHeight(80);
-        heart3.setMaxWidth(80);
+        heartManagement = new HeartManager(canvas);
     }
 
     public static void main(String[] args) {
@@ -41,9 +30,7 @@ public class BulletHell {
     }
 
     public void start(){
-        canvas.add(heart);
-        canvas.add(heart2);
-        canvas.add(heart3);
+        heartManagement.SummonHearts();
         createPlayer(0.1);
         manager.spawnBullets(10);
 
@@ -106,13 +93,13 @@ public class BulletHell {
      */
     public void removeHeart() {
         if (currentLife == 3) {
-            canvas.remove(heart3);
+            canvas.remove(heartManagement.getHeart());
         }
         if (currentLife == 2) {
-            canvas.remove(heart2);
+            canvas.remove(heartManagement.getHeart2());
         }
         if (currentLife == 1) {
-            canvas.remove(heart);
+            canvas.remove(heartManagement.getHeart3());
         }
     }
 }
