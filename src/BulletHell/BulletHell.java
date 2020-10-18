@@ -48,9 +48,6 @@ public class BulletHell {
 
                 if (player.isImmune()) {
                     player.reduceImmunity(dt);
-                    if (!player.isImmune()) {
-                        player.endImmunity();
-                    }
                 }
 
                 if (manager.bulletsIntersect(player, terrain, eraser)) {

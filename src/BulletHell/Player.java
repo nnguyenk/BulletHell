@@ -16,7 +16,8 @@ public class Player {
     private double leftX;
     private double topY;
     private double remainingImmunity;
-    private boolean frozen; // If true, prevents the character from moving. 
+
+    private boolean frozen; // If true, prevents the player from moving.
 
 
     public Player(CanvasWindow canvas) {
@@ -92,19 +93,23 @@ public class Player {
     }
 
     /**
-     * Reduces the remaining time of the immunity.
+     * Reduces the remaining time of the immunity. 
+     * Calls endImmunity if the player is no longer immune.
      * 
      * @param dt The number of seconds that will be deducted from the remaining immunity.
      */
     public void reduceImmunity(double dt) {
         remainingImmunity -= dt;
+        if (!isImmune()) {
+            endImmunity();
+        }
     }
     
     /**
      * Ends the immunity state.
      * Thaws out the player if they are frozen.
      */
-    public void endImmunity() {
+    private void endImmunity() {
         if (frozen) {
             frozen = false;
         }
@@ -113,7 +118,7 @@ public class Player {
     }
 
     /**
-     * Freezes the character.
+     * Freezes the player.
      */
     public void freeze() {
         frozen = true;
