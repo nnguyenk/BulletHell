@@ -3,7 +3,6 @@ package BulletHell;
 import BulletHell.Powerups.Slow;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.events.Key;
-import edu.macalester.graphics.Image;
 
 /**
  * The game of Bullet Hell
