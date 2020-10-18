@@ -6,8 +6,8 @@ import java.awt.Color;
 
 import BulletHell.Bullet;
 
-public class BlueBullet extends Bullet {
-    public BlueBullet(CanvasWindow canvas) {
+public class CyanBullet extends Bullet {
+    public CyanBullet(CanvasWindow canvas) {
         super(canvas, Color.CYAN);
     }
 
