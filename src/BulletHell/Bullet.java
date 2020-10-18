@@ -154,6 +154,7 @@ public abstract class Bullet {
                 if (right.getX() <= 120 || left.getX() >= 140) {
                     deflectVertical();
                 }
+            }
         }
     }
 
