@@ -1,14 +1,17 @@
 package BulletHell;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Rectangle;
 
 public class Terrain {
-    CanvasWindow canvas;
-    Rectangle rectangle1 = new Rectangle(700, 720, 90, 30);
-    Rectangle rectangle2 = new Rectangle(120, 500, 20, 80);
+    private CanvasWindow canvas;
+    private Rectangle rectangle1 = new Rectangle(700, 720, 90, 30);
+    private Rectangle rectangle2 = new Rectangle(120, 500, 20, 80);
+    private List<Rectangle> allTerrain = new ArrayList<>();
 
     public Terrain(CanvasWindow canvas){
         this.canvas = canvas;
@@ -23,14 +26,12 @@ public class Terrain {
         
         canvas.add(rectangle1);
         canvas.add(rectangle2);
+
+        allTerrain.add(rectangle1);
+        allTerrain.add(rectangle2);
     }
 
-    public Rectangle getTerrain1(){
-        return rectangle1;
+    public List<Rectangle> getTerrain() {
+        return allTerrain;
     }
-
-    public Rectangle getTerrain2(){
-        return rectangle2;
-    }
-
 }

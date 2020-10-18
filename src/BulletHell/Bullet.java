@@ -9,13 +9,14 @@ import edu.macalester.graphics.*;
 public abstract class Bullet {
     public static final double RADIUS = 20;
     public static final int SPEED = 4;
-    private static int maxLives = 4; 
+    
+    private int maxLives = 4; 
 
-    private Ellipse shape;
-    private double xCenter, yCenter, xSpeed, ySpeed;
     private Point top, left, bottom, right;  // Reference points, slightly outside of the bullet
     private CanvasWindow canvas;
     private Color color;
+    private Ellipse shape;
+    private double xCenter, yCenter, xSpeed, ySpeed;
     private int currentLife;
 
     public Bullet(CanvasWindow canvas, Color color) {
@@ -38,7 +39,7 @@ public abstract class Bullet {
     }
 
     /*
-     * Gets the shape of the bullet
+     * Gets the shape of the bullet.
      */
     public Ellipse getShape() {
         return shape;
@@ -110,6 +111,7 @@ public abstract class Bullet {
                 ySpeed *= 1.75;
             }
         }
+        
         if ((left.getX() <= 0) || (right.getX() >= canvas.getWidth())) {
             loseLife();
             if (isAlive()) {
@@ -133,25 +135,20 @@ public abstract class Bullet {
     }
 
     /**
-     * Upon collision with terrain, bullets bounce without losing a life or gaining speed
+     * Upon collision with terrain, bullets bounce without losing a life or gaining speed.
+     * 
      * @param terrain
      */
-    public void collideTerrain(Terrain terrain){
+    private void collideTerrain(Terrain terrain) {
         setPoints();
         for (Point point : List.of(top, bottom, left, right)) {
-            if (canvas.getElementAt(point) == terrain.getTerrain1()) {
-                if (top.getY() <= 750 || bottom.getY() >= 720) {
+            if (terrain.getTerrain().contains(canvas.getElementAt(point))) {
+                
+                if (point == top || point == bottom) {
                     deflectHorizontal();
                 }
-                if (right.getX() <= 700 || left.getX() >= 790) {
-                    deflectVertical();
-                }
-            }
-            if (canvas.getElementAt(point) == terrain.getTerrain2()) {
-                if (top.getY() <= 580 || bottom.getY() >= 500) {
-                    deflectHorizontal();
-                }
-                if (right.getX() <= 120 || left.getX() >= 140) {
+
+                else {
                     deflectVertical();
                 }
             }
