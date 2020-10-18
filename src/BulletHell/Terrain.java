@@ -10,7 +10,7 @@ import edu.macalester.graphics.Rectangle;
 public class Terrain {
     private CanvasWindow canvas;
     private Rectangle rectangle1 = new Rectangle(700, 720, 90, 30);
-    private Rectangle rectangle2 = new Rectangle(120, 500, 20, 80);
+    private Rectangle rectangle2 = new Rectangle(120, 500, 30, 80);
     private List<Rectangle> allTerrain = new ArrayList<>();
 
     public Terrain(CanvasWindow canvas){
