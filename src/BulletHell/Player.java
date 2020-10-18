@@ -88,15 +88,7 @@ public class Player {
      * and calculates the remaining time.
      */
     public boolean isImmune() {
-        if (remainingImmunity <= 0) {
-            if (frozen) {
-                frozen = false;
-            }
-            // Resets the color once the immunity is over.
-            playerShape.setFillColor(Color.BLUE);
-            return false;
-        }
-        return true;
+        return (remainingImmunity > 0);
     }
 
     /**
@@ -106,7 +98,19 @@ public class Player {
      */
     public void reduceImmunity(double dt) {
         remainingImmunity -= dt;
-    }    
+    }
+    
+    /**
+     * Ends the immunity state.
+     * Thaws out the player if they are frozen.
+     */
+    public void endImmunity() {
+        if (frozen) {
+            frozen = false;
+        }
+        // Resets the color once the immunity is over.
+        playerShape.setFillColor(Color.BLUE);
+    }
 
     /**
      * Freezes the character.

@@ -3,7 +3,6 @@ package BulletHell;
 import BulletHell.Powerups.Slow;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.events.Key;
-import edu.macalester.graphics.Image;
 
 /**
  * The game of Bullet Hell
@@ -35,13 +34,18 @@ public class BulletHell {
         heartManagement.SummonHearts();
         terrain.SummonTerrain();
         createPlayer(0.1);
-        manager.spawnBullets(10);
+        manager.spawnBullets(5);
 
         currentLife = MAX_LIFE;
 
         canvas.animate(dt -> {
-            if (currentLife > 0) {            
+            if (currentLife > 0) {
+
                 player.reduceImmunity(dt);
+
+                if (!player.isImmune()) {
+                    player.endImmunity();
+                }
 
                 if (manager.bulletsIntersect(player)) {
                     removeHeart();
@@ -55,7 +59,8 @@ public class BulletHell {
                     canvas.closeWindow();
                     //go to next room?
                 }
-                if(slow.isSlowed(manager)){
+
+                if (slow.isSlowed(manager)) {
                     slow.reduceSlow(dt);
                 }
             }
