@@ -43,11 +43,7 @@ public class BulletHell {
 
                 player.reduceImmunity(dt);
 
-                if (!player.isImmune()) {
-                    player.endImmunity();
-                }
-
-                if (manager.bulletsIntersect(player)) {
+                if (manager.bulletsIntersect(player, terrain)) {
                     removeHeart();
                     currentLife -= 1;
                     player.startImmunity();
