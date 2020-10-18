@@ -18,6 +18,7 @@ public class Player {
     private double remainingImmunity;
 
     private boolean frozen; // If true, prevents the player from moving.
+    private boolean erasing; // If true, allows the player to erase bullets without losing lives. 
 
 
     public Player(CanvasWindow canvas) {
@@ -122,5 +123,26 @@ public class Player {
      */
     public void freeze() {
         frozen = true;
+    }
+
+    /**
+     * Begins the 'eraser' state.
+     */
+    public void startErasing() {
+        erasing = true;
+    }
+
+    /**
+     * Checks if the player is still in the 'eraser' state.
+     */
+    public boolean isErasing() {
+        return erasing;
+    }
+
+    /**
+     * Ends the 'eraser' state.
+     */
+    public void endErasing() {
+        erasing = false;
     }
 }
