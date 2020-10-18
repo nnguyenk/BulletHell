@@ -29,8 +29,6 @@ public class BulletManager {
             canvas.add(bullet.getShape());
             bullets.add(bullet);
         }
-
-        canvas.add(new Rectangle(0, 40, 800, 1));
     }
 
     /**

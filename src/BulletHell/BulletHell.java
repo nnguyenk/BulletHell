@@ -2,6 +2,7 @@ package BulletHell;
 
 import BulletHell.Powerups.Slow;
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.events.Key;
 
 /**
@@ -20,6 +21,8 @@ public class BulletHell {
 
     public BulletHell(){
         canvas = new CanvasWindow("Stage 1", 800, 800);
+        canvas.add(new Rectangle(0, 40, 800, 1));
+        
         manager = new BulletManager(canvas);
         heartManagement = new HeartManager(canvas);
         terrain = new Terrain(canvas);
