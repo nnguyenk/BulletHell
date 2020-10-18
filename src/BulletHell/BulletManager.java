@@ -60,11 +60,11 @@ public class BulletManager {
      * 
      * @return true if the player was hit with any bullets
      */
-    public boolean bulletsIntersect(Player player) {
+    public boolean bulletsIntersect(Player player, Terrain terrain) {
         hitPlayer = false;
         for (Bullet bullet : bullets) {
             if (bullet.isAlive()) {
-                bullet.updatePosition();
+                bullet.updatePosition(terrain);
 
                 if (!player.isImmune() && bullet.collidePlayer(player)) {
                     hitPlayer = true;
