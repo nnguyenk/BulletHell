@@ -151,6 +151,11 @@ public abstract class Bullet {
                 color.getBlue() * currentLife / maxLives));
         }
     }
+
+    public void changeSpeed(int i) {
+        xSpeed *= i;
+        ySpeed *= i;
+    }
 }
 
 

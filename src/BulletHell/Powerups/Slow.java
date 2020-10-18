@@ -7,17 +7,17 @@ public class Slow {
     // all bullets on the screen slow down/come to a halt where they are.
     public final static double MAX_IMMUNITY = 5; // The maximum number of seconds the player is immuned.
 
-    public static double remainingSlow;
+    public double remainingSlow;
 
-    public static void startSlow() {
+    public void startSlow() {
         remainingSlow = MAX_IMMUNITY;
-        
+
     }
 
     /**
      * Returns true if the player is still immune, and calculates the remaining time.
      */
-    public static boolean stillSlowed() {
+    public boolean isSlowed() {
         if (remainingSlow > 0) {
             return true;
         }
@@ -29,10 +29,8 @@ public class Slow {
      * 
      * @param dt The number of seconds that will be deducted from the remaining immunity.
      */
-    public static void reduceSlow(double dt) {
-        if (stillSlowed()) {
-            remainingSlow -= dt;
-        }
+    public void reduceSlow(double dt) {
+        remainingSlow -= dt;
     }
 
     // public void slowBullets() {
@@ -45,5 +43,4 @@ public class Slow {
     //     }
     // }
 
-    
 }
