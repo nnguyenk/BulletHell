@@ -4,7 +4,7 @@ import BulletHell.Player;
 
 public class Eraser {
     private double remainingEraser;
-    public static final double MAX_IMMUNITY = 2; // The maximum number of seconds the player is immuned.
+    public static final double MAX_IMMUNITY = 7; // The maximum number of seconds the player is immuned.
 
     public void StartErasing() {
         remainingEraser = MAX_IMMUNITY;

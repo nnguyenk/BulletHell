@@ -58,7 +58,7 @@ public class BulletManager {
      * 
      * @return true if the player was hit with any bullets
      */
-    public boolean bulletsIntersect(Player player, Terrain terrain) {
+    public boolean bulletsIntersect(Player player, Terrain terrain, Eraser eraser) {
         hitPlayer = false;
         for (Bullet bullet : bullets) {
             if (bullet.isAlive()) {

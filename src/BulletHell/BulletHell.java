@@ -53,11 +53,12 @@ public class BulletHell {
                     }
                 }
 
-                if (manager.bulletsIntersect(player, terrain)) {
+                if (manager.bulletsIntersect(player, terrain, eraser)) {
                     removeHeart();
                     currentLife -= 1;
                     player.startImmunity();
                     slow.startSlow(manager);
+                    eraser.StartErasing();
                 }
 
                 if (!manager.bulletsLeft()) {
