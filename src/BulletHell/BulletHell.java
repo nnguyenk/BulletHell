@@ -39,7 +39,9 @@ public class BulletHell {
         heartManagement.SummonHearts();
         terrain.SummonTerrain();
         createPlayer(0.1);
-        manager.spawnBullets(5);
+
+        usePowerUp();
+        manager.spawnBullets(100);
 
         currentLife = MAX_LIFE;
 
@@ -63,7 +65,6 @@ public class BulletHell {
                     currentLife -= 1;
                     player.startImmunity();
                     slow.activate();
-                    eraser.activate();
                 }
 
                 if (!manager.bulletsLeft()) {
@@ -101,9 +102,14 @@ public class BulletHell {
             if (event.getKey() == Key.DOWN_ARROW) {
                 player.moveDown(dt);
             }
-            // if (event.getKey() == Key.Q) {
-            //     eraser.StartErasing();
-            // }
+        });
+    }
+
+    public void usePowerUp(){
+        canvas.onKeyDown(event -> {
+            if (event.getKey() == Key.Q) {
+                    eraser.activate();
+            }   
         });
     }
 
