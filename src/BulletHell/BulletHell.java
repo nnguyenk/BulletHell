@@ -11,11 +11,10 @@ public class BulletHell {
     private CanvasWindow canvas;
     private Player player;
     private int currentLife;
-    private int currentRound = 1;
+    private int currentRound = 0;
     private BulletManager bulletManager;
     private HeartManager heartManagement;
     private PowerManager powerManager;
-    private EnergyManager energyManagement;
 
     private RoundTitle roundTitle;
     // private GameDescription gamedescription;
@@ -34,8 +33,6 @@ public class BulletHell {
         roundTitle = new RoundTitle(canvas);
         // gamedescription = new GameDescription(canvas);
         terrain = new Terrain(canvas);
-
-        // energyManagement = new EnergyManager(canvas);
     }
 
     public static void main(String[] args) {
@@ -48,10 +45,7 @@ public class BulletHell {
         //     gamedescription.addRules();
         // }
         // gamedescription.beginGame();
-        roundTitle.changeTitle(currentRound);
         heartManagement.SummonHearts();
-        terrain.SummonTerrain();
-        bulletManager.spawnBullets(5);
         createPlayer(0.1);
         createPowerups();
 

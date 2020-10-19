@@ -13,6 +13,6 @@ public class RoundTitle {
     }
 
     public void changeTitle(int roundNumber){
-        roundTitle.setText("BulletHell Round " + roundNumber);
+        roundTitle.setText("Bullet Hell Round " + roundNumber);
     }
 }
