@@ -45,27 +45,14 @@ public class BulletHell {
         //     gamedescription.addRules();
         // }
         // gamedescription.beginGame();
-        heartManagement.SummonHearts();
-        createPlayer(0.1);
-        createPowerups();
-        currentLife = MAX_LIFE;
-
+        setUpGame();
         canvas.animate(dt -> {
             if (currentLife > 0) {
-                powerManager.reduceCooldown(dt);
-                powerManager.reduceDuration(dt);
-                player.reduceImmunity(dt);
-
-                if (bulletManager.bulletsIntersect(player, terrain)) {
-                    removeHeart();
-                    currentLife -= 1;
-                    player.startImmunity();
-                }
-
                 if (!bulletManager.bulletsLeft()) {
-                    currentRound++;
-                    newRound(currentRound);
+                    newRound();
                 }
+                reduceAllTimer(dt);
+                playerIsHit();
             }
             else { // breaks out of the animation loop
                 canvas.removeAll();
@@ -76,37 +63,91 @@ public class BulletHell {
     }
 
     /**
+     * Sets up the player, the maximum lives, and the powerups.
+     */
+    public void setUpGame() {
+        heartManagement.SummonHearts();
+        createPlayer(0.1);
+        createPowerups();
+        currentLife = MAX_LIFE;
+    }
+
+    /**
      * Adds the player to the canvas and enables control with the keyboard.
      * 
-     * @param dt The movement rate of the player
+     * @param dt The movement rate of the player.
      */
     public void createPlayer(double dt) {
         player = new Player(canvas);
         canvas.add(player.getPlayerShape());
-        canvas.onKeyDown(event -> {
-            if (event.getKey() == Key.LEFT_ARROW) {
-                player.moveLeft(dt);
-            }
-            if (event.getKey() == Key.RIGHT_ARROW) {
-                player.moveRight(dt);
-            }
-            if (event.getKey() == Key.UP_ARROW) {
-                player.moveUp(dt);
-            }
-            if (event.getKey() == Key.DOWN_ARROW) {
-                player.moveDown(dt);
-            }
-        });
+        canvas.onKeyDown(event -> movePlayer(event.getKey(), dt));
     }
 
     /**
-     * Creates the environment for a new round using the roundnumber to decide number of bullets and title
-     * @param round
+     * Moves the player based on the key.
+     * 
+     * @param key The input direction key.
+     * @param dt The movement rate of the player.
      */
-    public void newRound(int round){
-        roundTitle.changeTitle(round);
-        terrain.SummonTerrain();
-        bulletManager.spawnBullets(5 + round * 2);
+    private void movePlayer(Key key, double dt) {
+        if (key == Key.LEFT_ARROW) {
+            player.moveLeft(dt);
+        }
+        if (key == Key.RIGHT_ARROW) {
+            player.moveRight(dt);
+        }
+        if (key == Key.UP_ARROW) {
+            player.moveUp(dt);
+        }
+        if (key == Key.DOWN_ARROW) {
+            player.moveDown(dt);
+        }
+    }
+    
+     /**
+     * Creates all the boxes of powerups.
+     * Allows the player to activate the power they click on.
+     */
+    public void createPowerups() {
+        powerManager = new PowerManager(canvas, this);
+        powerManager.createPowers();
+        canvas.onKeyDown(event -> powerManager.activatePower(event.getKey()));
+    } 
+
+    /**
+     * Reduces the cooldown/duration of all powers.
+     * Also reduces the immunity of the player (if any).
+     * 
+     * @param dt The number of seconds that will be deducted.
+     */
+    public void reduceAllTimer(double dt) {
+        powerManager.reduceCooldown(dt);
+        powerManager.reduceDuration(dt);
+        player.reduceImmunity(dt);
+    }
+
+    /**
+     * Creates the environment for a new round using the roundnumber to decide number of bullets and title.
+     */
+    public void newRound() {
+        if (!bulletManager.bulletsLeft()) {
+            currentRound++;
+            roundTitle.changeTitle(currentRound);
+            terrain.SummonTerrain();
+            bulletManager.spawnBullets(5 + currentRound * 2);
+        }
+    }
+
+    /**
+     * Checks if the player is hit with any bullet.
+     * Removes one heart (life) and starts immunity if true.
+     */
+    public void playerIsHit() {
+        if (bulletManager.bulletsIntersect(player, terrain)) {
+            removeHeart();
+            currentLife -= 1;
+            player.startImmunity();
+        }
     }
 
     // public boolean preGameText() {
@@ -116,17 +157,7 @@ public class BulletHell {
     //         }
     //     });
     //     return booleanholder;
-    // }
-
-     /**
-     * Creates all the boxes of powerups.
-     * Allows the player to activate the power they click on.
-     */
-    public void createPowerups() {
-        powerManager = new PowerManager(canvas, this);
-        powerManager.createPowers();
-        canvas.onKeyDown(event -> powerManager.activatePower(event.getKey())); 
-    } 
+    // } 
 
     /**
      * Removes hearts based on the player's lives left
