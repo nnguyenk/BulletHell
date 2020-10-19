@@ -12,7 +12,7 @@ public class BulletManager {
     private List<Bullet> bullets = new ArrayList<>();
     private List<Bullet> bulletsToRemove = new ArrayList<>();
 
-    private boolean hitPlayer;
+    private boolean hitPlayer; // A boolean to determine whether any bullet has hit the player.
 
     public BulletManager(CanvasWindow canvas) {
         this.canvas = canvas;
@@ -36,7 +36,7 @@ public class BulletManager {
      */
     private Bullet createRandomBullet() {
         Bullet randomBullet;
-        int i = Utility.randomInt(1, 2);
+        int i = Utility.randomInt(1, 3);
 
         switch (i) {
             case 1: 
@@ -44,6 +44,9 @@ public class BulletManager {
                 break;
             case 2:
                 randomBullet = new CyanBullet(canvas);
+                break;
+            case 3:
+                randomBullet = new YellowBullet(canvas);
                 break;
             default:
                 randomBullet = null;
@@ -56,27 +59,14 @@ public class BulletManager {
      * Updates the position of all bullets.
      * Deletes any bullet that collides with the player when immunity is inactive.
      * 
-     * @return true if the player was hit with any bullets, without eraser active.
+     * @return true if the player was damaged by any bullets, without eraser activated.
      */
     public boolean bulletsIntersect(Player player, Terrain terrain) {
         hitPlayer = false;
         for (Bullet bullet : bullets) {
             if (bullet.isAlive()) {
                 bullet.updatePosition(terrain);
-                if (bullet.collidePlayer(player)) {
-                    if (player.isErasing()) {
-                        bulletsToRemove.add(bullet);
-                    }
-                    else {
-                        if (!player.isImmune()) {
-                            hitPlayer = true;
-                            bulletsToRemove.add(bullet);
-                            if (bullet.getType().equalsIgnoreCase("Cyan")) {
-                                player.freeze();
-                            }
-                        }
-                    }
-                }
+                bulletCollidePlayer(bullet, player);
             }
             else {
                 bulletsToRemove.add(bullet);
@@ -84,6 +74,40 @@ public class BulletManager {
         }
         removeBullets();
         return hitPlayer;
+    }
+
+    /**
+     * When a bullet collides with the player:
+     *    - If eraser IS activated, the bullet is removed, and the player is unscathed.
+     *    - If not, then if the player IS NOT immune, then they absorb the bullet and take damage.
+     *    - If the player IS immune, then the bullet passes straight through them. 
+     */
+    private void bulletCollidePlayer(Bullet bullet, Player player) {
+        if (bullet.collidePlayer(player)) {
+            if (player.isErasing()) {
+                bulletsToRemove.add(bullet);
+            }
+            else {
+                bulletDamagePlayer(bullet, player);
+            }
+        }
+    }
+
+    /**
+     * Changes the value of hitPlayer to indicate that the user is damaged.
+     * Freezes the player if the bullet is cyan, or prevent immunity if it's yellow.
+     */
+    private void bulletDamagePlayer(Bullet bullet, Player player) {
+        if (!player.isImmune()) {
+            hitPlayer = true;
+            bulletsToRemove.add(bullet);
+            if (!bullet.getType().equalsIgnoreCase("Yellow")) {
+                player.startImmunity();
+            }
+            if (bullet.getType().equalsIgnoreCase("Cyan")) {
+                player.freeze();
+            }
+        }
     }
 
     /**

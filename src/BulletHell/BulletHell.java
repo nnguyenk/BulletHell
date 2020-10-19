@@ -132,19 +132,18 @@ public class BulletHell {
             currentRound++;
             roundTitle.changeTitle(currentRound);
             terrain.SummonTerrain();
-            bulletManager.spawnBullets(5 + currentRound * 2);
+            bulletManager.spawnBullets(3 + currentRound * 2);
         }
     }
 
     /**
      * Checks if the player is hit with any bullet.
-     * Removes one heart (life) and starts immunity if true.
+     * Removes one heart (life) if true.
      */
     public void playerIsHit() {
         if (bulletManager.bulletsIntersect(player, terrain)) {
             removeHeart();
             currentLife -= 1;
-            player.startImmunity();
         }
     }
 
