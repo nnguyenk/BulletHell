@@ -5,7 +5,6 @@ import edu.macalester.graphics.GraphicsText;
 
 public class RoundTitle {
     private GraphicsText roundTitle;
-    private int roundnumber = 1;
     
     public RoundTitle(CanvasWindow canvas) {
         roundTitle = new GraphicsText();
@@ -13,8 +12,7 @@ public class RoundTitle {
         canvas.add(roundTitle);
     }
 
-    public void changeTitle(){
-        roundTitle.setText("BulletHell Round" + roundnumber);
-        roundnumber ++;
+    public void changeTitle(int roundNumber){
+        roundTitle.setText("BulletHell Round " + roundNumber);
     }
 }
