@@ -19,6 +19,8 @@ public class BulletHell {
     private Slow slow = new Slow(this);
     private Eraser eraser = new Eraser(this);
 
+    private EnergyManager energyManagement;
+
     public static final int MAX_LIFE = 3;
 
     public BulletHell(){
@@ -28,6 +30,8 @@ public class BulletHell {
         manager = new BulletManager(canvas);
         heartManagement = new HeartManager(canvas);
         terrain = new Terrain(canvas);
+
+        energyManagement = new EnergyManager(canvas);
     }
 
     public static void main(String[] args) {
@@ -47,6 +51,7 @@ public class BulletHell {
 
         canvas.animate(dt -> {
             if (currentLife > 0) {
+                energyManagement.summonEnergy(dt);
 
                 if (player.isImmune()) {
                     player.reduceImmunity(dt);
@@ -64,7 +69,6 @@ public class BulletHell {
                     removeHeart();
                     currentLife -= 1;
                     player.startImmunity();
-                    slow.activate();
                 }
 
                 if (!manager.bulletsLeft()) {
@@ -105,11 +109,19 @@ public class BulletHell {
         });
     }
 
+    /**
+     * Activates the eraser ability on Q key press
+     * 
+     */
     public void usePowerUp(){
         canvas.onKeyDown(event -> {
             if (event.getKey() == Key.Q) {
-                    eraser.activate();
-            }   
+                eraser.activate();
+            }  
+            if (event.getKey() == Key.E) {
+                slow.activate();
+        } 
+             
         });
     }
 
