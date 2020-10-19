@@ -53,7 +53,7 @@ public class Player {
      * Moves the player up by a set amount when called.
      */
     public void moveUp(double dt) {
-        if (playerShape.getY() > 0 && !frozen) {
+        if (playerShape.getY() > 40 && !frozen) {
             topY -= PLAYER_SPEED * dt;
             playerShape.setY(topY);
         }
