@@ -11,13 +11,17 @@ public class BulletHell {
     private CanvasWindow canvas;
     private Player player;
     private int currentLife;
+    private int currentRound = 1;
     private BulletManager manager;
     private HeartManager heartManagement;
-    private RoundTitle roundTitle;
-    private Terrain terrain;
     private PowerManager powerManager;
-
     private EnergyManager energyManagement;
+
+    private RoundTitle roundTitle;
+    private GameDescription gamedescription;
+    private Terrain terrain;
+
+    private Boolean booleanholder = true;
 
     public static final int MAX_LIFE = 3;
 
@@ -28,6 +32,7 @@ public class BulletHell {
         manager = new BulletManager(canvas);
         heartManagement = new HeartManager(canvas);
         roundTitle = new RoundTitle(canvas);
+        gamedescription = new GameDescription(canvas);
         terrain = new Terrain(canvas);
 
         energyManagement = new EnergyManager(canvas);
@@ -39,7 +44,11 @@ public class BulletHell {
     }
 
     public void start() {
-        roundTitle.changeTitle();
+        // while (preGameText()) {
+        //     gamedescription.addRules();
+        // }
+        // gamedescription.beginGame();
+        roundTitle.changeTitle(currentRound);
         heartManagement.SummonHearts();
         terrain.SummonTerrain();
         manager.spawnBullets(5);
@@ -74,9 +83,8 @@ public class BulletHell {
                 }
 
                 if (!manager.bulletsLeft()) {
-                    System.out.println("Congratulations! You have WON!");
-                    canvas.closeWindow();
-                    //go to next room?
+                    currentRound ++;
+                    newRound(currentRound);
                 }
             }
             else { // breaks out of the animation loop
@@ -110,6 +118,25 @@ public class BulletHell {
             }
         });
     }
+
+    /**
+     * Creates the environment for a new round using the roundnumber to decide number of bullets and title
+     * @param round
+     */
+    public void newRound(int round){
+        roundTitle.changeTitle(round);
+        terrain.SummonTerrain();
+        manager.spawnBullets(5 + round * 2);
+    }
+
+    // public boolean preGameText() {
+    //     canvas.onKeyDown(event -> {
+    //         if (event.getKey() == Key.SPACE){
+    //             booleanholder = false;
+    //         }
+    //     });
+    //     return booleanholder;
+    // }
 
      /**
      * Creates all the boxes of powerups.
