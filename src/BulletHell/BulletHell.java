@@ -13,8 +13,11 @@ public class BulletHell {
     private int currentLife;
     private BulletManager manager;
     private HeartManager heartManagement;
+    private RoundTitle roundTitle;
     private Terrain terrain;
     private PowerManager powerManager;
+
+    private EnergyManager energyManagement;
 
     public static final int MAX_LIFE = 3;
 
@@ -24,7 +27,10 @@ public class BulletHell {
         
         manager = new BulletManager(canvas);
         heartManagement = new HeartManager(canvas);
+        roundTitle = new RoundTitle(canvas);
         terrain = new Terrain(canvas);
+
+        energyManagement = new EnergyManager(canvas);
     }
 
     public static void main(String[] args) {
@@ -33,6 +39,7 @@ public class BulletHell {
     }
 
     public void start() {
+        roundTitle.changeTitle();
         heartManagement.SummonHearts();
         terrain.SummonTerrain();
         manager.spawnBullets(5);
@@ -43,6 +50,15 @@ public class BulletHell {
 
         canvas.animate(dt -> {
             if (currentLife > 0) {
+
+                if(!energyManagement.fullEnergy()){
+                    energyManagement.summonEnergy();
+                }
+
+                if(energyManagement.fullEnergy()){
+                    System.out.println(10);
+                }
+                
 
                 if (player.isImmune()) {
                     player.reduceImmunity(dt);
