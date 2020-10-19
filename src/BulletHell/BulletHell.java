@@ -12,30 +12,30 @@ public class BulletHell {
     private Player player;
     private int currentLife;
     private int currentRound = 1;
-    private BulletManager manager;
+    private BulletManager bulletManager;
     private HeartManager heartManagement;
     private PowerManager powerManager;
     private EnergyManager energyManagement;
 
     private RoundTitle roundTitle;
-    private GameDescription gamedescription;
+    // private GameDescription gamedescription;
     private Terrain terrain;
 
-    private Boolean booleanholder = true;
+    // private Boolean booleanholder = true;
 
     public static final int MAX_LIFE = 3;
 
     public BulletHell(){
-        canvas = new CanvasWindow("Stage 1", 800, 800);
+        canvas = new CanvasWindow("Bullet Hell!", 800, 800);
         canvas.add(new Rectangle(0, 40, 800, 1));
         
-        manager = new BulletManager(canvas);
+        bulletManager = new BulletManager(canvas);
         heartManagement = new HeartManager(canvas);
         roundTitle = new RoundTitle(canvas);
-        gamedescription = new GameDescription(canvas);
+        // gamedescription = new GameDescription(canvas);
         terrain = new Terrain(canvas);
 
-        energyManagement = new EnergyManager(canvas);
+        // energyManagement = new EnergyManager(canvas);
     }
 
     public static void main(String[] args) {
@@ -51,7 +51,7 @@ public class BulletHell {
         roundTitle.changeTitle(currentRound);
         heartManagement.SummonHearts();
         terrain.SummonTerrain();
-        manager.spawnBullets(5);
+        bulletManager.spawnBullets(5);
         createPlayer(0.1);
         createPowerups();
 
@@ -60,13 +60,13 @@ public class BulletHell {
         canvas.animate(dt -> {
             if (currentLife > 0) {
 
-                if(!energyManagement.fullEnergy()){
-                    energyManagement.summonEnergy();
-                }
+                // if (!energyManagement.fullEnergy()){
+                //     energyManagement.summonEnergy();
+                // }
 
-                if(energyManagement.fullEnergy()){
-                    System.out.println(10);
-                }
+                // if (energyManagement.fullEnergy()){
+                //     System.out.println(10);
+                // }
                 
 
                 if (player.isImmune()) {
@@ -76,14 +76,14 @@ public class BulletHell {
                 powerManager.reduceCooldown(dt);
                 powerManager.reduceDuration(dt);
 
-                if (manager.bulletsIntersect(player, terrain)) {
+                if (bulletManager.bulletsIntersect(player, terrain)) {
                     removeHeart();
                     currentLife -= 1;
                     player.startImmunity();
                 }
 
-                if (!manager.bulletsLeft()) {
-                    currentRound ++;
+                if (!bulletManager.bulletsLeft()) {
+                    currentRound++;
                     newRound(currentRound);
                 }
             }
@@ -126,7 +126,7 @@ public class BulletHell {
     public void newRound(int round){
         roundTitle.changeTitle(round);
         terrain.SummonTerrain();
-        manager.spawnBullets(5 + round * 2);
+        bulletManager.spawnBullets(5 + round * 2);
     }
 
     // public boolean preGameText() {
@@ -174,6 +174,6 @@ public class BulletHell {
      * Return the bullet manager of the game.
      */
     public BulletManager getBulletManager() {
-        return manager;
+        return bulletManager;
     }
 }
