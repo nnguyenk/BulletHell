@@ -55,9 +55,7 @@ public class BulletHell {
                 playerIsHit();
             }
             else { // breaks out of the animation loop
-                canvas.removeAll();
-                System.out.println("You have LOST!");
-                canvas.closeWindow();
+                lose();
             }
         });
     }
@@ -148,6 +146,15 @@ public class BulletHell {
             currentLife -= 1;
             player.startImmunity();
         }
+    }
+
+    /**
+     * Closes the window, and prints out an encouraging message. 
+     */
+    public void lose() {
+        canvas.removeAll();
+        System.out.println("You have LOST!");
+        canvas.closeWindow();
     }
 
     // public boolean preGameText() {
