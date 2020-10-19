@@ -77,12 +77,19 @@ public class Player {
     }
 
     /**
+     * Changes the color of the player.
+     */
+    public void changeColor(Color color) {
+        playerShape.setFillColor(color);
+    }
+
+    /**
      * Starts the immunity timer of the player. 
      * The frames of immunity are indicated by the purple color.
      */
     public void startImmunity() {
         remainingImmunity = MAX_IMMUNITY;
-        playerShape.setFillColor(Color.MAGENTA);
+        changeColor(Color.MAGENTA);
     }
 
     /**
@@ -95,7 +102,7 @@ public class Player {
 
     /**
      * Reduces the remaining time of the immunity. 
-     * Calls endImmunity if the player is no longer immune.
+     * Ends immunity if the player is no longer immune.
      * 
      * @param dt The number of seconds that will be deducted from the remaining immunity.
      */
@@ -109,15 +116,12 @@ public class Player {
     }
     
     /**
-     * Ends the immunity state.
+     * Changes the player's color back to blue to indicate the end of immunity.
      * Thaws out the player if they are frozen.
      */
     private void endImmunity() {
-        if (frozen) {
-            frozen = false;
-        }
-        // Resets the color once the immunity is over.
-        playerShape.setFillColor(Color.BLUE);
+        thaw();
+        changeColor(Color.BLUE);
     }
 
     /**
@@ -125,6 +129,15 @@ public class Player {
      */
     public void freeze() {
         frozen = true;
+    }
+
+    /**
+     * Thaws the player.
+     */
+    public void thaw() {
+        if (frozen) {
+            frozen = false;
+        }
     }
 
     /**
