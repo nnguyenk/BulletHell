@@ -40,7 +40,7 @@ public class Slow implements Powerups {
      * Creates a new rectangle with a different height to represent the fill value.
      * Fills the rectangle with different shades of cyan depending on the cooldown. 
      * 
-     * @param remainingCD The remaining cooldown to help calculate the width of the rectangle.
+     * @param remainingCD The remaining cooldown to help calculate the height of the rectangle.
      */
     private void fill(double remainingCD) {
         if (remainingCD < 0) {

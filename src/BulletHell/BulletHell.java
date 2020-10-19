@@ -48,7 +48,6 @@ public class BulletHell {
         heartManagement.SummonHearts();
         createPlayer(0.1);
         createPowerups();
-
         currentLife = MAX_LIFE;
 
         canvas.animate(dt -> {

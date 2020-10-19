@@ -8,25 +8,29 @@ import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.events.Key;
 
 public class PowerManager {
-    public static final int GAP = 10; // The gap between the boxes.
+    public static final int GAP = 40; // The gap between the boxes + the width of the boxes.
 
     private Map<Key, Powerups> allPowers = new HashMap<>();
     private CanvasWindow canvas;
 
     public PowerManager(CanvasWindow canvas, BulletHell bulletHell) {
         this.canvas = canvas;
+  
+        Eraser eraser = new Eraser(bulletHell);
+        allPowers.put(Key.W, eraser);
 
         Slow slow = new Slow(bulletHell);
         allPowers.put(Key.Q, slow);
-        // allPowers.add(new Eraser(bulletHell));
     }
 
     /**
      * Adds all shapes of the powerups to the canvas. 
      */
     public void createPowers() {
+        double coorX = 20;
         for (Powerups powerups : allPowers.values()) {
-            canvas.add(powerups.getShape(), 20, 5);
+            canvas.add(powerups.getShape(), coorX, 5);
+            coorX += GAP; 
         }
     }
 
