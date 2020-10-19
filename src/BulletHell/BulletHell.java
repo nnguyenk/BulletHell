@@ -15,6 +15,7 @@ public class BulletHell {
     private int currentLife;
     private BulletManager manager;
     private HeartManager heartManagement;
+    private RoundTitle roundTitle;
     private Terrain terrain;
     private Slow slow = new Slow(this);
     private Eraser eraser = new Eraser(this);
@@ -29,6 +30,7 @@ public class BulletHell {
         
         manager = new BulletManager(canvas);
         heartManagement = new HeartManager(canvas);
+        roundTitle = new RoundTitle(canvas);
         terrain = new Terrain(canvas);
 
         energyManagement = new EnergyManager(canvas);
@@ -42,6 +44,7 @@ public class BulletHell {
     public void start(){
         heartManagement.SummonHearts();
         terrain.SummonTerrain();
+        roundTitle.changeTitle();
         createPlayer(0.1);
 
         usePowerUp();
