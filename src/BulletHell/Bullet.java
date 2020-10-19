@@ -146,12 +146,12 @@ public abstract class Bullet {
                 
                 if (point == top || point == bottom) {
                     deflectHorizontal();
-                    currentLife --;
+                    loseLife();;
                 }
 
                 else {
                     deflectVertical();
-                    currentLife --;
+                    loseLife();;
                 }
             }
         }
