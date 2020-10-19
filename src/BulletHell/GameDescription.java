@@ -27,7 +27,8 @@ public class GameDescription {
         gameRules.setText("Here are the rules: Move around with the arrow keys. Use power ups with q and e. \n"
                             + "You have 3 lives, and will go invulnerable for some time upon being hit by bullets \n"
                             + "Once all bullets on the screen disappear, you have won the round and will proceed to the next! \n"
-                            + "Beware, blue bullets freeze you.");
+                            + "Beware, blue bullets freeze you.\n"
+                            + "Press space to start game");
 
 
         canvas.add(welcome);
