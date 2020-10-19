@@ -77,7 +77,7 @@ public class Slow implements Powerups {
     /**
      * Returns true if slow is on cooldown.
      */
-    public boolean onCooldown() {
+    private boolean onCooldown() {
         return (remainingCD > 0);
     }
     
@@ -96,7 +96,7 @@ public class Slow implements Powerups {
     /**
      * Returns true if slow is in effect.
      */
-    public boolean inEffect() {
+    private boolean inEffect() {
         return (remainingSlow > 0);
     }
 

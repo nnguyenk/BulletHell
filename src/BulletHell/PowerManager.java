@@ -37,8 +37,7 @@ public class PowerManager {
      */
     public void reduceCooldown(double dt) {
         for (Powerups powerups : allPowers.values()) {
-            if (powerups.onCooldown())
-                powerups.reduceCooldown(dt);
+            powerups.reduceCooldown(dt);
         }
     }
 
@@ -49,8 +48,7 @@ public class PowerManager {
      */
     public void reduceDuration(double dt) {
         for (Powerups powerups : allPowers.values()) {
-            if (powerups.inEffect())
-                powerups.reduceDuration(dt);
+            powerups.reduceDuration(dt);
         }
     }
 
