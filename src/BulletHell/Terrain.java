@@ -18,9 +18,11 @@ public class Terrain {
     }
 
     public void SummonTerrain() {
+        rectangle1.setCenter(Utility.randomInt(100, 700), Utility.randomInt(100, 700));
         rectangle1.setFillColor(Color.ORANGE);
         rectangle1.setStrokeColor(null);
 
+        rectangle2.setCenter(Utility.randomInt(100, 700), Utility.randomInt(100, 700));
         rectangle2.setFillColor(Color.ORANGE);
         rectangle2.setStrokeColor(null);
         
