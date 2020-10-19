@@ -51,7 +51,15 @@ public class BulletHell {
 
         canvas.animate(dt -> {
             if (currentLife > 0) {
-                energyManagement.summonEnergy(dt);
+
+                if(!energyManagement.fullEnergy()){
+                    energyManagement.summonEnergy();
+                }
+
+                if(energyManagement.fullEnergy()){
+                    System.out.println(10);
+                }
+                
 
                 if (player.isImmune()) {
                     player.reduceImmunity(dt);
