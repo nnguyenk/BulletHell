@@ -1,7 +1,5 @@
 package BulletHell;
 
-import BulletHell.Powerups.Eraser;
-import BulletHell.Powerups.Slow;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.events.Key;
@@ -16,8 +14,7 @@ public class BulletHell {
     private BulletManager manager;
     private HeartManager heartManagement;
     private Terrain terrain;
-    private Slow slow = new Slow(this);
-    private Eraser eraser = new Eraser(this);
+    private PowerManager powerManager;
 
     public static final int MAX_LIFE = 3;
 
@@ -35,11 +32,12 @@ public class BulletHell {
         bulletHell.start();
     }
 
-    public void start(){
+    public void start() {
         heartManagement.SummonHearts();
         terrain.SummonTerrain();
-        createPlayer(0.1);
         manager.spawnBullets(5);
+        createPlayer(0.1);
+        createPowerups();
 
         currentLife = MAX_LIFE;
 
@@ -50,20 +48,13 @@ public class BulletHell {
                     player.reduceImmunity(dt);
                 }
 
-                if (slow.inEffect()) {
-                    slow.reduceDuration(dt);
-                }
-
-                if (eraser.inEffect()) {
-                    eraser.reduceDuration(dt);
-                }
+                powerManager.reduceCooldown(dt);
+                powerManager.reduceDuration(dt);
 
                 if (manager.bulletsIntersect(player, terrain)) {
                     removeHeart();
                     currentLife -= 1;
                     player.startImmunity();
-                    slow.activate();
-                    eraser.activate();
                 }
 
                 if (!manager.bulletsLeft()) {
@@ -81,11 +72,11 @@ public class BulletHell {
     }
 
     /**
-     * Adds the player to the canvas and enables control with the mouse
+     * Adds the player to the canvas and enables control with the keyboard.
      * 
      * @param dt The movement rate of the player
      */
-    public void createPlayer(double dt){
+    public void createPlayer(double dt) {
         player = new Player(canvas);
         canvas.add(player.getPlayerShape());
         canvas.onKeyDown(event -> {
@@ -101,11 +92,18 @@ public class BulletHell {
             if (event.getKey() == Key.DOWN_ARROW) {
                 player.moveDown(dt);
             }
-            // if (event.getKey() == Key.Q) {
-            //     eraser.StartErasing();
-            // }
         });
     }
+
+     /**
+     * Creates all the boxes of powerups.
+     * Allows the player to activate the power they click on.
+     */
+    public void createPowerups() {
+        powerManager = new PowerManager(canvas, this);
+        powerManager.createPowers();
+        canvas.onKeyDown(event -> powerManager.activatePower(event.getKey())); 
+    } 
 
     /**
      * Removes hearts based on the player's lives left
