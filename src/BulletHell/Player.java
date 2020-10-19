@@ -100,9 +100,11 @@ public class Player {
      * @param dt The number of seconds that will be deducted from the remaining immunity.
      */
     public void reduceImmunity(double dt) {
-        remainingImmunity -= dt;
-        if (!isImmune()) {
-            endImmunity();
+        if (isImmune()) {
+            remainingImmunity -= dt;
+            if (!isImmune()) {
+                endImmunity();
+            }
         }
     }
     

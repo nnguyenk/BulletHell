@@ -53,22 +53,9 @@ public class BulletHell {
 
         canvas.animate(dt -> {
             if (currentLife > 0) {
-
-                // if (!energyManagement.fullEnergy()){
-                //     energyManagement.summonEnergy();
-                // }
-
-                // if (energyManagement.fullEnergy()){
-                //     System.out.println(10);
-                // }
-                
-
-                if (player.isImmune()) {
-                    player.reduceImmunity(dt);
-                }
-
                 powerManager.reduceCooldown(dt);
                 powerManager.reduceDuration(dt);
+                player.reduceImmunity(dt);
 
                 if (bulletManager.bulletsIntersect(player, terrain)) {
                     removeHeart();
