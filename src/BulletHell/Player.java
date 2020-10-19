@@ -79,7 +79,7 @@ public class Player {
     /**
      * Changes the color of the player.
      */
-    public void changeColor(Color color) {
+    private void changeColor(Color color) {
         playerShape.setFillColor(color);
     }
 
@@ -141,10 +141,11 @@ public class Player {
     }
 
     /**
-     * Begins the 'eraser' state.
+     * Changes the player's color to yellow and begins the 'eraser' state.
      */
     public void startErasing() {
         erasing = true;
+        changeColor(Color.YELLOW);
     }
 
     /**
@@ -155,9 +156,10 @@ public class Player {
     }
 
     /**
-     * Ends the 'eraser' state.
+     * Ends the 'eraser' state and returns the player's color back to blue.
      */
     public void endErasing() {
         erasing = false;
+        changeColor(Color.BLUE);
     }
 }
