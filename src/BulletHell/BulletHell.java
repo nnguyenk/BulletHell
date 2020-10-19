@@ -24,7 +24,7 @@ public class BulletHell {
 
     public static final int MAX_LIFE = 3;
 
-    public BulletHell(){
+    public BulletHell() {
         canvas = new CanvasWindow("Bullet Hell!", 800, 800);
         canvas.add(new Rectangle(0, 40, 800, 1));
         

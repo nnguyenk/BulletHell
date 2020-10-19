@@ -13,7 +13,7 @@ import edu.macalester.graphics.Rectangle;
 
 public class Slow implements Powerups {
     public static final double SIZE = 30;
-    public static final int MAX_COOLDOWN = 3; // The number of seconds that this power is on cooldown.
+    public static final int MAX_COOLDOWN = 10; // The number of seconds that this power is on cooldown.
     public static final int MAX_DURATION = 5; // The maximum number of seconds the power is active.
 
     private double remainingSlow;
@@ -21,19 +21,40 @@ public class Slow implements Powerups {
     private BulletHell mainGame;
 
     private GraphicsGroup shape;
-    private Rectangle box;
-    private GraphicsText CD; // A text box that shows the remaining CD of this power.
+    private Rectangle border;
+    private Rectangle energy;
+    private GraphicsText remainingText; // A text box that shows how many seconds left until the slow expires.
 
     public Slow(BulletHell bulletHell) {
         mainGame = bulletHell;
         remainingCD = MAX_COOLDOWN;
 
         shape = new GraphicsGroup();
-        box = new Rectangle(0, 0, SIZE, SIZE);
-        CD = new GraphicsText(Integer.toString(MAX_COOLDOWN), 0, 0);
+        border = new Rectangle(0, 0, SIZE, SIZE);
+        remainingText = new GraphicsText("", 0, 0);
 
-        shape.add(box);
-        shape.add(CD, 5, 20);
+        shape.add(border);
+    }
+
+    /**
+     * Creates a new rectangle with a different height to represent the fill value.
+     * Fills the rectangle with different shades of cyan depending on the cooldown. 
+     * 
+     * @param remainingCD The remaining cooldown to help calculate the width of the rectangle.
+     */
+    private void fill(double remainingCD) {
+        if (remainingCD < 0) {
+            remainingCD = 0;
+        }
+        double cooldownRatio = remainingCD / MAX_COOLDOWN;
+        energy = new Rectangle(0, SIZE * cooldownRatio, SIZE, SIZE * (1 - cooldownRatio));
+        energy.setStroked(false);
+        energy.setFillColor(new Color(
+            (int) (255 * cooldownRatio),
+            255,
+            255
+        ));
+        shape.add(energy);
     }
 
     /**
@@ -43,12 +64,12 @@ public class Slow implements Powerups {
      * @param dt The number of seconds that will be deducted.
      */
     public void reduceCooldown(double dt) {
-        if (!inEffect()) {
+        if (!inEffect() && onCooldown()) {
             remainingCD -= dt;
-            CD.setText(new DecimalFormat("#").format(remainingCD)); // Truncate all decimal points.
+            fill(remainingCD);
             if (!onCooldown()) {
-                CD.setText("");
-                box.setFillColor(Color.CYAN);
+                remainingText.setText("Q");
+                shape.add(remainingText, 5, 20);
             }
         }
     }
@@ -66,7 +87,7 @@ public class Slow implements Powerups {
     public void activate() {
         if (!onCooldown() && !inEffect()) {
             BulletManager manager = mainGame.getBulletManager();
-            box.setFillColor(Color.WHITE);
+            energy.setFillColor(Color.WHITE);
             remainingSlow = MAX_DURATION;
             slowBullets(manager);
         }
@@ -89,11 +110,12 @@ public class Slow implements Powerups {
         if (inEffect()) {
             BulletManager manager = mainGame.getBulletManager();
             remainingSlow -= dt;
+            remainingText.setText(new DecimalFormat("#").format(remainingSlow)); // Truncate all decimal points.
+            shape.add(remainingText);
             if (!inEffect()) {
                 restoreBullets(manager);
-
                 remainingCD = MAX_COOLDOWN;
-                CD.setText(Integer.toString(MAX_COOLDOWN));
+                remainingText.setText("");
             }
         }
     }
