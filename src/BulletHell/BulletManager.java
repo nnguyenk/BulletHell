@@ -20,15 +20,18 @@ public class BulletManager {
     }
 
     /**
-     * Adds all bullets to the canvas.
-     * Adds the line demarcating the cieling and player info above
+     * Adds all bullets to the canvas, makes sure that the bullets are not spawned on top of the player.
      */
-    public void spawnBullets(int bulletsNumber) {
+    public void spawnBullets(int bulletsNumber, Player player) {
         for (int i = 0; i < bulletsNumber; i++) {
-            Bullet bullet = createRandomBullet();
+            Bullet newBullet;
+            do {
+                newBullet = createRandomBullet();
+            }
+            while (newBullet.collidePlayer(player));
 
-            canvas.add(bullet.getShape());
-            bullets.add(bullet);
+            canvas.add(newBullet.getShape());
+            bullets.add(newBullet);
         }
     }
 
