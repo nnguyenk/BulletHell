@@ -151,14 +151,15 @@ public class BulletHell {
 
     /**
      * Creates the environment for a new round using the roundnumber to decide number of bullets and title.
+     * Pauses the canvas for 1 second
      */
     public void newRound() {
-        if (!bulletManager.bulletsLeft()) {
-            currentRound++;
-            roundTitle.changeTitle(currentRound);
-            terrain.SummonTerrain();
-            bulletManager.spawnBullets(3 + currentRound * 2, player, terrain);
-        }
+        currentRound++;
+        roundTitle.changeTitle(currentRound);
+        terrain.SummonTerrain();
+        bulletManager.spawnBullets(3 + currentRound * 2, player, terrain);
+        canvas.draw();
+        canvas.pause(1000);
     }
 
     /**

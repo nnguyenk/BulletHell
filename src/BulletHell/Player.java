@@ -117,12 +117,14 @@ public class Player {
     }
     
     /**
-     * Changes the player's color back to blue to indicate the end of immunity.
+     * Changes the player's color back to blue to indicate the end of immunity (not if eraser is active).
      * Thaws out the player if they are frozen.
      */
     private void endImmunity() {
         thaw();
-        changeColor(Color.BLUE);
+        if (!erasing) {
+            changeColor(Color.BLUE);
+        }
     }
 
     /**
