@@ -32,8 +32,10 @@ public class Slow implements Powerups {
         shape = new GraphicsGroup();
         border = new Rectangle(0, 0, SIZE, SIZE);
         remainingText = new GraphicsText("", 0, 0);
+        remainingText.setFontSize(20);
 
         shape.add(border);
+        shape.add(remainingText, 6, 22);
     }
 
     /**
@@ -69,7 +71,7 @@ public class Slow implements Powerups {
             fill(remainingCD);
             if (!onCooldown()) {
                 remainingText.setText("Q");
-                shape.add(remainingText, 5, 20);
+                shape.add(remainingText);
             }
         }
     }

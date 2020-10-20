@@ -9,6 +9,7 @@ import BulletHell.Player;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Rectangle;
+import edu.macalester.graphics.events.Key;
 
 public class Eraser implements Powerups {
     public static final double SIZE = 30;
@@ -19,7 +20,7 @@ public class Eraser implements Powerups {
     private double remainingCD;
     private BulletHell mainGame;
 
-    private GraphicsGroup eraserShape;
+    private GraphicsGroup shape;
     private Rectangle border;
     private Rectangle energy;
     private GraphicsText remainingText; // A text box that shows how many seconds left until the eraser expires.
@@ -28,11 +29,13 @@ public class Eraser implements Powerups {
         mainGame = bulletHell;
         remainingCD = MAX_COOLDOWN;
 
-        eraserShape = new GraphicsGroup();
+        shape = new GraphicsGroup();
         border = new Rectangle(0, 0, SIZE, SIZE);
         remainingText = new GraphicsText("", 0, 0);
+        remainingText.setFontSize(20);
 
-        eraserShape.add(border);
+        shape.add(border);
+        shape.add(remainingText, 6, 22);
     }
 
     /**
@@ -53,7 +56,7 @@ public class Eraser implements Powerups {
             255,
             (int) (255 * cooldownRatio)
         ));
-        eraserShape.add(energy);
+        shape.add(energy);
     }
 
     /**
@@ -68,7 +71,7 @@ public class Eraser implements Powerups {
             fill(remainingCD);
             if (!onCooldown()) {
                 remainingText.setText("W");
-                eraserShape.add(remainingText, 5, 20);
+                shape.add(remainingText);
             }
         }
     }
@@ -110,7 +113,7 @@ public class Eraser implements Powerups {
             Player player = mainGame.getPlayer();
             remainingEraser -= dt;
             remainingText.setText(new DecimalFormat("#").format(remainingEraser)); // Truncate all decimal points.
-            eraserShape.add(remainingText);
+            shape.add(remainingText);
             if (!inEffect()) {
                 player.endErasing();
                 remainingCD = MAX_COOLDOWN;
@@ -123,6 +126,13 @@ public class Eraser implements Powerups {
      * Returns the shape of the power.
      */
     public GraphicsGroup getShape() {
-        return eraserShape;
+        return shape;
+    }
+
+    /**
+     * Returns the key used to activate this power, which is W.
+     */
+    public Key getKey() {
+        return Key.W;
     }
 }
