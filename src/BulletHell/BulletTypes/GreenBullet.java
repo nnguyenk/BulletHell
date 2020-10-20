@@ -12,7 +12,7 @@ public class GreenBullet extends Bullet {
     }
 
     @Override
-    public String getType() {
-        return "Green";
+    public BulletType getType() {
+        return BulletType.GREEN;
     }
 }

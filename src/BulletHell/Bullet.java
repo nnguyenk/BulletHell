@@ -2,6 +2,8 @@ package BulletHell;
 
 import java.util.List;
 
+import BulletHell.BulletTypes.BulletType;
+
 import java.awt.Color;
 
 import edu.macalester.graphics.*;
@@ -60,7 +62,7 @@ public abstract class Bullet {
     /**
      * Returns a string for the type of this bullet.
      */
-    public abstract String getType();
+    public abstract BulletType getType();
 
     /**
      * Check if the ball collides with a brick, the paddle, or the walls, and 
