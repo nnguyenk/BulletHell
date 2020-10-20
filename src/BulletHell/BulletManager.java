@@ -20,15 +20,15 @@ public class BulletManager {
     }
 
     /**
-     * Adds all bullets to the canvas, makes sure that the bullets are not spawned on top of the player.
+     * Adds all bullets to the canvas, makes sure that the bullets are not spawned on top of the player or terrains.
      */
-    public void spawnBullets(int bulletsNumber, Player player) {
+    public void spawnBullets(int bulletsNumber, Player player, Terrain terrain) {
         for (int i = 0; i < bulletsNumber; i++) {
             Bullet newBullet;
             do {
                 newBullet = createRandomBullet();
             }
-            while (newBullet.collidePlayer(player));
+            while (newBullet.collidePlayer(player) || newBullet.collideTerrain(terrain));
 
             canvas.add(newBullet.getShape());
             bullets.add(newBullet);

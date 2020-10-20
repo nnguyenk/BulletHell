@@ -136,11 +136,11 @@ public abstract class Bullet {
     }
 
     /**
-     * Upon collision with terrain, bullets bounce without losing a life or gaining speed.
+     * Returns true if the bullet collides with a terrain.
      * 
      * @param terrain
      */
-    private void collideTerrain(Terrain terrain) {
+    public boolean collideTerrain(Terrain terrain) {
         for (Point point : List.of(top, bottom, left, right)) {
             if (terrain.getTerrain().contains(canvas.getElementAt(point))) {
                 if (point == top || point == bottom) {
@@ -149,8 +149,10 @@ public abstract class Bullet {
                 else {
                     deflectVertical();
                 }
+                return true;
             }
         }
+        return false;
     }
 
     /**

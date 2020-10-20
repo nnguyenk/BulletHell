@@ -157,7 +157,7 @@ public class BulletHell {
             currentRound++;
             roundTitle.changeTitle(currentRound);
             terrain.SummonTerrain();
-            bulletManager.spawnBullets(3 + currentRound * 2, player);
+            bulletManager.spawnBullets(3 + currentRound * 2, player, terrain);
         }
     }
 
