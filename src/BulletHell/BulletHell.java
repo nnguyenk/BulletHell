@@ -72,6 +72,8 @@ public class BulletHell {
         createPlayer(0.1);
         createPowerups();
         currentLife = MAX_LIFE;
+
+        // createSprite(0.1);
     }
 
     /**
@@ -85,6 +87,10 @@ public class BulletHell {
         canvas.onKeyDown(event -> movePlayer(event.getKey(), dt));
     }
 
+    // public void createSprite(double dt){
+    //     canvas.onKeyDown(event -> moveSprite(event.getKey(), dt));
+    // }
+
     /**
      * Moves the player based on the key.
      * 
@@ -94,21 +100,32 @@ public class BulletHell {
     private void movePlayer(Key key, double dt) {
         if (key == Key.LEFT_ARROW) {
             player.moveLeft(dt);
-            // animationManagement.leftWalk(player);
         }
         if (key == Key.RIGHT_ARROW) {
             player.moveRight(dt);
-            // animationManagement.rightWalk(player);
         }
         if (key == Key.UP_ARROW) {
             player.moveUp(dt);
-            // animationManagement.backwardWalk(player);
         }
         if (key == Key.DOWN_ARROW) {
             player.moveDown(dt);
-            // animationManagement.forwardWalk(player);
         }
     }
+
+    // private void moveSprite(Key key, double dt) {
+    //     if (key == Key.LEFT_ARROW) {
+    //         animationManagement.betterAnimate("left", player, canvas);
+    //     }
+    //     if (key == Key.RIGHT_ARROW) {
+    //         animationManagement.betterAnimate("right", player, canvas);
+    //     }
+    //     if (key == Key.UP_ARROW) {
+    //         animationManagement.betterAnimate("up", player, canvas);
+    //     }
+    //     if (key == Key.DOWN_ARROW) {
+    //         animationManagement.betterAnimate("down", player, canvas);
+    //     }
+    // }
     
      /**
      * Creates all the boxes of powerups.

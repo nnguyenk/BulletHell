@@ -2,8 +2,6 @@ package BulletHell;
 
 import java.util.ArrayList;
 
-import javax.print.attribute.standard.DialogOwner;
-
 import edu.macalester.graphics.*;
 
 public class AnimateManager {
@@ -15,69 +13,92 @@ public class AnimateManager {
     ArrayList<Image> backward = new ArrayList<Image>();
     
 
+    private Image sprite;
     private int frameNumber = 0;
-    private boolean lastFrame = false;
+    private boolean L = false;
+    private boolean R = false;
+    private boolean D = false;
+    private boolean U = false;
 
     public AnimateManager(CanvasWindow canvas){
         this.canvas = canvas;
     }
-    
-    private void createCycle(Player player, ArrayList<Image> imageList, String direction){
-        for (int i = 0; i <= 3; i++) {
-            imageList.add(new Image(direction + i + ".png"));
-            imageList.get(i).setMaxHeight(player.getPlayerShape().getHeight() * 3);
-            imageList.get(i).setMaxHeight(player.getPlayerShape().getWidth() * 3);
-            imageList.get(i).setCenter(player.getPlayerShape().getCenter());
-        }
-    }
 
-    public void updateCycle(Player player, ArrayList<Image> imageList, String direction){
-        createCycle(player, imageList, direction);
-        if(frameNumber == 0){
-            System.out.println(frameNumber);
-            canvas.add(imageList.get(frameNumber));
-            frameNumber += 1;
-            if(lastFrame == true){
-                canvas.remove(imageList.get(3));
-                lastFrame = false;
-            }
-        }else if(frameNumber == 1){
-            System.out.println(frameNumber);
-            canvas.add(imageList.get(frameNumber));
-            canvas.remove(imageList.get(frameNumber - 1));
-            frameNumber += 1;
-        }else if(frameNumber == 2){
-            System.out.println(frameNumber);
-            canvas.add(imageList.get(frameNumber));
-            canvas.remove(imageList.get(frameNumber - 1));
-            frameNumber += 1;
-        }else if(frameNumber == 3){
-            System.out.println(frameNumber);
-            canvas.add(imageList.get(frameNumber));
-            canvas.removeAll();
+    public void betterAnimate(String key, Player player, CanvasWindow canvas){
+        if(frameNumber == 4){
             frameNumber = 0;
-            lastFrame = true;
+        }
+        if (key.equals("left")) {
+            if((R || D || U) == true){
+                canvas.remove(sprite);
+                frameNumber = 0;
+                R = false;
+                D = false;
+                U = false;
+            }else if(L == true){
+                canvas.remove(sprite);
+            }
+            sprite = new Image("left" + frameNumber + ".png");
+            sprite.setMaxHeight(player.getPlayerShape().getHeight() * 3);
+            sprite.setMaxHeight(player.getPlayerShape().getWidth() * 3);
+            sprite.setCenter(player.getPlayerShape().getCenter());
+            canvas.add(sprite);
+            frameNumber += 1;
+            L = true;
+        }
+        if (key.equals("right")) {
+            if((L || D || U) == true){
+                canvas.remove(sprite);
+                frameNumber = 0;
+                L = false;
+                D = false;
+                U = false;
+            }else if(R == true){
+                canvas.remove(sprite);
+            }
+            sprite = new Image("right" + frameNumber + ".png");
+            sprite.setMaxHeight(player.getPlayerShape().getHeight() * 3);
+            sprite.setMaxHeight(player.getPlayerShape().getWidth() * 3);
+            sprite.setCenter(player.getPlayerShape().getCenter());
+            canvas.add(sprite);
+            frameNumber += 1;
+            R = true;
+        }
+        if (key.equals("up")) {
+            if((R || D || L) == true){
+                canvas.remove(sprite);
+                frameNumber = 0;
+                R = false;
+                D = false;
+                L = false;
+            }else if(U == true){
+                canvas.remove(sprite);
+            }
+            sprite = new Image("backward" + frameNumber + ".png");
+            sprite.setMaxHeight(player.getPlayerShape().getHeight() * 3);
+            sprite.setMaxHeight(player.getPlayerShape().getWidth() * 3);
+            sprite.setCenter(player.getPlayerShape().getCenter());
+            canvas.add(sprite);
+            frameNumber += 1;
+            U = true;
+        }
+        if (key.equals("down")) {
+            if((R || L || U) == true){
+                canvas.remove(sprite);
+                frameNumber = 0;
+                R = false;
+                L = false;
+                U = false;
+            }else if(D = true){
+                canvas.remove(sprite);
+            }
+            sprite = new Image("forward" + frameNumber + ".png");
+            sprite.setMaxHeight(player.getPlayerShape().getHeight() * 3);
+            sprite.setMaxHeight(player.getPlayerShape().getWidth() * 3);
+            sprite.setCenter(player.getPlayerShape().getCenter());
+            canvas.add(sprite);
+            frameNumber += 1;
+            D = true;
         }
     }
-
-    
-
-   
-
-    public void forwardWalk(Player player){
-        updateCycle(player, forward, "forward");
-    }
-
-    public void rightWalk(Player player){
-        updateCycle(player, right, "right");
-    }
-
-    public void leftWalk(Player player){
-        updateCycle(player, left, "left");
-    }
-
-    public void backwardWalk(Player player){
-        updateCycle(player, backward, "backward");
-    }
-
 }
