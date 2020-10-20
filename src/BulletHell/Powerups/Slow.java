@@ -10,6 +10,7 @@ import BulletHell.BulletManager;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Rectangle;
+import edu.macalester.graphics.events.Key;
 
 public class Slow implements Powerups {
     public static final double SIZE = 30;
@@ -127,6 +128,13 @@ public class Slow implements Powerups {
      */
     public GraphicsGroup getShape() {
         return shape;
+    }
+
+    /**
+     * Returns the key used to activate this power, which is Q.
+     */
+    public Key getKey() {
+        return Key.Q;
     }
 
     /**
