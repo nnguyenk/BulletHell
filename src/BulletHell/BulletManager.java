@@ -1,5 +1,6 @@
 package BulletHell;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,15 +20,18 @@ public class BulletManager {
     }
 
     /**
-     * Adds all bullets to the canvas.
-     * Adds the line demarcating the cieling and player info above
+     * Adds all bullets to the canvas, makes sure that the bullets are not spawned on top of the player.
      */
-    public void spawnBullets(int bulletsNumber) {
+    public void spawnBullets(int bulletsNumber, Player player) {
         for (int i = 0; i < bulletsNumber; i++) {
-            Bullet bullet = createRandomBullet();
+            Bullet newBullet;
+            do {
+                newBullet = createRandomBullet();
+            }
+            while (newBullet.collidePlayer(player));
 
-            canvas.add(bullet.getShape());
-            bullets.add(bullet);
+            canvas.add(newBullet.getShape());
+            bullets.add(newBullet);
         }
     }
 
@@ -36,7 +40,7 @@ public class BulletManager {
      */
     private Bullet createRandomBullet() {
         Bullet randomBullet;
-        int i = Utility.randomInt(1, 3);
+        int i = Utility.randomInt(1, 4);
 
         switch (i) {
             case 1: 
@@ -47,6 +51,9 @@ public class BulletManager {
                 break;
             case 3:
                 randomBullet = new YellowBullet(canvas);
+                break;
+            case 4:
+                randomBullet = new GreenBullet(canvas);
                 break;
             default:
                 randomBullet = null;
@@ -96,6 +103,7 @@ public class BulletManager {
     /**
      * Changes the value of hitPlayer to indicate that the user is damaged.
      * Freezes the player if the bullet is cyan, or prevent immunity if it's yellow.
+     * If the bullet is green, the screen changes color during invulnerability.
      */
     private void bulletDamagePlayer(Bullet bullet, Player player) {
         if (!player.isImmune()) {
@@ -107,6 +115,9 @@ public class BulletManager {
             if (bullet.getType().equalsIgnoreCase("Cyan")) {
                 player.freeze();
             }
+            if (bullet.getType().equalsIgnoreCase("Green")) {
+                canvas.setBackground(new Color(35, 125, 35));
+            }
         }
     }
 
@@ -114,7 +125,7 @@ public class BulletManager {
      * Removes the bullet from tha canvas and the list.
      */
     private void removeBullets() {
-        for (Bullet bulletToRemove : bulletsToRemove){
+        for (Bullet bulletToRemove : bulletsToRemove) {
             canvas.remove(bulletToRemove.getShape());
             bullets.remove(bulletToRemove);
         }
