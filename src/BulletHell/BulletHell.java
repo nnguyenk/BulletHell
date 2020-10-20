@@ -16,6 +16,8 @@ public class BulletHell {
     private HeartManager heartManagement;
     private PowerManager powerManager;
 
+    private AnimateManager animationManagement;
+
     private RoundTitle roundTitle;
     // private GameDescription gamedescription;
     private Terrain terrain;
@@ -33,6 +35,8 @@ public class BulletHell {
         roundTitle = new RoundTitle(canvas);
         // gamedescription = new GameDescription(canvas);
         terrain = new Terrain(canvas);
+
+        animationManagement = new AnimateManager(canvas);
     }
 
     public static void main(String[] args) {
@@ -90,15 +94,19 @@ public class BulletHell {
     private void movePlayer(Key key, double dt) {
         if (key == Key.LEFT_ARROW) {
             player.moveLeft(dt);
+            // animationManagement.leftWalk(player);
         }
         if (key == Key.RIGHT_ARROW) {
             player.moveRight(dt);
+            // animationManagement.rightWalk(player);
         }
         if (key == Key.UP_ARROW) {
             player.moveUp(dt);
+            // animationManagement.backwardWalk(player);
         }
         if (key == Key.DOWN_ARROW) {
             player.moveDown(dt);
+            // animationManagement.forwardWalk(player);
         }
     }
     
