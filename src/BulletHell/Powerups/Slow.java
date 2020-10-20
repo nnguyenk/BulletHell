@@ -138,23 +138,23 @@ public class Slow implements Powerups {
     }
 
     /**
-     * Slows all bullets in the manager.
+     * Slows all bullets in the manager by half of their current speed.
      */
     private void slowBullets(BulletManager manager) {
         for (Bullet bullet : manager.getAllBullets()) {
             if (bullet.isAlive()) {
-                bullet.reduceSpeed();
+                bullet.reduceSpeed(0.5);
             }
         }
     }
 
     /**
-     * Restores the speed of all bullets in the manager.
+     * Restores the speed of all bullets in the manager by doubling them.
      */
     private void restoreBullets(BulletManager manager) {
         for (Bullet bullet : manager.getAllBullets()) {
             if (bullet.isAlive()) {
-                bullet.restoreSpeed();
+                bullet.increaseSpeed(2);
             }
         }
     }

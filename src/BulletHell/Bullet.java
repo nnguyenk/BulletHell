@@ -86,17 +86,27 @@ public abstract class Bullet {
     }
 
     /**
-     * Changes the direction if the bullet collides with a horizontal surface.
+     * Reduces the life of the bullet when it collides with a horizontal surface.
+     * Then, if it's alive, change its direction and increases its speed.
      */
     private void deflectHorizontal() {
-        ySpeed = -ySpeed;
+        loseLife();
+        if (isAlive()) {
+            ySpeed = -ySpeed;
+            increaseSpeed(1.5);
+        }
     }
 
     /**
-     * Changes the direction if the bullet collides with a vertical surface.
+     * Reduces the life of the bullet when it collides with a vertical surface.
+     * Then, if it's alive, change its direction and increases its speed.
      */
     private void deflectVertical() {
-        xSpeed = -xSpeed;
+        loseLife();
+        if (isAlive()) {
+            xSpeed = -xSpeed;
+            increaseSpeed(1.5);
+        }
     }
 
     /**
@@ -105,19 +115,11 @@ public abstract class Bullet {
      */
     private void collideWalls() {
         if ((top.getY() <= 31) || bottom.getY() >= canvas.getHeight()) {
-            loseLife();
-            if (isAlive()) {
-                deflectHorizontal();
-                ySpeed *= 1.75;
-            }
+            deflectHorizontal();
         }
         
         if ((left.getX() <= 0) || (right.getX() >= canvas.getWidth())) {
-            loseLife();
-            if (isAlive()) {
-                deflectVertical();
-                xSpeed *= 1.75;
-            }
+            deflectVertical();
         }
     }
 
@@ -125,7 +127,6 @@ public abstract class Bullet {
      * Returns true if the bullet hits the player.
      */
     public boolean collidePlayer(Player player) {
-        setPoints();
         for (Point point : List.of(top, bottom, left, right)) {
             if (canvas.getElementAt(point) == player.getPlayerShape()) {
                 return true;
@@ -140,18 +141,13 @@ public abstract class Bullet {
      * @param terrain
      */
     private void collideTerrain(Terrain terrain) {
-        setPoints();
         for (Point point : List.of(top, bottom, left, right)) {
             if (terrain.getTerrain().contains(canvas.getElementAt(point))) {
-                
                 if (point == top || point == bottom) {
                     deflectHorizontal();
-                    loseLife();;
                 }
-
                 else {
                     deflectVertical();
-                    loseLife();;
                 }
             }
         }
@@ -178,14 +174,24 @@ public abstract class Bullet {
         }
     }
 
-    public void reduceSpeed() {
-        xSpeed *= .5;
-        ySpeed *= .5;
+    /**
+     * Reduces the speed of this bullet.
+     * 
+     * @param ratio The ratio between the changed speed and the old one.
+     */
+    public void reduceSpeed(double ratio) {
+        xSpeed *= ratio;
+        ySpeed *= ratio;
     }
 
-    public void restoreSpeed() {
-        xSpeed *= 2;
-        ySpeed *= 2;
+    /**
+     * Increases the speed of the bullet.
+     * 
+     * @param ratio The ratio between the changed speed and the old one.
+     */
+    public void increaseSpeed(double ratio) {
+        xSpeed *= ratio;
+        ySpeed *= ratio;
     }
 }
 
