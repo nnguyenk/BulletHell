@@ -113,7 +113,7 @@ public class BulletManager {
                 player.freeze();
             }
             if (bullet.getType().equalsIgnoreCase("Green")) {
-                canvas.setBackground(Color.BLUE);
+                canvas.setBackground(new Color(35, 125, 35));
             }
         }
     }
