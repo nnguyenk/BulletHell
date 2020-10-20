@@ -1,5 +1,6 @@
 package BulletHell;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +37,7 @@ public class BulletManager {
      */
     private Bullet createRandomBullet() {
         Bullet randomBullet;
-        int i = Utility.randomInt(1, 3);
+        int i = Utility.randomInt(1, 4);
 
         switch (i) {
             case 1: 
@@ -47,6 +48,9 @@ public class BulletManager {
                 break;
             case 3:
                 randomBullet = new YellowBullet(canvas);
+                break;
+            case 4:
+                randomBullet = new GreenBullet(canvas);
                 break;
             default:
                 randomBullet = null;
@@ -96,6 +100,7 @@ public class BulletManager {
     /**
      * Changes the value of hitPlayer to indicate that the user is damaged.
      * Freezes the player if the bullet is cyan, or prevent immunity if it's yellow.
+     * If the bullet is green, the screen changes color during invulnerability.
      */
     private void bulletDamagePlayer(Bullet bullet, Player player) {
         if (!player.isImmune()) {
@@ -106,6 +111,9 @@ public class BulletManager {
             }
             if (bullet.getType().equalsIgnoreCase("Cyan")) {
                 player.freeze();
+            }
+            if (bullet.getType().equalsIgnoreCase("Green")) {
+                canvas.setBackground(Color.BLUE);
             }
         }
     }
