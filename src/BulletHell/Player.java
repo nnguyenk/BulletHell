@@ -111,6 +111,7 @@ public class Player {
             remainingImmunity -= dt;
             if (!isImmune()) {
                 endImmunity();
+                canvas.setBackground(Color.WHITE);
             }
         }
     }
