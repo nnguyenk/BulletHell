@@ -8,7 +8,7 @@ import edu.macalester.graphics.*;
 
 public abstract class Bullet {
     public static final double RADIUS = 20;
-    public static final int SPEED = 3;
+    public static final int SPEED = 5;
     
     private int maxLives = 4; 
 
@@ -93,7 +93,7 @@ public abstract class Bullet {
         loseLife();
         if (isAlive()) {
             ySpeed = -ySpeed;
-            increaseSpeed(1.5);
+            increaseSpeed(1.25);
         }
     }
 
@@ -105,7 +105,7 @@ public abstract class Bullet {
         loseLife();
         if (isAlive()) {
             xSpeed = -xSpeed;
-            increaseSpeed(1.5);
+            increaseSpeed(1.25);
         }
     }
 
