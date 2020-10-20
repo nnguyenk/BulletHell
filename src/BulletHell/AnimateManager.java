@@ -6,11 +6,6 @@ import edu.macalester.graphics.*;
 
 public class AnimateManager {
     CanvasWindow canvas;
-
-    ArrayList<Image> forward = new ArrayList<Image>();
-    ArrayList<Image> right = new ArrayList<Image>();
-    ArrayList<Image> left = new ArrayList<Image>();
-    ArrayList<Image> backward = new ArrayList<Image>();
     
 
     private Image sprite;
@@ -100,5 +95,10 @@ public class AnimateManager {
             frameNumber += 1;
             D = true;
         }
+        getSprite();
+    }
+
+    public Image getSprite(){
+        return sprite;
     }
 }

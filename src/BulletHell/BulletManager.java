@@ -146,3 +146,22 @@ public class BulletManager {
         return Collections.unmodifiableList(bullets);
     }
 }
+
+
+
+
+
+
+/*
+
+public enum CompassDirection {
+    NORTH, EAST, SOUTH, WEST;
+}
+
+void goInDirection(CompassDirection direction) {
+    if (direction == CompassDirection.NORTH) {
+
+    }
+}
+
+*/
