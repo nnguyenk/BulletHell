@@ -122,7 +122,7 @@ public class BulletManager {
      * Removes the bullet from tha canvas and the list.
      */
     private void removeBullets() {
-        for (Bullet bulletToRemove : bulletsToRemove){
+        for (Bullet bulletToRemove : bulletsToRemove) {
             canvas.remove(bulletToRemove.getShape());
             bullets.remove(bulletToRemove);
         }

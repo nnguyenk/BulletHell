@@ -1,26 +1,29 @@
 package BulletHell;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import BulletHell.Powerups.*;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.events.Key;
 
 public class PowerManager {
-    public static final int GAP = 40; // The gap between the boxes + the width of the boxes.
+    public static final int GAP = 50; // The gap between the boxes + the width of the boxes.
 
-    private Map<Key, Powerups> allPowers = new HashMap<>();
+    private List<Powerups> allPowers = new ArrayList<>();
+    private List<Key> activateKeys = new ArrayList<>();
     private CanvasWindow canvas;
 
     public PowerManager(CanvasWindow canvas, BulletHell bulletHell) {
         this.canvas = canvas;
-  
-        Eraser eraser = new Eraser(bulletHell);
-        allPowers.put(Key.W, eraser);
 
         Slow slow = new Slow(bulletHell);
-        allPowers.put(Key.Q, slow);
+        allPowers.add(slow);
+        activateKeys.add(slow.getKey());
+
+        Eraser eraser = new Eraser(bulletHell);
+        allPowers.add(eraser);
+        activateKeys.add(eraser.getKey());
     }
 
     /**
@@ -28,7 +31,7 @@ public class PowerManager {
      */
     public void createPowers() {
         double coorX = 20;
-        for (Powerups powerups : allPowers.values()) {
+        for (Powerups powerups : allPowers) {
             canvas.add(powerups.getShape(), coorX, 5);
             coorX += GAP; 
         }
@@ -40,7 +43,7 @@ public class PowerManager {
      * @param dt The number of seconds that will be deducted.
      */
     public void reduceCooldown(double dt) {
-        for (Powerups powerups : allPowers.values()) {
+        for (Powerups powerups : allPowers) {
             powerups.reduceCooldown(dt);
         }
     }
@@ -51,7 +54,7 @@ public class PowerManager {
      * @param dt The number of seconds that will be deducted.
      */
     public void reduceDuration(double dt) {
-        for (Powerups powerups : allPowers.values()) {
+        for (Powerups powerups : allPowers) {
             powerups.reduceDuration(dt);
         }
     }
@@ -60,8 +63,9 @@ public class PowerManager {
      * Activates the power at the point if the power is off cooldown and not active.
      */
     public void activatePower(Key key) {
-        if (allPowers.keySet().contains(key)) {
-            allPowers.get(key).activate();
+        if (activateKeys.contains(key)) {
+            int index = activateKeys.indexOf(key);
+            allPowers.get(index).activate();
         }
     }
 }
