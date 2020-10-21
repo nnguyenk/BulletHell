@@ -109,13 +109,13 @@ public class BulletManager {
         if (!player.isImmune()) {
             hitPlayer = true;
             bulletsToRemove.add(bullet);
-            if (!bullet.getType().equalsIgnoreCase("Yellow")) {
+            if (bullet.getType() != BulletType.YELLOW) {
                 player.startImmunity();
             }
-            if (bullet.getType().equalsIgnoreCase("Cyan")) {
+            if (bullet.getType() == BulletType.CYAN) {
                 player.freeze();
             }
-            if (bullet.getType().equalsIgnoreCase("Green")) {
+            if (bullet.getType() == BulletType.GREEN) {
                 canvas.setBackground(new Color(35, 125, 35));
             }
         }

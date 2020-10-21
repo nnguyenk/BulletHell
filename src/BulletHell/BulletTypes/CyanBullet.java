@@ -12,7 +12,7 @@ public class CyanBullet extends Bullet {
     }
 
     @Override
-    public String getType() {
-        return "Cyan";
+    public BulletType getType() {
+        return BulletType.CYAN;
     }
 }

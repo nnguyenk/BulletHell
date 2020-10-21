@@ -13,6 +13,7 @@ public class BulletHell {
     private int currentLife;
     private int currentRound = 0;
     private static boolean started = false;
+
     private BulletManager bulletManager;
     private HeartManager heartManagement;
     private PowerManager powerManager;
@@ -22,6 +23,7 @@ public class BulletHell {
     private RoundTitle roundTitle;
     private GameDescription gamedescription;
     private Terrain terrain;
+    private Key currentDirection; // Holds the most recent key pressed.
 
     // private Boolean booleanholder = true;
 
@@ -59,6 +61,7 @@ public class BulletHell {
                 if (!bulletManager.bulletsLeft()) {
                     newRound();
                 }
+                player.move();
                 reduceAllTimer(dt);
                 playerIsHit();
             }
@@ -82,39 +85,28 @@ public class BulletHell {
 
     /**
      * Adds the player to the canvas and enables control with the keyboard.
+     * When a key is pressed, turn the player to the corresponding direction.
+     * When a key is lifted, if it's the same direction with the current one, stops the player.
      * 
      * @param dt The movement rate of the player.
      */
     public void createPlayer(double dt) {
         player = new Player(canvas);
         canvas.add(player.getPlayerShape());
-        canvas.onKeyDown(event -> movePlayer(event.getKey(), dt));
+        
+        canvas.onKeyDown(event -> {
+            currentDirection = event.getKey();
+            player.turn(currentDirection);
+        });
+        canvas.onKeyUp(event -> {
+            if (currentDirection == event.getKey())
+            player.stop();
+        });
     }
 
     // public void createSprite(double dt){
     //     canvas.onKeyDown(event -> moveSprite(event.getKey(), dt));
     // }
-
-    /**
-     * Moves the player based on the key.
-     * 
-     * @param key The input direction key.
-     * @param dt The movement rate of the player.
-     */
-    private void movePlayer(Key key, double dt) {
-        if (key == Key.LEFT_ARROW) {
-            player.moveLeft(dt);
-        }
-        if (key == Key.RIGHT_ARROW) {
-            player.moveRight(dt);
-        }
-        if (key == Key.UP_ARROW) {
-            player.moveUp(dt);
-        }
-        if (key == Key.DOWN_ARROW) {
-            player.moveDown(dt);
-        }
-    }
 
     // private void moveSprite(Key key, double dt) {
     //     if (key == Key.LEFT_ARROW) {
