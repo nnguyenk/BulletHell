@@ -156,7 +156,7 @@ public class BulletHell {
     public void newRound() {
         currentRound++;
         roundTitle.changeTitle(currentRound);
-        terrain.SummonTerrain();
+        terrain.SummonTerrain(3);
         bulletManager.spawnBullets(3 + currentRound * 2, player, terrain);
         canvas.draw();
         canvas.pause(1000);
