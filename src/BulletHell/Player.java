@@ -7,8 +7,8 @@ import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.events.Key;
 
 public class Player {
-    public static final int PLAYER_WIDTH = 40; 
-    public static final int PLAYER_HEIGHT = 50; 
+    public static final int PLAYER_WIDTH = 60; 
+    public static final int PLAYER_HEIGHT = 90; 
     public static final int PLAYER_SPEED = 4;
     public static final double MAX_IMMUNITY = 2; // The maximum number of seconds the player is immuned.
 

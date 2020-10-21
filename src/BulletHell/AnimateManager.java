@@ -17,6 +17,11 @@ public class AnimateManager {
     private boolean U = false;
 
     ArrayList<Boolean> directions = new ArrayList<Boolean>();
+    ArrayList<Image> down = new ArrayList<Image>();
+    ArrayList<Image> left = new ArrayList<Image>();
+    ArrayList<Image> right = new ArrayList<Image>();
+    ArrayList<Image> up = new ArrayList<Image>();
+
 
     public AnimateManager(CanvasWindow canvas){
         this.canvas = canvas;
@@ -24,6 +29,11 @@ public class AnimateManager {
         directions.add(R);
         directions.add(D);
         directions.add(U);
+
+        fillImagelist(down, "down");
+        fillImagelist(left, "left");
+        fillImagelist(right, "right");
+        fillImagelist(up, "up");
     }
 
     public void animateSprite(Key key, Player player, CanvasWindow canvas){
@@ -40,7 +50,7 @@ public class AnimateManager {
             }else if(L == true && sprite != null){
                 canvas.remove(sprite);
             }
-            sprite = new Image("left" + frameNumber + ".png");
+            sprite = left.get(frameNumber);
             generateSprite(sprite, player);
             L = true;
         }
@@ -54,7 +64,7 @@ public class AnimateManager {
             }else if(R == true && sprite != null){
                 canvas.remove(sprite);
             }
-            sprite = new Image("right" + frameNumber + ".png");
+            sprite = right.get(frameNumber);
             generateSprite(sprite, player);
             R = true;
         }
@@ -68,7 +78,7 @@ public class AnimateManager {
             }else if(U == true && sprite != null){
                 canvas.remove(sprite);
             }
-            sprite = new Image("backward" + frameNumber + ".png");
+            sprite = up.get(frameNumber);
             generateSprite(sprite, player);
             U = true;
         }
@@ -82,7 +92,7 @@ public class AnimateManager {
             }else if(D = true && sprite != null){
                 canvas.remove(sprite);
             }
-            sprite = new Image("forward" + frameNumber + ".png");
+            sprite = down.get(frameNumber);
             generateSprite(sprite, player);
             D = true;
         }
@@ -94,8 +104,8 @@ public class AnimateManager {
     }
 
     private void generateSprite(Image sprite, Player player){
-        sprite.setMaxHeight(player.getPlayerShape().getHeight() * 3);
-        sprite.setMaxHeight(player.getPlayerShape().getWidth() * 3);
+        sprite.setMaxHeight(player.getPlayerShape().getHeight() - 5);
+        sprite.setMaxWidth(player.getPlayerShape().getWidth() - 5);
         sprite.setCenter(player.getPlayerShape().getCenter());
         canvas.add(sprite);
         frameNumber += 1;
@@ -106,6 +116,12 @@ public class AnimateManager {
             canvas.add(sprite);
             sprite.setCenter(player.getPlayerShape().getCenter());
             canvas.remove(sprite);
+        }
+    }
+
+    private void fillImagelist(ArrayList<Image> images, String direction){
+        for(int i = 0; i < 4; i++){
+            images.add(new Image(direction + i + ".png"));
         }
     }
 }

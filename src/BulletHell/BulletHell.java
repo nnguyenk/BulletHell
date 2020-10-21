@@ -80,11 +80,7 @@ public class BulletHell {
         heartManager.generateHearts(3);
         createPlayer(0.1);
         createPowerups();
-<<<<<<< Updated upstream
         // createSprite(0.1);
-=======
-        currentLife = MAX_LIFE;
->>>>>>> Stashed changes
     }
 
     /**

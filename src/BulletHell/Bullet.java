@@ -137,6 +137,15 @@ public abstract class Bullet {
         return false;
     }
 
+    public boolean collideSprite(AnimateManager sprite) {
+        for (Point point : List.of(top, bottom, left, right)) {
+            if (canvas.getElementAt(point) == sprite.getSprite()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Returns true if the bullet collides with a terrain.
      * 
