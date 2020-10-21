@@ -1,7 +1,6 @@
 package BulletHell;
 
 import edu.macalester.graphics.CanvasWindow;
-import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.events.Key;
 
@@ -191,5 +190,12 @@ public class BulletHell {
      */
     public BulletManager getBulletManager() {
         return bulletManager;
+    }
+
+    /**
+     * Return the heart manager of the game.
+     */
+    public HeartManager getHeartManager() {
+        return heartManager;
     }
 }
