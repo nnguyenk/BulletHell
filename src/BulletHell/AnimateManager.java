@@ -33,6 +33,7 @@ public class AnimateManager {
         if (key == Key.LEFT_ARROW) {
             if((R || D || U) == true && sprite != null){
                 canvas.remove(sprite);
+                frameNumber = 0;
                 R = false;
                 D = false;
                 U = false;
@@ -46,6 +47,7 @@ public class AnimateManager {
         if (key == Key.RIGHT_ARROW) {
             if((L || D || U) == true && sprite != null){
                 canvas.remove(sprite);
+                frameNumber = 0;
                 L = false;
                 D = false;
                 U = false;
@@ -59,6 +61,7 @@ public class AnimateManager {
         if (key == Key.UP_ARROW) {
             if((R || D || L) == true && sprite != null){
                 canvas.remove(sprite);
+                frameNumber = 0;
                 R = false;
                 D = false;
                 L = false;
@@ -72,6 +75,7 @@ public class AnimateManager {
         if (key == Key.DOWN_ARROW) {
             if((R || L || U) == true && sprite != null){
                 canvas.remove(sprite);
+                frameNumber = 0;
                 R = false;
                 L = false;
                 U = false;
