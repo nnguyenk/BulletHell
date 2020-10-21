@@ -57,7 +57,7 @@ public class BulletHell {
         started = true;
         setUpGame();
         canvas.animate(dt -> {
-            if (heartManager.heartsLeft()) {
+            if (heartManager.heartsLeft() > 0) {
                 if (!bulletManager.bulletsLeft()) {
                     newRound();
                 }

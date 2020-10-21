@@ -45,9 +45,9 @@ public class HeartManager {
     }
 
     /**
-     * Checks if the player still have any remaining hearts.
+     * Returns the number of remaining hearts.
      */
-    public boolean heartsLeft() {
-        return !allHearts.isEmpty();
+    public int heartsLeft() {
+        return allHearts.size();
     }
 }
