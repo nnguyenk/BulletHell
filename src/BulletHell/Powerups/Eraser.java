@@ -17,7 +17,7 @@ public class Eraser implements Powerups {
     public static final int MAX_DURATION = 5; // The maximum number of seconds the power is active.
 
     private double remainingEraser;
-    private double remainingCD;
+    private double cooldown;
     private BulletHell mainGame;
 
     private GraphicsGroup shape;
@@ -27,7 +27,7 @@ public class Eraser implements Powerups {
 
     public Eraser(BulletHell bulletHell) {
         mainGame = bulletHell;
-        remainingCD = MAX_COOLDOWN;
+        cooldown = MAX_COOLDOWN;
 
         shape = new GraphicsGroup();
         border = new Rectangle(0, 0, SIZE, SIZE);
@@ -67,8 +67,8 @@ public class Eraser implements Powerups {
      */
     public void reduceCooldown(double dt) {
         if (!inEffect() && onCooldown()) {
-            remainingCD -= dt;
-            fill(remainingCD);
+            cooldown -= dt;
+            fill(cooldown);
             if (!onCooldown()) {
                 remainingText.setText("W");
                 shape.add(remainingText);
@@ -80,7 +80,7 @@ public class Eraser implements Powerups {
      * Returns true if eraser is on cooldown.
      */
     private boolean onCooldown() {
-        return (remainingCD > 0);
+        return (cooldown > 0);
     }
 
     /**
@@ -116,7 +116,7 @@ public class Eraser implements Powerups {
             shape.add(remainingText);
             if (!inEffect()) {
                 player.endErasing();
-                remainingCD = MAX_COOLDOWN;
+                cooldown = MAX_COOLDOWN;
                 remainingText.setText("");
             }
         }

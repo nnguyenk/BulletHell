@@ -20,7 +20,7 @@ public class Terrain {
      * Spawns a number of terrain objects onto the screen corresponding to the integer parameter
      * @param numberOfTerrainObjects
      */
-    public void SummonTerrain(int numberOfTerrainObjects) {
+    public void generateTerrain(int numberOfTerrainObjects) {
         for (int i = 0; i < numberOfTerrainObjects; i++) {
             int j = Utility.randomInt(1, 2);
 
@@ -41,6 +41,16 @@ public class Terrain {
      */
     public List<Rectangle> getTerrain() {
         return allTerrain;
+    }
+
+    /**
+     * Clears all terrain rectangles from the screen and from the Terrain list
+     */
+    public void clearList(){
+        for (Rectangle rect : allTerrain){
+            canvas.remove(rect);
+        }
+        allTerrain.clear();
     }
 
     /**

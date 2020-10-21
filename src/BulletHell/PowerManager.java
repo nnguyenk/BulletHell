@@ -10,7 +10,7 @@ import edu.macalester.graphics.events.Key;
 public class PowerManager {
     public static final int GAP = 50; // The gap between the boxes + the width of the boxes.
 
-    private List<Powerups> allPowers = new ArrayList<>();
+    private List<Powerups> allPowerups = new ArrayList<>();
     private List<Key> activateKeys = new ArrayList<>();
     private CanvasWindow canvas;
 
@@ -18,20 +18,20 @@ public class PowerManager {
         this.canvas = canvas;
 
         Slow slow = new Slow(bulletHell);
-        allPowers.add(slow);
+        allPowerups.add(slow);
         activateKeys.add(slow.getKey());
 
         Eraser eraser = new Eraser(bulletHell);
-        allPowers.add(eraser);
+        allPowerups.add(eraser);
         activateKeys.add(eraser.getKey());
     }
 
     /**
      * Adds all shapes of the powerups to the canvas. 
      */
-    public void createPowers() {
+    public void generatePowerups() {
         double coorX = 20;
-        for (Powerups powerups : allPowers) {
+        for (Powerups powerups : allPowerups) {
             canvas.add(powerups.getShape(), coorX, 5);
             coorX += GAP; 
         }
@@ -43,7 +43,7 @@ public class PowerManager {
      * @param dt The number of seconds that will be deducted.
      */
     public void reduceCooldown(double dt) {
-        for (Powerups powerups : allPowers) {
+        for (Powerups powerups : allPowerups) {
             powerups.reduceCooldown(dt);
         }
     }
@@ -54,7 +54,7 @@ public class PowerManager {
      * @param dt The number of seconds that will be deducted.
      */
     public void reduceDuration(double dt) {
-        for (Powerups powerups : allPowers) {
+        for (Powerups powerups : allPowerups) {
             powerups.reduceDuration(dt);
         }
     }
@@ -62,10 +62,10 @@ public class PowerManager {
     /**
      * Activates the power at the point if the power is off cooldown and not active.
      */
-    public void activatePower(Key key) {
+    public void activatePowerups(Key key) {
         if (activateKeys.contains(key)) {
             int index = activateKeys.indexOf(key);
-            allPowers.get(index).activate();
+            allPowerups.get(index).activate();
         }
     }
 }

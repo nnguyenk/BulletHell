@@ -1,6 +1,7 @@
 package BulletHell;
 
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.events.Key;
 
@@ -15,10 +16,10 @@ public class BulletHell {
     private static boolean started = false;
 
     private BulletManager bulletManager;
-    private HeartManager heartManagement;
+    private HeartManager heartManager;
     private PowerManager powerManager;
 
-    private AnimateManager animationManagement;
+    private AnimateManager animationManager;
 
     private RoundTitle roundTitle;
     private GameDescription gamedescription;
@@ -29,17 +30,17 @@ public class BulletHell {
 
     public static final int MAX_LIFE = 3;
 
-    public BulletHell() {
+    private BulletHell() {
         canvas = new CanvasWindow("Bullet Hell!", 800, 800);
         canvas.add(new Rectangle(0, 40, 800, 1));
 
         bulletManager = new BulletManager(canvas);
-        heartManagement = new HeartManager(canvas);
+        heartManager = new HeartManager(canvas);
         roundTitle = new RoundTitle(canvas);
         gamedescription = new GameDescription(canvas);
         terrain = new Terrain(canvas);
 
-        animationManagement = new AnimateManager(canvas);
+        // animationManager = new AnimateManager(canvas);
     }
 
     public static void main(String[] args) {
@@ -53,7 +54,7 @@ public class BulletHell {
         });
     }
 
-    public void start() {
+    private void start() {
         started = true;
         setUpGame();
         canvas.animate(dt -> {
@@ -74,12 +75,11 @@ public class BulletHell {
     /**
      * Sets up the player, the maximum lives, and the powerups.
      */
-    public void setUpGame() {
-        heartManagement.SummonHearts();
+    private void setUpGame() {
+        heartManager.generateHearts();
         createPlayer(0.1);
         createPowerups();
         currentLife = MAX_LIFE;
-
         // createSprite(0.1);
     }
 
@@ -90,7 +90,7 @@ public class BulletHell {
      * 
      * @param dt The movement rate of the player.
      */
-    public void createPlayer(double dt) {
+    private void createPlayer(double dt) {
         player = new Player(canvas);
         canvas.add(player.getPlayerShape());
         
@@ -104,22 +104,22 @@ public class BulletHell {
         });
     }
 
-    // public void createSprite(double dt){
+    // private void createSprite(double dt){
     //     canvas.onKeyDown(event -> moveSprite(event.getKey(), dt));
     // }
 
     // private void moveSprite(Key key, double dt) {
     //     if (key == Key.LEFT_ARROW) {
-    //         animationManagement.betterAnimate("left", player, canvas);
+    //         animationManager.animateSprite(key, player, canvas, dt);
     //     }
     //     if (key == Key.RIGHT_ARROW) {
-    //         animationManagement.betterAnimate("right", player, canvas);
+    //         animationManager.animateSprite(key, player, canvas, dt);
     //     }
     //     if (key == Key.UP_ARROW) {
-    //         animationManagement.betterAnimate("up", player, canvas);
+    //         animationManager.animateSprite(key, player, canvas, dt);
     //     }
     //     if (key == Key.DOWN_ARROW) {
-    //         animationManagement.betterAnimate("down", player, canvas);
+    //         animationManager.animateSprite(key, player, canvas, dt);
     //     }
     // }
     
@@ -127,10 +127,10 @@ public class BulletHell {
      * Creates all the boxes of powerups.
      * Allows the player to activate the power they click on.
      */
-    public void createPowerups() {
+    private void createPowerups() {
         powerManager = new PowerManager(canvas, this);
-        powerManager.createPowers();
-        canvas.onKeyDown(event -> powerManager.activatePower(event.getKey()));
+        powerManager.generatePowerups();
+        canvas.onKeyDown(event -> powerManager.activatePowerups(event.getKey()));
     } 
 
     /**
@@ -139,7 +139,7 @@ public class BulletHell {
      * 
      * @param dt The number of seconds that will be deducted.
      */
-    public void reduceAllTimer(double dt) {
+    private void reduceAllTimer(double dt) {
         powerManager.reduceCooldown(dt);
         powerManager.reduceDuration(dt);
         player.reduceImmunity(dt);
@@ -149,13 +149,11 @@ public class BulletHell {
      * Creates the environment for a new round using the roundnumber to decide number of bullets and title.
      * Pauses the canvas for 1 second
      */
-    public void newRound() {
+    private void newRound() {
         currentRound++;
         roundTitle.changeTitle(currentRound);
-        for (Rectangle rectangle : terrain.getTerrain()){
-            canvas.remove(rectangle);
-        }
-        terrain.SummonTerrain(3);
+        terrain.clearList();
+        terrain.generateTerrain(3);
         bulletManager.spawnBullets(3 + currentRound * 2, player, terrain);
         canvas.draw();
         canvas.pause(1000);
@@ -165,7 +163,7 @@ public class BulletHell {
      * Checks if the player is hit with any bullet.
      * Removes one heart (life) if true.
      */
-    public void playerIsHit() {
+    private void playerIsHit() {
         if (bulletManager.bulletsIntersect(player, terrain)) {
             removeHeart();
             currentLife -= 1;
@@ -175,7 +173,7 @@ public class BulletHell {
     /**
      * Closes the window, and prints out an encouraging message. 
      */
-    public void lose() {
+    private void lose() {
         canvas.removeAll();
         System.out.println("You have LOST!");
         canvas.closeWindow();
@@ -184,15 +182,15 @@ public class BulletHell {
     /**
      * Removes hearts based on the player's lives left
      */
-    public void removeHeart() {
+    private void removeHeart() {
         if (currentLife == 3) {
-            canvas.remove(heartManagement.getHeart());
+            canvas.remove(heartManager.getHeart());
         }
         if (currentLife == 2) {
-            canvas.remove(heartManagement.getHeart2());
+            canvas.remove(heartManager.getHeart2());
         }
         if (currentLife == 1) {
-            canvas.remove(heartManagement.getHeart3());
+            canvas.remove(heartManager.getHeart3());
         }
     }
 

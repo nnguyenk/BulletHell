@@ -19,7 +19,7 @@ public abstract class Bullet {
     private Color color;
     private Ellipse shape;
     private double xCenter, yCenter, xSpeed, ySpeed;
-    private int currentLife;
+    private int currentLives;
 
     public Bullet(CanvasWindow canvas, Color color) {
         shape = new Ellipse(Utility.randomX(canvas), Utility.randomY(canvas), RADIUS, RADIUS);
@@ -37,7 +37,7 @@ public abstract class Bullet {
         this.canvas = canvas;
         this.color = color;
 
-        currentLife = maxLives;
+        currentLives = maxLives;
     }
 
     /*
@@ -161,7 +161,7 @@ public abstract class Bullet {
      * Returns true if the bullet is still alive.
      */
     public boolean isAlive() {
-        return (currentLife > 0);
+        return (currentLives > 0);
     }
 
     /**
@@ -169,12 +169,12 @@ public abstract class Bullet {
      * Indicates the remaining lives with a change in color.
      */
     private void loseLife() {
-        currentLife--;
+        currentLives--;
         if (isAlive()) {
             shape.setFillColor(new Color(
-                color.getRed() * currentLife / maxLives,
-                color.getGreen() * currentLife / maxLives, 
-                color.getBlue() * currentLife / maxLives));
+                color.getRed() * currentLives / maxLives,
+                color.getGreen() * currentLives / maxLives, 
+                color.getBlue() * currentLives / maxLives));
         }
     }
 

@@ -14,7 +14,7 @@ public class HeartManager {
         this.canvas = canvas;
     }
 
-    public void SummonHearts(){
+    public void generateHearts(){
         heart.setCenter(750, 130);
         heart.setMaxHeight(80);
         heart.setMaxWidth(80);
