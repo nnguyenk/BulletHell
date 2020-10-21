@@ -24,6 +24,7 @@ public class BulletHell {
     private GameDescription gamedescription;
     private Terrain terrain;
     private Key currentDirection; // Holds the most recent key pressed.
+    private Key currentSpriteDirection;
 
     // private Boolean booleanholder = true;
 
@@ -39,7 +40,7 @@ public class BulletHell {
         gamedescription = new GameDescription(canvas);
         terrain = new Terrain(canvas);
 
-        // animationManager = new AnimateManager(canvas);
+        animationManager = new AnimateManager(canvas);
     }
 
     public static void main(String[] args) {
@@ -62,6 +63,7 @@ public class BulletHell {
                     newRound();
                 }
                 player.move();
+                animationManager.placeSprite(player);
                 reduceAllTimer(dt);
                 playerIsHit();
             }
@@ -78,7 +80,11 @@ public class BulletHell {
         heartManager.generateHearts(3);
         createPlayer(0.1);
         createPowerups();
+<<<<<<< Updated upstream
         // createSprite(0.1);
+=======
+        currentLife = MAX_LIFE;
+>>>>>>> Stashed changes
     }
 
     /**
@@ -95,6 +101,13 @@ public class BulletHell {
         canvas.onKeyDown(event -> {
             currentDirection = event.getKey();
             player.turn(currentDirection);
+            if  (currentSpriteDirection != event.getKey()){
+                currentSpriteDirection = event.getKey();
+                moveSprite(currentSpriteDirection);
+            }else if(currentSpriteDirection == event.getKey()){
+                currentSpriteDirection = event.getKey();
+                moveSprite(currentSpriteDirection);
+            }
         });
         canvas.onKeyUp(event -> {
             if (currentDirection == event.getKey())
@@ -102,24 +115,21 @@ public class BulletHell {
         });
     }
 
-    // private void createSprite(double dt){
-    //     canvas.onKeyDown(event -> moveSprite(event.getKey(), dt));
-    // }
 
-    // private void moveSprite(Key key, double dt) {
-    //     if (key == Key.LEFT_ARROW) {
-    //         animationManager.animateSprite(key, player, canvas, dt);
-    //     }
-    //     if (key == Key.RIGHT_ARROW) {
-    //         animationManager.animateSprite(key, player, canvas, dt);
-    //     }
-    //     if (key == Key.UP_ARROW) {
-    //         animationManager.animateSprite(key, player, canvas, dt);
-    //     }
-    //     if (key == Key.DOWN_ARROW) {
-    //         animationManager.animateSprite(key, player, canvas, dt);
-    //     }
-    // }
+    private void moveSprite(Key key) {
+        if (key == Key.LEFT_ARROW) {
+            animationManager.animateSprite(key, player, canvas);
+        }
+        if (key == Key.RIGHT_ARROW) {
+            animationManager.animateSprite(key, player, canvas);
+        }
+        if (key == Key.UP_ARROW) {
+            animationManager.animateSprite(key, player, canvas);
+        }
+        if (key == Key.DOWN_ARROW) {
+            animationManager.animateSprite(key, player, canvas);
+        }
+    }
     
      /**
      * Creates all the boxes of powerups.
