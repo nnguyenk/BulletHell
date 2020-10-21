@@ -9,31 +9,61 @@ import edu.macalester.graphics.Rectangle;
 
 public class Terrain {
     private CanvasWindow canvas;
-    private Rectangle rectangle1 = new Rectangle(700, 720, 90, 30);
-    private Rectangle rectangle2 = new Rectangle(120, 500, 30, 80);
     private List<Rectangle> allTerrain = new ArrayList<>();
 
     public Terrain(CanvasWindow canvas){
         this.canvas = canvas;
     }
 
-    public void SummonTerrain() {
-        rectangle1.setCenter(Utility.randomInt(100, 700), Utility.randomInt(100, 700));
-        rectangle1.setFillColor(Color.ORANGE);
-        rectangle1.setStrokeColor(null);
 
-        rectangle2.setCenter(Utility.randomInt(100, 700), Utility.randomInt(100, 700));
-        rectangle2.setFillColor(Color.ORANGE);
-        rectangle2.setStrokeColor(null);
-        
-        canvas.add(rectangle1);
-        canvas.add(rectangle2);
+    /**
+     * Spawns a number of terrain objects onto the screen corresponding to the integer parameter
+     * @param numberOfTerrainObjects
+     */
+    public void SummonTerrain(int numberOfTerrainObjects) {
+        for (int i = 0; i < numberOfTerrainObjects; i++) {
+            int j = Utility.randomInt(1, 2);
 
-        allTerrain.add(rectangle1);
-        allTerrain.add(rectangle2);
+            switch (j) {
+                case 1:
+                    horizontalRectangle();
+                    break;
+                case 2:
+                    verticalRectangle();
+                    break;
+            }   
+        }    
     }
 
+
+    /**
+     * @return a list of all the terrain objects
+     */
     public List<Rectangle> getTerrain() {
-        return allTerrain;
+        return allTerrain;                     //NOT SURE IF THIS IS NECESSARY
+    }
+
+    /**
+     * @return a vertical rectangle placed randomly on the screen
+     */
+    private Rectangle verticalRectangle(){
+        Rectangle rectangle = new Rectangle(Utility.randomX(canvas), Utility.randomY(canvas), 90, 30);
+        rectangle.setFillColor(Color.BLACK);
+        rectangle.setStrokeColor(null);
+        canvas.add(rectangle);
+        allTerrain.add(rectangle);
+        return rectangle;
+    }
+
+    /**
+     * @return a horizontal rectangle placed randomly on the screen
+     */
+    private Rectangle horizontalRectangle(){
+        Rectangle rectangle = new Rectangle(Utility.randomX(canvas), Utility.randomY(canvas), 30, 90);
+        rectangle.setFillColor(Color.BLACK);
+        rectangle.setStrokeColor(null);
+        canvas.add(rectangle);
+        allTerrain.add(rectangle);
+        return rectangle;
     }
 }
