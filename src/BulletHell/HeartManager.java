@@ -1,60 +1,46 @@
 package BulletHell;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Image;
 
 public class HeartManager {
     private CanvasWindow canvas;
 
-    private Image heart = new Image("Heart-1.png");
-    private Image heart2 = new Image("Heart-1.png");
-    private Image heart3 = new Image("Heart-1.png");
+    private List<Image> allHearts = new ArrayList<>();
 
-    public HeartManager(CanvasWindow canvas){
+    public HeartManager(CanvasWindow canvas) {
         this.canvas = canvas;
     }
 
-    public void generateHearts(){
-        heart.setCenter(750, 130);
-        heart.setMaxHeight(80);
-        heart.setMaxWidth(80);
-        heart2.setCenter(790, 130);
-        heart2.setMaxHeight(80);
-        heart2.setMaxWidth(80);
-        heart3.setCenter(830, 130);
-        heart3.setMaxHeight(80);
-        heart3.setMaxWidth(80);
+    /**
+     * Adds a number of heart(s) to the canvas.
+     * 
+     * @param heartNumber The number of hearts to be added. 
+     */
+    public void generateHearts(int heartNumber) {
+        if (heartNumber == 0) {
+            return;
+        }
+        for (int i = 0; i < heartNumber; i++) {
+            Image heart = new Image("Heart-1.png");
+            heart.setMaxHeight(80);
+            heart.setMaxWidth(80);
+            heart.setCenter((canvas.getWidth() - 30) - allHearts.size() * 50, 10);
 
-        canvas.add(heart);
-        canvas.add(heart2);
-        canvas.add(heart3);
-    }
-
-    public Image getHeart(){
-        return heart;
-    }
-
-    public Image getHeart2(){
-        return heart2;
-    }
-
-    public Image getHeart3(){
-        return heart3;
+            canvas.add(heart);
+            allHearts.add(heart);
+        }
     }
 
     /**
-     * Removes hearts based on the player's lives left
+     * Removes the leftmost heart on the canvas.
      */
-    // public void removeHeart() {
-    //     if (player.getCurrentLife == 3) {
-    //         canvas.remove(heart3);
-    //     }
-    //     if (player.getCurrentLife == 2) {
-    //         canvas.remove(heart2);
-    //     }
-    //     if (player.getCurrentLife == 1) {
-    //         canvas.remove(heart);
-    //     }
-    // }
-
+    public void removeHeart() {
+        Image heartToRemove = allHearts.get(allHearts.size() - 1);
+        canvas.remove(heartToRemove);
+        allHearts.remove(heartToRemove);
+    }
 }

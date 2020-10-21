@@ -76,7 +76,7 @@ public class BulletHell {
      * Sets up the player, the maximum lives, and the powerups.
      */
     private void setUpGame() {
-        heartManager.generateHearts();
+        heartManager.generateHearts(3);
         createPlayer(0.1);
         createPowerups();
         currentLife = MAX_LIFE;
@@ -165,7 +165,7 @@ public class BulletHell {
      */
     private void playerIsHit() {
         if (bulletManager.bulletsIntersect(player, terrain)) {
-            removeHeart();
+            heartManager.removeHeart();
             currentLife -= 1;
         }
     }
@@ -177,21 +177,6 @@ public class BulletHell {
         canvas.removeAll();
         System.out.println("You have LOST!");
         canvas.closeWindow();
-    }
-
-    /**
-     * Removes hearts based on the player's lives left
-     */
-    private void removeHeart() {
-        if (currentLife == 3) {
-            canvas.remove(heartManager.getHeart());
-        }
-        if (currentLife == 2) {
-            canvas.remove(heartManager.getHeart2());
-        }
-        if (currentLife == 1) {
-            canvas.remove(heartManager.getHeart3());
-        }
     }
 
     /**
