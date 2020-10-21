@@ -26,8 +26,6 @@ public class BulletHell {
     private Key currentDirection; // Holds the most recent key pressed.
     private Key currentSpriteDirection;
 
-    // private Boolean booleanholder = true;
-
     public static final int MAX_LIFE = 3;
 
     private BulletHell() {

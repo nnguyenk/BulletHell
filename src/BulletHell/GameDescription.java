@@ -3,17 +3,24 @@ package BulletHell;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.FontStyle;
 import edu.macalester.graphics.GraphicsText;
+import edu.macalester.graphics.Image;
 
 import java.awt.Color;
 
 public class GameDescription {
-    CanvasWindow canvas;
-    GraphicsText welcome;
-    GraphicsText gameRules1;
-    GraphicsText gameRules2;
-    GraphicsText gameRules3;
-    GraphicsText gameRules4;
-    GraphicsText gameRules5;
+    private CanvasWindow canvas;
+    private GraphicsText welcome;
+    private GraphicsText gameRules1;
+    private GraphicsText gameRules2;
+    private GraphicsText gameRules3;
+    private GraphicsText gameRules4;
+    private GraphicsText gameRules5;
+
+    private Image sprite;
+
+    private BulletManager bulletManager;
+    private Player player;
+    private Terrain terrain;
 
     public GameDescription(CanvasWindow canvas){
         this.canvas = canvas;
@@ -41,6 +48,14 @@ public class GameDescription {
         gameRules5 = new GraphicsText();
         gameRules5.setFont("Bradley Hand", FontStyle.ITALIC, 15);
         gameRules5.setCenter(canvas.getWidth() / 2 - 250, 520);
+
+        sprite = new Image("down0.png");
+        sprite.setCenter(canvas.getWidth() / 2 - 80, 240);
+        sprite.setMaxHeight(100);
+
+        bulletManager = new BulletManager(canvas);
+        player = new Player(canvas);
+        terrain = new Terrain(canvas);
     }
 
     public void addRules(){
@@ -58,6 +73,8 @@ public class GameDescription {
     }
 
     private void addToCanvas(){
+        bulletManager.spawnBullets(7, player, terrain);
+
         canvas.setBackground(Color.GREEN);
         canvas.add(welcome);
         canvas.add(gameRules1);
@@ -65,6 +82,9 @@ public class GameDescription {
         canvas.add(gameRules3);
         canvas.add(gameRules4);
         canvas.add(gameRules5);
+        canvas.add(sprite);
+
+        canvas.animate((dt) -> bulletManager.bulletsIntersect(player, terrain));
     }
 
     public void beginGame(){
@@ -75,6 +95,7 @@ public class GameDescription {
         canvas.remove(gameRules3);
         canvas.remove(gameRules4);
         canvas.remove(gameRules5);
+        canvas.remove(sprite);
         canvas.pause(100);
     }
 }
