@@ -12,6 +12,7 @@ public class BulletHell {
     private Player player;
     private int currentLife;
     private int currentRound = 0;
+    private static boolean started = false;
     private BulletManager bulletManager;
     private HeartManager heartManagement;
     private PowerManager powerManager;
@@ -19,7 +20,7 @@ public class BulletHell {
     private AnimateManager animationManagement;
 
     private RoundTitle roundTitle;
-    // private GameDescription gamedescription;
+    private GameDescription gamedescription;
     private Terrain terrain;
 
     // private Boolean booleanholder = true;
@@ -29,11 +30,11 @@ public class BulletHell {
     public BulletHell() {
         canvas = new CanvasWindow("Bullet Hell!", 800, 800);
         canvas.add(new Rectangle(0, 40, 800, 1));
-        
+
         bulletManager = new BulletManager(canvas);
         heartManagement = new HeartManager(canvas);
         roundTitle = new RoundTitle(canvas);
-        // gamedescription = new GameDescription(canvas);
+        gamedescription = new GameDescription(canvas);
         terrain = new Terrain(canvas);
 
         animationManagement = new AnimateManager(canvas);
@@ -41,14 +42,17 @@ public class BulletHell {
 
     public static void main(String[] args) {
         BulletHell bulletHell = new BulletHell();
-        bulletHell.start();
+        bulletHell.gamedescription.addRules();
+        bulletHell.canvas.onClick((d) -> {
+            if (!started) {
+                bulletHell.gamedescription.beginGame();
+                bulletHell.start();
+            }
+        });
     }
 
     public void start() {
-        // while (preGameText()) {
-        //     gamedescription.addRules();
-        // }
-        // gamedescription.beginGame();
+        started = true;
         setUpGame();
         canvas.animate(dt -> {
             if (currentLife > 0) {
@@ -156,6 +160,9 @@ public class BulletHell {
     public void newRound() {
         currentRound++;
         roundTitle.changeTitle(currentRound);
+        for (Rectangle rectangle : terrain.getTerrain()){
+            canvas.remove(rectangle);
+        }
         terrain.SummonTerrain(3);
         bulletManager.spawnBullets(3 + currentRound * 2, player, terrain);
         canvas.draw();
@@ -181,15 +188,6 @@ public class BulletHell {
         System.out.println("You have LOST!");
         canvas.closeWindow();
     }
-
-    // public boolean preGameText() {
-    //     canvas.onKeyDown(event -> {
-    //         if (event.getKey() == Key.SPACE){
-    //             booleanholder = false;
-    //         }
-    //     });
-    //     return booleanholder;
-    // } 
 
     /**
      * Removes hearts based on the player's lives left
