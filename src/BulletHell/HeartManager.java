@@ -43,4 +43,11 @@ public class HeartManager {
         canvas.remove(heartToRemove);
         allHearts.remove(heartToRemove);
     }
+
+    /**
+     * Checks if the player still have any remaining hearts.
+     */
+    public boolean heartsLeft() {
+        return !allHearts.isEmpty();
+    }
 }

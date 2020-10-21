@@ -10,7 +10,7 @@ import edu.macalester.graphics.events.Key;
 public class BulletHell {
     private CanvasWindow canvas;
     private Player player;
-    private int currentLife;
+    // private int currentLife;
     private int currentRound = 0;
     private static boolean started = false;
 
@@ -57,7 +57,7 @@ public class BulletHell {
         started = true;
         setUpGame();
         canvas.animate(dt -> {
-            if (currentLife > 0) {
+            if (heartManager.heartsLeft()) {
                 if (!bulletManager.bulletsLeft()) {
                     newRound();
                 }
@@ -78,7 +78,6 @@ public class BulletHell {
         heartManager.generateHearts(3);
         createPlayer(0.1);
         createPowerups();
-        currentLife = MAX_LIFE;
         // createSprite(0.1);
     }
 
@@ -165,7 +164,6 @@ public class BulletHell {
     private void playerIsHit() {
         if (bulletManager.bulletsIntersect(player, terrain)) {
             heartManager.removeHeart();
-            currentLife -= 1;
         }
     }
 
