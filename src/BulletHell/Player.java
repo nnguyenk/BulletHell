@@ -4,17 +4,18 @@ import java.awt.Color;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Rectangle;
+import edu.macalester.graphics.events.Key;
 
 public class Player {
     public static final int PLAYER_WIDTH = 40; 
     public static final int PLAYER_HEIGHT = 50; 
-    public static final int PLAYER_SPEED = 200;
+    public static final int PLAYER_SPEED = 4;
     public static final double MAX_IMMUNITY = 2; // The maximum number of seconds the player is immuned.
 
     private Rectangle playerShape;
     private CanvasWindow canvas;
-    private double leftX;
-    private double topY;
+    private double leftX, topY;
+    private double dx, dy;
     private double remainingImmunity;
 
     private boolean frozen; // If true, prevents the player from moving.
@@ -30,43 +31,79 @@ public class Player {
     }
 
     /**
-     * Moves the player left by a set amount when called.
+     * Makes the player move forward in its current direction if it is not frozen.
      */
-    public void moveLeft(double dt) {
-        if (playerShape.getX() > 0 && !frozen) {
-            leftX -= PLAYER_SPEED * dt;
-            playerShape.setX(leftX);
+    public void move() {
+        if (!frozen) {
+            double newX = playerShape.getX() + dx;
+            double newY = playerShape.getY() + dy;
+            if (newX >= 0 && newX <= canvas.getWidth() - PLAYER_WIDTH
+                && newY >= 40 && newY <= canvas.getHeight() - PLAYER_HEIGHT) {
+                leftX = newX;
+                topY = newY;
+                playerShape.setPosition(leftX, topY);
+            }
         }
     }
 
     /**
-     * Moves the player right by a set amount when called.
+     * Stops all the movements of the player.
      */
-    public void moveRight(double dt) {
-        if (playerShape.getX() < canvas.getWidth() - PLAYER_WIDTH && !frozen){
-            leftX += PLAYER_SPEED * dt;
-            playerShape.setX(leftX);
+    public void stop() {
+        dx = 0;
+        dy = 0;
+    }
+
+    /**
+     * Turns the player in the same diraction as the key.
+     * 
+     * @param key The input direction key.
+     */
+    public void turn(Key key) {
+        if (key == Key.LEFT_ARROW) {
+            turnLeft();
+        }
+        if (key == Key.RIGHT_ARROW) {
+            turnRight();
+        }
+        if (key == Key.UP_ARROW) {
+            turnUp();
+        }
+        if (key == Key.DOWN_ARROW) {
+            turnDown();
         }
     }
 
     /**
-     * Moves the player up by a set amount when called.
+     * Makes the player start moving left.
      */
-    public void moveUp(double dt) {
-        if (playerShape.getY() > 40 && !frozen) {
-            topY -= PLAYER_SPEED * dt;
-            playerShape.setY(topY);
-        }
+    private void turnLeft() {
+        dx = -PLAYER_SPEED;
+        dy = 0;
     }
 
     /**
-     * Moves the player down by a set amount when called.
+     * Makes the player start moving right.
      */
-    public void moveDown(double dt) {
-        if (playerShape.getY() < canvas.getHeight() - PLAYER_HEIGHT && !frozen){
-            topY += PLAYER_SPEED * dt;
-            playerShape.setY(topY);
-        }
+    private void turnRight() {
+        dx = PLAYER_SPEED;
+        dy = 0;
+    }
+
+    /**
+     * Makes the player start moving up.
+     */
+    private void turnUp() {
+        dx = 0;
+        dy = -PLAYER_SPEED;
+    }
+
+    /**
+     * Makes the player start moving up.
+     */
+    private void turnDown() {
+        dx = 0;
+        dy = PLAYER_SPEED;
     }
 
     /**
@@ -209,6 +246,3 @@ better way:
     canvas.onKeyUp()   →   ONLY IF key matches current direction, then stop
 
 */
-
-
-
