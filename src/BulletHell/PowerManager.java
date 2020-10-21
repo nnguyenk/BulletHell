@@ -24,6 +24,11 @@ public class PowerManager {
         Eraser eraser = new Eraser(bulletHell);
         allPowerups.add(eraser);
         activateKeys.add(eraser.getKey());
+
+        Heal heal = new Heal(bulletHell);
+        allPowerups.add(heal);
+        activateKeys.add(heal.getKey());
+
     }
 
     /**

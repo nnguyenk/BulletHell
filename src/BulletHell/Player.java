@@ -201,7 +201,9 @@ public class Player {
      */
     public void endErasing() {
         erasing = false;
-        changeColor(Color.BLUE);
+        if (!isHealing()) {
+            changeColor(Color.BLUE);
+        }
     }
 
     /**
@@ -224,49 +226,12 @@ public class Player {
      */
     public void endHealing() {
         healing = false;
-        changeColor(Color.BLUE);
+        if (!isErasing() && !isImmune()) {
+            changeColor(Color.BLUE);
+        }
     }
 
     private void drawSprite() {
 
     }
 }
-
-
-/*
-
-in game class:
-
-    animate → player.move(dt)  always
-        (sometimes dx = 0 and dy = 0)
-    
-in player class:
-
-    move(dt)  ← in current direction
-
-    turnLeft, turnUp, stop, etc...  ← DO NOT move player, just set dx and dy
-
-    OR  changeDirection(Direction)   // ?????????
-    enum Direction {
-        UP(0, -1), DOWN(0, 1), LEFT(-1, 0), RIGHT(1, 0);
-        
-        private final int dx, dy;
-
-        Direction(...) {
-            ...
-        }
-    }
-
-––––––––––––––––––––
-
-simple way:
-
-    in animate, canvas.getKeysPressed()
-
-better way:
-
-    canvas.onKeyDown()  →   sets player direction based on key
-
-    canvas.onKeyUp()   →   ONLY IF key matches current direction, then stop
-
-*/

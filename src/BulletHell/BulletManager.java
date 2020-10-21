@@ -104,6 +104,7 @@ public class BulletManager {
      * Changes the value of hitPlayer to indicate that the user is damaged.
      * Freezes the player if the bullet is cyan, or prevent immunity if it's yellow.
      * If the bullet is green, the screen changes color during invulnerability.
+     * The bullets also end any healing prematurely.
      */
     private void bulletDamagePlayer(Bullet bullet, Player player) {
         if (!player.isImmune()) {
@@ -117,6 +118,9 @@ public class BulletManager {
             }
             if (bullet.getType() == BulletType.GREEN) {
                 canvas.setBackground(new Color(35, 125, 35));
+            }
+            if (player.isHealing()) {
+                player.endHealing();
             }
         }
     }
