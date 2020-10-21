@@ -19,7 +19,8 @@ public class Player {
     private double remainingImmunity;
 
     private boolean frozen; // If true, prevents the player from moving.
-    private boolean erasing; // If true, allows the player to erase bullets without losing lives. 
+    private boolean erasing; // If true, allows the player to erase bullets without losing lives.
+    private boolean healing; // If true, allows the player to enter the healing state. 
 
 
     public Player(CanvasWindow canvas) {
@@ -181,7 +182,7 @@ public class Player {
     }
 
     /**
-     * Changes the player's color to yellow and begins the 'eraser' state.
+     * Changes the player's color to yellow and begins the eraser state.
      */
     public void startErasing() {
         erasing = true;
@@ -189,21 +190,44 @@ public class Player {
     }
 
     /**
-     * Checks if the player is still in the 'eraser' state.
+     * Checks if the player is still in the eraser state.
      */
     public boolean isErasing() {
         return erasing;
     }
 
     /**
-     * Ends the 'eraser' state and returns the player's color back to blue.
+     * Ends the eraser state and returns the player's color back to blue.
      */
     public void endErasing() {
         erasing = false;
         changeColor(Color.BLUE);
     }
 
-    private void drawSprite(){
+    /**
+     * Changes the player's color to yellow and begins the eraser state.
+     */
+    public void startHealing() {
+        healing = true;
+        changeColor(Color.GREEN);
+    }
+
+    /**
+     * Checks if the player is still in the eraser state.
+     */
+    public boolean isHealing() {
+        return healing;
+    }
+
+    /**
+     * Ends the eraser state and returns the player's color back to blue.
+     */
+    public void endHealing() {
+        healing = false;
+        changeColor(Color.BLUE);
+    }
+
+    private void drawSprite() {
 
     }
 }
