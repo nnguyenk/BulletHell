@@ -40,7 +40,7 @@ public class Terrain {
      * @return a list of all the terrain objects
      */
     public List<Rectangle> getTerrain() {
-        return allTerrain;                     //NOT SURE IF THIS IS NECESSARY
+        return allTerrain;
     }
 
     /**
