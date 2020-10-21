@@ -61,8 +61,8 @@ public class Slow implements Powerups {
     }
 
     /**
-     * Reduces the cooldown of this power if while it is not in effect.
-     * Once the CD is over, changes the color of the box to indicate that the power is ready.
+     * Reduces the cooldown of this power if it is not in effect.
+     * Slowly fills up the box to indicate how much cooldown remains.
      * 
      * @param dt The number of seconds that will be deducted.
      */
@@ -71,10 +71,17 @@ public class Slow implements Powerups {
             cooldown -= dt;
             fill(cooldown);
             if (!onCooldown()) {
-                remainingText.setText("Q");
-                shape.add(remainingText);
+                endCooldown();
             }
         }
+    }
+
+    /**
+     * Indicates that the cooldown is over with the letter 'Q'.
+     */
+    private void endCooldown() {
+        remainingText.setText("Q");
+        shape.add(remainingText);
     }
 
     /**
@@ -105,22 +112,29 @@ public class Slow implements Powerups {
 
     /**
      * Reduces the remaining time of the slow effect.
-     * Ends the effect if the duration has expired, and puts the power on cooldown.
+     * Ends the effect if the duration has expired.
      * 
      * @param dt The number of seconds that will be deducted.
      */
     public void reduceDuration(double dt) {
         if (inEffect()) {
-            BulletManager manager = mainGame.getBulletManager();
             remainingSlow -= dt;
             remainingText.setText(new DecimalFormat("#").format(remainingSlow)); // Truncate all decimal points.
             shape.add(remainingText);
             if (!inEffect()) {
-                restoreBullets(manager);
-                cooldown = MAX_COOLDOWN;
-                remainingText.setText("");
+                deactivate();
             }
         }
+    }
+
+    /**
+     * Restores the speed of the bullets, and puts the power on cooldown.
+     */
+    private void deactivate() {
+        BulletManager manager = mainGame.getBulletManager();
+        restoreBullets(manager);
+        cooldown = MAX_COOLDOWN;
+        remainingText.setText("");
     }
 
     /**

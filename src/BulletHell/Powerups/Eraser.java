@@ -60,8 +60,8 @@ public class Eraser implements Powerups {
     }
 
     /**
-     * Reduces the cooldown of this power if while it is not in effect.
-     * Once the CD is over, changes the color of the box to indicate that the power is ready.
+     * Reduces the cooldown of this power if it is not in effect.
+     * Slowly fills up the box to indicate how much cooldown remains.
      * 
      * @param dt The number of seconds that will be deducted.
      */
@@ -70,10 +70,17 @@ public class Eraser implements Powerups {
             cooldown -= dt;
             fill(cooldown);
             if (!onCooldown()) {
-                remainingText.setText("W");
-                shape.add(remainingText);
+                endCooldown();
             }
         }
+    }
+
+    /**
+     * Indicates that the cooldown is over with the letter 'W'.
+     */
+    private void endCooldown() {
+        remainingText.setText("W");
+        shape.add(remainingText);
     }
 
     /**
@@ -110,17 +117,25 @@ public class Eraser implements Powerups {
      */
     public void reduceDuration(double dt) {
         if (inEffect()) {
-            Player player = mainGame.getPlayer();
             remainingEraser -= dt;
             remainingText.setText(new DecimalFormat("#").format(remainingEraser)); // Truncate all decimal points.
             shape.add(remainingText);
             if (!inEffect()) {
-                player.endErasing();
-                cooldown = MAX_COOLDOWN;
-                remainingText.setText("");
+                deactivate();
             }
         }
     }
+
+    /**
+     * Makes the player vulnerable again, and puts the power on cooldown.
+     */
+    private void deactivate() {
+        Player player = mainGame.getPlayer();
+        player.endErasing();
+        cooldown = MAX_COOLDOWN;
+        remainingText.setText("");
+    }
+
 
     /**
      * Returns the shape of the power.
