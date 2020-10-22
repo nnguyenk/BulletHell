@@ -28,7 +28,7 @@ public class BulletManager {
             do {
                 newBullet = createRandomBullet();
             }
-            while (newBullet.collidePlayer(player) || newBullet.collideTerrain(terrain));
+            while (newBullet.closeToPlayer(player) || newBullet.collideTerrain(terrain));
 
             canvas.add(newBullet.getShape());
             bullets.add(newBullet);

@@ -134,6 +134,18 @@ public abstract class Bullet {
     }
 
     /**
+     * Returns true if the bullet is close to the player (a 200 x 200 square around the player).
+     * Useful to make sure that the player can't get hit instantly every round start.
+     */
+    public boolean closeToPlayer(Player player) {
+        return (
+            xCenter < player.getCenterX() + 200
+            && xCenter > player.getCenterX() - 200
+            && yCenter < player.getCenterY() + 200
+            && yCenter > player.getCenterY() - 200);
+    }
+
+    /**
      * Returns true if the bullet collides with a terrain.
      * 
      * @param terrain
