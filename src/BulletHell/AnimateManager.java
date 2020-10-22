@@ -66,8 +66,8 @@ public class AnimateManager {
     }
 
     private void generateSprite(Image sprite, Player player){
-        sprite.setMaxHeight(player.getPlayerShape().getHeight() - 5);
-        sprite.setMaxWidth(player.getPlayerShape().getWidth() - 5);
+        sprite.setMaxHeight(90);
+        sprite.setMaxWidth(60);
         sprite.setCenter(player.getPlayerShape().getCenter());
         canvas.add(sprite);
         if(!spriteWasFrozen){
@@ -117,7 +117,7 @@ public class AnimateManager {
     }
 
     public void spriteThaw(Player player, boolean isFrozen){
-        if(spriteWasFrozen){
+        if(spriteWasFrozen && sprite != null){
             canvas.remove(sprite);
             generateSprite(sprite, player);
             spriteWasFrozen = false;

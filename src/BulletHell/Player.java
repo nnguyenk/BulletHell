@@ -7,8 +7,8 @@ import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.events.Key;
 
 public class Player {
-    public static final int PLAYER_WIDTH = 60; 
-    public static final int PLAYER_HEIGHT = 90; 
+    public static final int PLAYER_WIDTH = 30; 
+    public static final int PLAYER_HEIGHT = 60; 
     public static final int PLAYER_SPEED = 4;
     public static final double MAX_IMMUNITY = 2;
 
@@ -27,7 +27,7 @@ public class Player {
         this.canvas = canvas;
         playerShape = new Rectangle(canvas.getWidth() / 2, canvas.getHeight() / 2, PLAYER_WIDTH, PLAYER_HEIGHT);
         playerShape.setFilled(false);
-        playerShape.setStroked(false);
+        playerShape.setStrokeColor(Color.white);
         leftX = playerShape.getX();
         topY = playerShape.getY();
     }

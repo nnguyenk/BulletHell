@@ -79,8 +79,8 @@ public class BulletHell {
         canvas.add(background);
         heartManager.generateHearts(3);
         createPlayer(0.1);
+        createSprite();
         createPowerups();
-        canvas.add(new Rectangle(0, 40, 800, 1));
         roundTitle = new RoundTitle(canvas);
         
     }
@@ -99,18 +99,22 @@ public class BulletHell {
         canvas.onKeyDown(event -> {
             currentDirection = event.getKey();
             player.turn(currentDirection);
+        });
+        canvas.onKeyUp(event -> {
+            if (currentDirection == event.getKey())
+            player.stop();
+        });
+    }
+
+    private void createSprite(){
+        canvas.onKeyDown(event -> {
             if  (currentSpriteDirection != event.getKey()){
                 currentSpriteDirection = event.getKey();
                 moveSprite(currentSpriteDirection);
             }else if(currentSpriteDirection == event.getKey()){
                 currentSpriteDirection = event.getKey();
                 moveSprite(currentSpriteDirection);
-            }
-        });
-        canvas.onKeyUp(event -> {
-            if (currentDirection == event.getKey())
-            player.stop();
-        });
+            }});
     }
 
 
