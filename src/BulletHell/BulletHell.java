@@ -30,11 +30,9 @@ public class BulletHell {
 
     private BulletHell() {
         canvas = new CanvasWindow("Bullet Hell!", 800, 800);
-        canvas.add(new Rectangle(0, 40, 800, 1));
 
         bulletManager = new BulletManager(canvas);
         heartManager = new HeartManager(canvas);
-        roundTitle = new RoundTitle(canvas);
         gamedescription = new GameDescription(canvas);
         terrain = new Terrain(canvas);
 
@@ -65,7 +63,7 @@ public class BulletHell {
                 reduceAllTimer(dt);
                 playerIsHit();
             }
-            else { // breaks out of the animation loop
+            else {
                 lose();
             }
         });
@@ -78,7 +76,8 @@ public class BulletHell {
         heartManager.generateHearts(3);
         createPlayer(0.1);
         createPowerups();
-        // createSprite(0.1);
+        canvas.add(new Rectangle(0, 40, 800, 1));
+        roundTitle = new RoundTitle(canvas);
     }
 
     /**
