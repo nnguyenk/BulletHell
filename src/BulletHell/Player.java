@@ -26,7 +26,7 @@ public class Player {
     public Player(CanvasWindow canvas) {
         this.canvas = canvas;
         playerShape = new Rectangle(canvas.getWidth() / 2, canvas.getHeight() / 2, PLAYER_WIDTH, PLAYER_HEIGHT);
-        playerShape.setFillColor(Color.WHITE);
+        playerShape.setFilled(false);
         playerShape.setStroked(false);
         leftX = playerShape.getX();
         topY = playerShape.getY();
@@ -162,7 +162,7 @@ public class Player {
     private void endImmunity() {
         thaw();
         if (!erasing) {
-            changeColor(Color.WHITE);
+            playerShape.setFilled(false);
         }
     }
 
@@ -180,7 +180,7 @@ public class Player {
     public void thaw() {
         if (frozen) {
             frozen = false;
-            changeColor(Color.WHITE);
+            playerShape.setFilled(false);
         }
     }
 
@@ -209,7 +209,7 @@ public class Player {
     public void endErasing() {
         erasing = false;
         if (!isHealing()) {
-            changeColor(Color.WHITE);
+            playerShape.setFilled(false);
         }
     }
 
@@ -234,7 +234,7 @@ public class Player {
     public void endHealing() {
         healing = false;
         if (!isErasing() && !isImmune()) {
-            changeColor(Color.WHITE);
+            playerShape.setFilled(false);
         }
     }
 }
