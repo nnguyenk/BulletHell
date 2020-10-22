@@ -8,7 +8,6 @@ import edu.macalester.graphics.Image;
 
 public class HeartManager {
     private CanvasWindow canvas;
-
     private List<Image> allHearts = new ArrayList<>();
 
     public HeartManager(CanvasWindow canvas) {

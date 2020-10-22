@@ -13,8 +13,8 @@ import edu.macalester.graphics.events.Key;
 
 public class Eraser implements Powerups {
     public static final double SIZE = 30;
-    public static final int MAX_COOLDOWN = 10; // The number of seconds that this power is on cooldown.
-    public static final int MAX_DURATION = 5; // The maximum number of seconds the power is active.
+    public static final int MAX_COOLDOWN = 10;
+    public static final int MAX_DURATION = 5;
 
     private double remainingEraser;
     private double cooldown;
@@ -23,7 +23,7 @@ public class Eraser implements Powerups {
     private GraphicsGroup shape;
     private Rectangle border;
     private Rectangle energy;
-    private GraphicsText remainingText; // A text box that shows how many seconds left until the eraser expires.
+    private GraphicsText remainingText;
 
     public Eraser(BulletHell bulletHell) {
         mainGame = bulletHell;

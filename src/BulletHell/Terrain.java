@@ -15,7 +15,6 @@ public class Terrain {
         this.canvas = canvas;
     }
 
-
     /**
      * Spawns a number of terrain objects onto the screen corresponding to the integer parameter
      * @param numberOfTerrainObjects
@@ -34,7 +33,6 @@ public class Terrain {
             }   
         }    
     }
-
 
     /**
      * @return a list of all the terrain objects

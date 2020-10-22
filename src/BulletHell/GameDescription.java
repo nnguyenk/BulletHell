@@ -62,11 +62,17 @@ public class GameDescription {
         terrain = new Terrain(canvas);
     }
 
+    /**
+     * Adds the rules to the canvas
+     */
     public void addRules(){
         setGameRules();
         addToCanvas();
     }
 
+    /**
+     * Sets the text for the game rules
+     */
     private void setGameRules(){
         gameRules1.setText("Here are the rules: Move around with the arrow keys. Use power ups with q and e.");
         gameRules2.setText("Q is a bullet slow, W is a pacman-esque eat bullets powerup, and E is a delayed heal (7 seconds)");
@@ -76,6 +82,9 @@ public class GameDescription {
         gameRules6.setText("Click your mouse to begin playing");
     }
 
+    /**
+     * Adds the game rules and game rule background to the screen. Adds bouncing bullets
+     */
     private void addToCanvas(){
         bulletManager.spawnBullets(7, player, terrain);
 
@@ -100,6 +109,9 @@ public class GameDescription {
         });
     }
 
+    /**
+     * Clears everything for the game to begin
+     */
     public void beginGame(){
         canvas.setBackground(Color.WHITE);
         animating = false;

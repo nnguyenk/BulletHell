@@ -10,22 +10,21 @@ import edu.macalester.graphics.events.Key;
 public class BulletHell {
     private CanvasWindow canvas;
     private Player player;
-    // private int currentLife;
-    private int currentRound = 0;
-    private static boolean started = false;
 
     private BulletManager bulletManager;
     private HeartManager heartManager;
     private PowerManager powerManager;
-
     private AnimateManager animationManager;
 
     private RoundTitle roundTitle;
     private GameDescription gamedescription;
     private Terrain terrain;
-    private Key currentDirection; // Holds the most recent key pressed.
+
+    private Key currentDirection;
     private Key currentSpriteDirection;
 
+    private int currentRound = 0;
+    private static boolean started = false;
     public static final int MAX_LIFE = 3;
 
     private BulletHell() {

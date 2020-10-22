@@ -8,7 +8,7 @@ import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.events.Key;
 
 public class PowerManager {
-    public static final int GAP = 50; // The gap between the boxes + the width of the boxes.
+    public static final int GAP = 50;
 
     private List<Powerups> allPowerups = new ArrayList<>();
     private List<Key> activateKeys = new ArrayList<>();

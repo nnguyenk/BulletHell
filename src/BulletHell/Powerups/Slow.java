@@ -14,8 +14,8 @@ import edu.macalester.graphics.events.Key;
 
 public class Slow implements Powerups {
     public static final double SIZE = 30;
-    public static final int MAX_COOLDOWN = 10; // The number of seconds that this power is on cooldown.
-    public static final int MAX_DURATION = 5; // The maximum number of seconds the power is active.
+    public static final int MAX_COOLDOWN = 10;
+    public static final int MAX_DURATION = 5;
 
     private double remainingSlow;
     private double cooldown;
@@ -24,7 +24,7 @@ public class Slow implements Powerups {
     private GraphicsGroup shape;
     private Rectangle border;
     private Rectangle energy;
-    private GraphicsText remainingText; // A text box that shows how many seconds left until the slow expires.
+    private GraphicsText remainingText;
 
     public Slow(BulletHell bulletHell) {
         mainGame = bulletHell;

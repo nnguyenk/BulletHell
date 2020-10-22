@@ -12,6 +12,9 @@ public class RoundTitle {
         canvas.add(roundTitle);
     }
 
+    /**
+     * Changes the round title at the top of the screen to match the round
+     */
     public void changeTitle(int roundNumber){
         roundTitle.setText("Bullet Hell Round " + roundNumber);
     }

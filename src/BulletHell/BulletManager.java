@@ -13,7 +13,7 @@ public class BulletManager {
     private List<Bullet> bullets = new ArrayList<>();
     private List<Bullet> bulletsToRemove = new ArrayList<>();
 
-    private boolean hitPlayer; // A boolean to determine whether any bullet has hit the player.
+    private boolean hitPlayer;
 
     public BulletManager(CanvasWindow canvas) {
         this.canvas = canvas;
@@ -150,22 +150,3 @@ public class BulletManager {
         return Collections.unmodifiableList(bullets);
     }
 }
-
-
-
-
-
-
-/*
-
-public enum CompassDirection {
-    NORTH, EAST, SOUTH, WEST;
-}
-
-void goInDirection(CompassDirection direction) {
-    if (direction == CompassDirection.NORTH) {
-
-    }
-}
-
-*/

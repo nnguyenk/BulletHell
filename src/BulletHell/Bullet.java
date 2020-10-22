@@ -14,7 +14,7 @@ public abstract class Bullet {
     
     private int maxLives = 4; 
 
-    private Point top, left, bottom, right;  // Reference points, slightly outside of the bullet
+    private Point top, left, bottom, right;
     private CanvasWindow canvas;
     private Color color;
     private Ellipse shape;
@@ -207,5 +207,3 @@ public abstract class Bullet {
         ySpeed *= ratio;
     }
 }
-
-// Comb through code for dead logic/etc

@@ -14,8 +14,8 @@ import edu.macalester.graphics.events.Key;
 
 public class Heal implements Powerups {
     public static final double SIZE = 30;
-    public static final int MAX_COOLDOWN = 15; // The number of seconds that this power is on cooldown.
-    public static final int MAX_DURATION = 7; // The maximum number of seconds the power is active.
+    public static final int MAX_COOLDOWN = 15;
+    public static final int MAX_DURATION = 7;
 
     private double remainingHeal;
     private double cooldown;
@@ -24,7 +24,7 @@ public class Heal implements Powerups {
     private GraphicsGroup shape;
     private Rectangle border;
     private Rectangle energy;
-    private GraphicsText remainingText; // A text box that shows how many seconds left until the slow expires.
+    private GraphicsText remainingText;
 
     public Heal(BulletHell bulletHell) {
         mainGame = bulletHell;

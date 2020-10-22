@@ -10,7 +10,7 @@ public class Player {
     public static final int PLAYER_WIDTH = 60; 
     public static final int PLAYER_HEIGHT = 90; 
     public static final int PLAYER_SPEED = 4;
-    public static final double MAX_IMMUNITY = 2; // The maximum number of seconds the player is immuned.
+    public static final double MAX_IMMUNITY = 2;
 
     private Rectangle playerShape;
     private CanvasWindow canvas;
@@ -18,9 +18,9 @@ public class Player {
     private double dx, dy;
     private double remainingImmunity;
 
-    private boolean frozen; // If true, prevents the player from moving.
-    private boolean erasing; // If true, allows the player to erase bullets without losing lives.
-    private boolean healing; // If true, allows the player to enter the healing state. 
+    private boolean frozen;
+    private boolean erasing;
+    private boolean healing;
 
 
     public Player(CanvasWindow canvas) {
