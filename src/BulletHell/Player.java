@@ -6,15 +6,20 @@ import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.events.Key;
 
+/**
+ * A class that represents the player of Bullet Hell.
+ * Primarily responsible for checking the player's immunity/active powerups.
+ * Also has a hitbox that moves according to input keys.
+ */
 public class Player {
     public static final int PLAYER_WIDTH = 50;
     public static final int PLAYER_HEIGHT = 80;
-    public static final int HITBOX_RADIUS = 50; 
+    public static final int HITBOX_RADIUS = 60; 
     public static final int PLAYER_SPEED = 4;
     public static final double MAX_IMMUNITY = 2;
 
-    private Ellipse playerHitbox;
     private CanvasWindow canvas;
+    private Ellipse playerHitbox;
     private double leftX, topY;
     private double dx, dy;
     private double remainingImmunity;
@@ -32,7 +37,7 @@ public class Player {
             HITBOX_RADIUS,
             HITBOX_RADIUS);
         playerHitbox.setFilled(false);
-        playerHitbox.setStrokeColor(Color.white);
+        playerHitbox.setStroked(false);
         leftX = playerHitbox.getX();
         topY = playerHitbox.getY();
     }
@@ -203,7 +208,10 @@ public class Player {
         }
     }
 
-    public boolean isFrozen(){
+    /**
+     * Returns true if the player is currently frozen.
+     */
+    public boolean isFrozen() {
         return frozen;
     }
 

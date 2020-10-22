@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import edu.macalester.graphics.*;
 import edu.macalester.graphics.events.Key;
 
+/**
+ * A class that contains and controls the sprite of the player.
+ */
 public class AnimateManager {
-    CanvasWindow canvas;
+    private CanvasWindow canvas;
     
-
     private Image sprite;
     private int frameNumber = 0;
     private boolean L = false;
@@ -28,7 +30,7 @@ public class AnimateManager {
     ArrayList<Image> frozen = new ArrayList<Image>();
 
 
-    public AnimateManager(CanvasWindow canvas){
+    public AnimateManager(CanvasWindow canvas) {
         this.canvas = canvas;
         directions.add(L);
         directions.add(R);
@@ -42,8 +44,8 @@ public class AnimateManager {
         frozen.add(new Image("frozen.png"));
     }
 
-    public void animateSprite(Key key, Player player, CanvasWindow canvas, boolean isFrozen){
-        if(frameNumber == 4){
+    public void animateSprite(Key key, Player player, CanvasWindow canvas, boolean isFrozen) {
+        if (frameNumber == 4) {
             frameNumber = 0;
         }
         if (key == Key.LEFT_ARROW) {
@@ -61,45 +63,45 @@ public class AnimateManager {
         getSprite();
     }
 
-    public Image getSprite(){
+    public Image getSprite() {
         return sprite;
     }
 
-    private void generateSprite(Image sprite, Player player){
+    private void generateSprite(Image sprite, Player player) {
         sprite.setMaxHeight(90);
         sprite.setMaxWidth(60);
         sprite.setCenter(player.getPlayerHitbox().getCenter());
         canvas.add(sprite);
-        if(!spriteWasFrozen){
+        if (!spriteWasFrozen) {
             frameNumber += 1;
         }
         
     }
 
-    public void placeSprite(Player player){
-        if(sprite != null) {
+    public void placeSprite(Player player) {
+        if (sprite != null) {
             canvas.add(sprite);
             sprite.setCenter(player.getPlayerHitbox().getCenter());
             canvas.remove(sprite);
         }
     }
 
-    private void fillImagelist(ArrayList<Image> images, String direction){
-        for(int i = 0; i < 4; i++){
+    private void fillImagelist(ArrayList<Image> images, String direction) {
+        for(int i = 0; i < 4; i++) {
             images.add(new Image(direction + i + ".png"));
         }
     }
 
-    private void spriteChange(Player player, Key key, ArrayList<Image> spriteSet, boolean isFrozen){
+    private void spriteChange(Player player, Key key, ArrayList<Image> spriteSet, boolean isFrozen) {
         spriteThaw(player, isFrozen);
-        if(spriteHasMoved == true && sprite != null && lastkey != key && !isFrozen){
+        if (spriteHasMoved == true && sprite != null && lastkey != key && !isFrozen) {
             canvas.remove(sprite);
             frameNumber = 0;
             spriteHasMoved = false;
-        }else if(lastkey == key && sprite != null && !isFrozen && !spriteWasFrozen){
+        } else if (lastkey == key && sprite != null && !isFrozen && !spriteWasFrozen) {
             canvas.remove(sprite);
         }
-        if(!isFrozen){
+        if (!isFrozen) {
             sprite = spriteSet.get(frameNumber);
             generateSprite(sprite, player);
             lastkey = key;
@@ -107,8 +109,8 @@ public class AnimateManager {
         }
     }
 
-    public void spriteFreeze(boolean isFrozen, Player player){
-        if(isFrozen){
+    public void spriteFreeze(boolean isFrozen, Player player) {
+        if (isFrozen) {
             canvas.remove(sprite);
             sprite = frozen.get(0);
             generateSprite(sprite, player);
@@ -116,8 +118,8 @@ public class AnimateManager {
         }
     }
 
-    public void spriteThaw(Player player, boolean isFrozen){
-        if(spriteWasFrozen && sprite != null){
+    private void spriteThaw(Player player, boolean isFrozen) {
+        if (spriteWasFrozen && sprite != null){
             canvas.remove(sprite);
             generateSprite(sprite, player);
             spriteWasFrozen = false;

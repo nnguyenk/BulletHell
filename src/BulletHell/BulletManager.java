@@ -1,6 +1,5 @@
 package BulletHell;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,6 +7,10 @@ import java.util.List;
 import BulletHell.BulletTypes.*;
 import edu.macalester.graphics.CanvasWindow;
 
+/**
+ * A helper class responsible for holding and updating the positions of all bullets.
+ * Also responsible for bullet/player interactions and bullets removal.
+ */
 public class BulletManager {
     private CanvasWindow canvas;
     private List<Bullet> bullets = new ArrayList<>();
@@ -21,6 +24,8 @@ public class BulletManager {
 
     /**
      * Adds all bullets to the canvas, makes sure that the bullets are not spawned on top of the player or terrains.
+     * 
+     * @param bulletsNumber The number of bullets to be added.
      */
     public void spawnBullets(int bulletsNumber, Player player, Terrain terrain) {
         for (int i = 0; i < bulletsNumber; i++) {
@@ -64,7 +69,7 @@ public class BulletManager {
 
     /**
      * Updates the position of all bullets.
-     * Deletes any bullet that collides with the player when immunity is inactive.
+     * When immunity is inactive, deletes any bullet that collides with the player.
      * 
      * @return true if the player was damaged by any bullets, without eraser activated.
      */
@@ -103,7 +108,6 @@ public class BulletManager {
     /**
      * Changes the value of hitPlayer to indicate that the user is damaged.
      * Freezes the player if the bullet is cyan, or prevent immunity if it's yellow.
-     * If the bullet is green, the screen changes color during invulnerability.
      * The bullets also end any healing prematurely.
      */
     private void bulletDamagePlayer(Bullet bullet, Player player) {
@@ -116,9 +120,6 @@ public class BulletManager {
             if (bullet.getType() == BulletType.CYAN) {
                 player.freeze();
             }
-            if (bullet.getType() == BulletType.GREEN) {
-                canvas.setBackground(new Color(35, 125, 35));
-            }
             if (player.isHealing()) {
                 player.endHealing();
             }
@@ -126,7 +127,7 @@ public class BulletManager {
     }
 
     /**
-     * Removes the bullet from tha canvas and the list.
+     * Removes the bullet from the canvas and the list.
      */
     private void removeBullets() {
         for (Bullet bulletToRemove : bulletsToRemove) {
@@ -137,7 +138,7 @@ public class BulletManager {
     }
     
     /**
-     * Returns true if there's still bullets.
+     * Returns true if there's still bullets left on the screen.
      */
     public boolean bulletsLeft() {
         return (bullets.size() > 0);

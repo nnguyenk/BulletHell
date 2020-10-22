@@ -7,6 +7,9 @@ import edu.macalester.graphics.Image;
 
 import java.awt.Color;
 
+/**
+ * A class to hold the tutorial text that shows up with every new Bullet Hell game.
+ */
 public class GameDescription {
     private CanvasWindow canvas;
     private GraphicsText gameRules1;
@@ -63,17 +66,17 @@ public class GameDescription {
     }
 
     /**
-     * Adds the rules to the canvas
+     * Adds the rules to the canvas.
      */
-    public void addRules(){
+    public void addRules() {
         setGameRules();
         addToCanvas();
     }
 
     /**
-     * Sets the text for the game rules
+     * Sets the text for the game rules.
      */
-    private void setGameRules(){
+    private void setGameRules() {
         gameRules1.setText("Here are the rules: Move around with the arrow keys. Use power ups with q and e.");
         gameRules2.setText("Q is a bullet slow, W is a pacman-esque eat bullets powerup, and E is a delayed heal (7 seconds)");
         gameRules3.setText("You have 3 lives, and will go invulnerable for some time upon being hit by bullets");
@@ -83,9 +86,9 @@ public class GameDescription {
     }
 
     /**
-     * Adds the game rules and game rule background to the screen. Adds bouncing bullets
+     * Adds the game rules and game rule background to the screen. Adds bouncing bullets.
      */
-    private void addToCanvas(){
+    private void addToCanvas() {
         bulletManager.spawnBullets(7, player, terrain);
 
         canvas.setBackground(Color.GREEN);
@@ -110,9 +113,9 @@ public class GameDescription {
     }
 
     /**
-     * Clears everything for the game to begin
+     * Clears everything for the game to begin.
      */
-    public void beginGame(){
+    public void beginGame() {
         canvas.setBackground(Color.WHITE);
         animating = false;
         canvas.removeAll();

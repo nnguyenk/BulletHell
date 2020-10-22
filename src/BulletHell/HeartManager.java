@@ -6,6 +6,9 @@ import java.util.List;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Image;
 
+/**
+ * A class that adds or removes hearts (lives) for the game Bullet Hell.
+ */
 public class HeartManager {
     private CanvasWindow canvas;
     private List<Image> allHearts = new ArrayList<>();
@@ -15,15 +18,15 @@ public class HeartManager {
     }
 
     /**
-     * Adds a number of heart(s) to the canvas.
+     * Adds a number of heart(s) to the canvas. Does nothing if the parameter is 0.
      * 
      * @param heartNumber The number of hearts to be added. 
      */
     public void generateHearts(int heartNumber) {
-        if (heartNumber == 0) {
+        if (heartNumber <= 0) {
             return;
         }
-        for (int i = 0; i < heartNumber; i++) {
+        for (int i = 0; i < Math.min(3, heartNumber); i++) {
             Image heart = new Image("Heart-1.png");
             heart.setMaxHeight(80);
             heart.setMaxWidth(80);

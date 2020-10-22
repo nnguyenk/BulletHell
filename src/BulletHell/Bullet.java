@@ -8,6 +8,11 @@ import java.awt.Color;
 
 import edu.macalester.graphics.*;
 
+/**
+ * A class that represents a bullet in the game Bullet Hell.
+ * Bullets can bounce between walls and terrains, but lose one life in the process.
+ * Each bullet has a type, which can give it additional activities.
+ */
 public abstract class Bullet {
     public static final double RADIUS = 20;
     public static final int SPEED = 4;
@@ -65,8 +70,8 @@ public abstract class Bullet {
     public abstract BulletType getType();
 
     /**
-     * Check if the ball collides with a brick, the paddle, or the walls, and 
-     * move the ball to its next position.
+     * Check if the bullet collides with walls or terrains. 
+     * Moves the bullet to its next position.
      */
     public void updatePosition(Terrain terrain) {
         setPoints();
@@ -89,7 +94,7 @@ public abstract class Bullet {
 
     /**
      * Reduces the life of the bullet when it collides with a horizontal surface.
-     * Then, if it's alive, change its direction and increases its speed.
+     * Then, if it's still alive, change its direction and increases its speed.
      */
     private void deflectHorizontal() {
         loseLife();
@@ -101,7 +106,7 @@ public abstract class Bullet {
 
     /**
      * Reduces the life of the bullet when it collides with a vertical surface.
-     * Then, if it's alive, change its direction and increases its speed.
+     * Then, if it's still alive, change its direction and increases its speed.
      */
     private void deflectVertical() {
         loseLife();
@@ -148,7 +153,7 @@ public abstract class Bullet {
     /**
      * Returns true if the bullet collides with a terrain.
      * 
-     * @param terrain
+     * @param terrain The terrain that can hinder the bullet's movement.
      */
     public boolean collideTerrain(Terrain terrain) {
         for (Point point : List.of(top, bottom, left, right)) {

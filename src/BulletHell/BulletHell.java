@@ -5,7 +5,7 @@ import edu.macalester.graphics.Image;
 import edu.macalester.graphics.events.Key;
 
 /**
- * The game of Bullet Hell
+ * The game of Bullet Hell. Created by Antonio Solis, Erik Borgehammar, and Nam Nguyen.
  */
 public class BulletHell {
     private CanvasWindow canvas;
@@ -36,7 +36,6 @@ public class BulletHell {
         heartManager = new HeartManager(canvas);
         gamedescription = new GameDescription(canvas);
         terrain = new Terrain(canvas);
-
         animationManager = new AnimateManager(canvas);
     }
 
@@ -118,16 +117,11 @@ public class BulletHell {
 
 
     private void moveSprite(Key key) {
-        if (key == Key.LEFT_ARROW) {
-            animationManager.animateSprite(key, player, canvas, player.isFrozen());
-        }
-        if (key == Key.RIGHT_ARROW) {
-            animationManager.animateSprite(key, player, canvas, player.isFrozen());
-        }
-        if (key == Key.UP_ARROW) {
-            animationManager.animateSprite(key, player, canvas, player.isFrozen());
-        }
-        if (key == Key.DOWN_ARROW) {
+        if (
+            key == Key.LEFT_ARROW
+            || key == Key.RIGHT_ARROW
+            || key == Key.UP_ARROW
+            || key == Key.DOWN_ARROW) {
             animationManager.animateSprite(key, player, canvas, player.isFrozen());
         }
     }
