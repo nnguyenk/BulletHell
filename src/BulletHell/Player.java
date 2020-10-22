@@ -3,16 +3,17 @@ package BulletHell;
 import java.awt.Color;
 
 import edu.macalester.graphics.CanvasWindow;
-import edu.macalester.graphics.Rectangle;
+import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.events.Key;
 
 public class Player {
-    public static final int PLAYER_WIDTH = 30; 
-    public static final int PLAYER_HEIGHT = 60; 
+    public static final int PLAYER_WIDTH = 50;
+    public static final int PLAYER_HEIGHT = 80;
+    public static final int HITBOX_RADIUS = 50; 
     public static final int PLAYER_SPEED = 4;
     public static final double MAX_IMMUNITY = 2;
 
-    private Rectangle playerShape;
+    private Ellipse playerHitbox;
     private CanvasWindow canvas;
     private double leftX, topY;
     private double dx, dy;
@@ -25,11 +26,15 @@ public class Player {
 
     public Player(CanvasWindow canvas) {
         this.canvas = canvas;
-        playerShape = new Rectangle(canvas.getWidth() / 2, canvas.getHeight() / 2, PLAYER_WIDTH, PLAYER_HEIGHT);
-        playerShape.setFilled(false);
-        playerShape.setStrokeColor(Color.white);
-        leftX = playerShape.getX();
-        topY = playerShape.getY();
+        playerHitbox = new Ellipse(
+            canvas.getWidth() / 2 - HITBOX_RADIUS, 
+            canvas.getHeight() / 2- HITBOX_RADIUS, 
+            HITBOX_RADIUS,
+            HITBOX_RADIUS);
+        playerHitbox.setFilled(false);
+        playerHitbox.setStrokeColor(Color.white);
+        leftX = playerHitbox.getX();
+        topY = playerHitbox.getY();
     }
 
     /**
@@ -37,13 +42,13 @@ public class Player {
      */
     public void move() {
         if (!frozen) {
-            double newX = playerShape.getX() + dx;
-            double newY = playerShape.getY() + dy;
+            double newX = playerHitbox.getX() + dx;
+            double newY = playerHitbox.getY() + dy;
             if (newX >= 0 && newX <= canvas.getWidth() - PLAYER_WIDTH
                 && newY >= 40 && newY <= canvas.getHeight() - PLAYER_HEIGHT) {
                 leftX = newX;
                 topY = newY;
-                playerShape.setPosition(leftX, topY);
+                playerHitbox.setPosition(leftX, topY);
             }
         }
     }
@@ -111,15 +116,29 @@ public class Player {
     /**
      * Gets the shape of the player.
      */
-    public Rectangle getPlayerShape() {
-        return playerShape;
+    public Ellipse getPlayerHitbox() {
+        return playerHitbox;
+    }
+
+    /**
+     * Gets the x-center of the player.
+     */
+    public double getCenterX() {
+        return playerHitbox.getCenter().getX();
+    }
+
+    /**
+     * Gets the y-center of the player.
+     */
+    public double getCenterY() {
+        return playerHitbox.getCenter().getY();
     }
 
     /**
      * Changes the color of the player.
      */
     private void changeColor(Color color) {
-        playerShape.setFillColor(color);
+        playerHitbox.setFillColor(color);
     }
 
     /**
@@ -162,7 +181,7 @@ public class Player {
     private void endImmunity() {
         thaw();
         if (!erasing) {
-            playerShape.setFilled(false);
+            playerHitbox.setFilled(false);
         }
     }
 
@@ -180,7 +199,7 @@ public class Player {
     public void thaw() {
         if (frozen) {
             frozen = false;
-            playerShape.setFilled(false);
+            playerHitbox.setFilled(false);
         }
     }
 
@@ -209,7 +228,7 @@ public class Player {
     public void endErasing() {
         erasing = false;
         if (!isHealing()) {
-            playerShape.setFilled(false);
+            playerHitbox.setFilled(false);
         }
     }
 
@@ -234,7 +253,7 @@ public class Player {
     public void endHealing() {
         healing = false;
         if (!isErasing() && !isImmune()) {
-            playerShape.setFilled(false);
+            playerHitbox.setFilled(false);
         }
     }
 }

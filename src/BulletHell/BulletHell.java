@@ -2,7 +2,6 @@ package BulletHell;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Image;
-import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.events.Key;
 
 /**
@@ -94,7 +93,7 @@ public class BulletHell {
      */
     private void createPlayer(double dt) {
         player = new Player(canvas);
-        canvas.add(player.getPlayerShape());
+        canvas.add(player.getPlayerHitbox());
         
         canvas.onKeyDown(event -> {
             currentDirection = event.getKey();
@@ -106,12 +105,12 @@ public class BulletHell {
         });
     }
 
-    private void createSprite(){
+    private void createSprite() {
         canvas.onKeyDown(event -> {
-            if  (currentSpriteDirection != event.getKey()){
+            if (currentSpriteDirection != event.getKey()) {
                 currentSpriteDirection = event.getKey();
                 moveSprite(currentSpriteDirection);
-            }else if(currentSpriteDirection == event.getKey()){
+            } else if (currentSpriteDirection == event.getKey()) {
                 currentSpriteDirection = event.getKey();
                 moveSprite(currentSpriteDirection);
             }});

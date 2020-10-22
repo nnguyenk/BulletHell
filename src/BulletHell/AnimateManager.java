@@ -68,7 +68,7 @@ public class AnimateManager {
     private void generateSprite(Image sprite, Player player){
         sprite.setMaxHeight(90);
         sprite.setMaxWidth(60);
-        sprite.setCenter(player.getPlayerShape().getCenter());
+        sprite.setCenter(player.getPlayerHitbox().getCenter());
         canvas.add(sprite);
         if(!spriteWasFrozen){
             frameNumber += 1;
@@ -77,9 +77,9 @@ public class AnimateManager {
     }
 
     public void placeSprite(Player player){
-        if(sprite != null){
+        if(sprite != null) {
             canvas.add(sprite);
-            sprite.setCenter(player.getPlayerShape().getCenter());
+            sprite.setCenter(player.getPlayerHitbox().getCenter());
             canvas.remove(sprite);
         }
     }

@@ -129,21 +129,8 @@ public abstract class Bullet {
      * Returns true if the bullet hits the player.
      */
     public boolean collidePlayer(Player player) {
-        for (Point point : List.of(top, bottom, left, right)) {
-            if (canvas.getElementAt(point) == player.getPlayerShape()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean collideSprite(AnimateManager sprite) {
-        for (Point point : List.of(top, bottom, left, right)) {
-            if (canvas.getElementAt(point) == sprite.getSprite()) {
-                return true;
-            }
-        }
-        return false;
+        double distance = Math.hypot(xCenter - player.getCenterX(), yCenter - player.getCenterY());
+        return (distance < RADIUS + Player.HITBOX_RADIUS);
     }
 
     /**
