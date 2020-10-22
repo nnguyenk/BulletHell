@@ -83,12 +83,10 @@ public class GameDescription {
         canvas.add(gameRules4);
         canvas.add(gameRules5);
         canvas.add(sprite);
+        bulletManager.spawnBullets(7, player, terrain);
 
         canvas.animate((dt) -> {
                 bulletManager.bulletsIntersect(player, terrain);
-                if (!bulletManager.bulletsLeft()){
-                    bulletManager.spawnBullets(7, player, terrain);
-                }
         });
     }
 
