@@ -2,7 +2,6 @@ package BulletHell;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Image;
-import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.events.Key;
 
 /**
