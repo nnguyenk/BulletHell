@@ -1,6 +1,7 @@
 package BulletHell;
 
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.events.Key;
 
@@ -19,6 +20,8 @@ public class BulletHell {
     private RoundTitle roundTitle;
     private GameDescription gamedescription;
     private Terrain terrain;
+
+    private Image background = new Image("BH_BackgroundGame.png");
 
     private Key currentDirection;
     private Key currentSpriteDirection;
@@ -73,11 +76,13 @@ public class BulletHell {
      * Sets up the player, the maximum lives, and the powerups.
      */
     private void setUpGame() {
+        canvas.add(background);
         heartManager.generateHearts(3);
         createPlayer(0.1);
         createPowerups();
         canvas.add(new Rectangle(0, 40, 800, 1));
         roundTitle = new RoundTitle(canvas);
+        
     }
 
     /**
