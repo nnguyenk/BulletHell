@@ -117,11 +117,12 @@ public class Heal implements Powerups {
      * @param dt The number of seconds that will be deducted.
      */
     public void reduceDuration(double dt) {
+        Player player = mainGame.getPlayer();
         if (inEffect()) {
             remainingHeal -= dt;
             remainingText.setText(new DecimalFormat("#").format(remainingHeal)); // Truncate all decimal points.
             shape.add(remainingText);
-            if (!inEffect()) {
+            if (!inEffect() || !player.isHealing()) {
                 deactivate();
             }
         }
