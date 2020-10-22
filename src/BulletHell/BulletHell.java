@@ -160,7 +160,7 @@ public class BulletHell {
         roundTitle.changeTitle(currentRound);
         terrain.clearList();
         terrain.generateTerrain(3);
-        bulletManager.spawnBullets(3 + currentRound * 2, player, terrain);
+        bulletManager.spawnBullets(5 + currentRound * 2, player, terrain);
         canvas.draw();
         canvas.pause(1000);
     }
