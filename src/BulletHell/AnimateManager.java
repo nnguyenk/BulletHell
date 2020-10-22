@@ -17,6 +17,7 @@ public class AnimateManager {
     private boolean U = false;
 
     private boolean spriteHasMoved = false;
+    private boolean spriteWasFrozen = false;
     private Key lastkey;
 
     ArrayList<Boolean> directions = new ArrayList<Boolean>();
@@ -24,6 +25,7 @@ public class AnimateManager {
     ArrayList<Image> left = new ArrayList<Image>();
     ArrayList<Image> right = new ArrayList<Image>();
     ArrayList<Image> up = new ArrayList<Image>();
+    ArrayList<Image> frozen = new ArrayList<Image>();
 
 
     public AnimateManager(CanvasWindow canvas){
@@ -37,23 +39,24 @@ public class AnimateManager {
         fillImagelist(left, "left");
         fillImagelist(right, "right");
         fillImagelist(up, "up");
+        frozen.add(new Image("frozen.png"));
     }
 
-    public void animateSprite(Key key, Player player, CanvasWindow canvas){
+    public void animateSprite(Key key, Player player, CanvasWindow canvas, boolean isFrozen){
         if(frameNumber == 4){
             frameNumber = 0;
         }
         if (key == Key.LEFT_ARROW) {
-           spriteChange(player, key, left);
+           spriteChange(player, key, left, isFrozen);
         }
         if (key == Key.RIGHT_ARROW) {
-            spriteChange(player, key, right);
+            spriteChange(player, key, right, isFrozen);
         }
         if (key == Key.UP_ARROW) {
-            spriteChange(player, key, up);
+            spriteChange(player, key, up, isFrozen);
         }
         if (key == Key.DOWN_ARROW) {
-            spriteChange(player, key, down);
+            spriteChange(player, key, down, isFrozen);
         }
         getSprite();
     }
@@ -67,7 +70,10 @@ public class AnimateManager {
         sprite.setMaxWidth(player.getPlayerShape().getWidth() - 5);
         sprite.setCenter(player.getPlayerShape().getCenter());
         canvas.add(sprite);
-        frameNumber += 1;
+        if(!spriteWasFrozen){
+            frameNumber += 1;
+        }
+        
     }
 
     public void placeSprite(Player player){
@@ -84,17 +90,37 @@ public class AnimateManager {
         }
     }
 
-    private void spriteChange(Player player, Key key, ArrayList<Image> spriteSet){
-        if(spriteHasMoved == true && sprite != null && lastkey != key){
+    private void spriteChange(Player player, Key key, ArrayList<Image> spriteSet, boolean isFrozen){
+        spriteThaw(player, isFrozen);
+        if(spriteHasMoved == true && sprite != null && lastkey != key && !isFrozen){
             canvas.remove(sprite);
             frameNumber = 0;
             spriteHasMoved = false;
-        }else if(lastkey == key && sprite != null){
+        }else if(lastkey == key && sprite != null && !isFrozen && !spriteWasFrozen){
             canvas.remove(sprite);
         }
-        sprite = spriteSet.get(frameNumber);
-        generateSprite(sprite, player);
-        lastkey = key;
-        spriteHasMoved = true;
+        if(!isFrozen){
+            sprite = spriteSet.get(frameNumber);
+            generateSprite(sprite, player);
+            lastkey = key;
+            spriteHasMoved = true;
+        }
+    }
+
+    public void spriteFreeze(boolean isFrozen, Player player){
+        if(isFrozen){
+            canvas.remove(sprite);
+            sprite = frozen.get(0);
+            generateSprite(sprite, player);
+            spriteWasFrozen = true;
+        }
+    }
+
+    public void spriteThaw(Player player, boolean isFrozen){
+        if(spriteWasFrozen){
+            canvas.remove(sprite);
+            generateSprite(sprite, player);
+            spriteWasFrozen = false;
+        }
     }
 }

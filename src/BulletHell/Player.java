@@ -184,6 +184,10 @@ public class Player {
         }
     }
 
+    public boolean isFrozen(){
+        return frozen;
+    }
+
     /**
      * Changes the player's color to yellow and begins the eraser state.
      */

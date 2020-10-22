@@ -59,6 +59,7 @@ public class BulletHell {
                 }
                 player.move();
                 animationManager.placeSprite(player);
+                animationManager.spriteFreeze(player.isFrozen(), player);
                 reduceAllTimer(dt);
                 playerIsHit();
             }
@@ -110,16 +111,16 @@ public class BulletHell {
 
     private void moveSprite(Key key) {
         if (key == Key.LEFT_ARROW) {
-            animationManager.animateSprite(key, player, canvas);
+            animationManager.animateSprite(key, player, canvas, player.isFrozen());
         }
         if (key == Key.RIGHT_ARROW) {
-            animationManager.animateSprite(key, player, canvas);
+            animationManager.animateSprite(key, player, canvas, player.isFrozen());
         }
         if (key == Key.UP_ARROW) {
-            animationManager.animateSprite(key, player, canvas);
+            animationManager.animateSprite(key, player, canvas, player.isFrozen());
         }
         if (key == Key.DOWN_ARROW) {
-            animationManager.animateSprite(key, player, canvas);
+            animationManager.animateSprite(key, player, canvas, player.isFrozen());
         }
     }
     
