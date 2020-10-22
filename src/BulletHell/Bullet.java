@@ -10,7 +10,7 @@ import edu.macalester.graphics.*;
 
 public abstract class Bullet {
     public static final double RADIUS = 20;
-    public static final int SPEED = 3;
+    public static final int SPEED = 4;
     
     private int maxLives = 4; 
 
