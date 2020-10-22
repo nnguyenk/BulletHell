@@ -78,7 +78,7 @@ public class GameDescription {
         gameRules2.setText("Q is a bullet slow, W is a pacman-esque eat bullets powerup, and E is a delayed heal (7 seconds)");
         gameRules3.setText("You have 3 lives, and will go invulnerable for some time upon being hit by bullets");
         gameRules4.setText("Once all bullets on the screen disappear, you have won the round and will proceed to the next!");
-        gameRules5.setText("Blue bullets freeze you, green bullets change the screen color, and yellow bullets do not give you immunity.");
+        gameRules5.setText("Blue bullets freeze you, and yellow bullets do not give you immunity.");
         gameRules6.setText("Click your mouse to begin playing");
     }
 
