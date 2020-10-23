@@ -12,10 +12,15 @@ import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.events.Key;
 
+/**
+ * A powerup that can be activated by pressing E.
+ * Once the duration is over, the player regenerates one life.
+ * If the player is damaged in the duration, the effect ends immediately.
+ */
 public class Heal implements Powerups {
-    public static final double SIZE = 30;
-    public static final int MAX_COOLDOWN = 15;
-    public static final int MAX_DURATION = 7;
+    public static final double BOX_SIZE = 30;
+    public static final double MAX_COOLDOWN = 15;
+    public static final double MAX_DURATION = 7;
 
     private double remainingHeal;
     private double cooldown;
@@ -31,7 +36,7 @@ public class Heal implements Powerups {
         cooldown = MAX_COOLDOWN;
 
         shape = new GraphicsGroup();
-        border = new Rectangle(0, 0, SIZE, SIZE);
+        border = new Rectangle(0, 0, BOX_SIZE, BOX_SIZE);
         remainingText = new GraphicsText("", 0, 0);
         remainingText.setFontSize(20);
 
@@ -50,7 +55,7 @@ public class Heal implements Powerups {
             remainingCD = 0;
         }
         double cooldownRatio = remainingCD / MAX_COOLDOWN;
-        energy = new Rectangle(0, SIZE * cooldownRatio, SIZE, SIZE * (1 - cooldownRatio));
+        energy = new Rectangle(0, BOX_SIZE * cooldownRatio, BOX_SIZE, BOX_SIZE * (1 - cooldownRatio));
         energy.setStroked(false);
         energy.setFillColor(new Color(
             (int) (255 * cooldownRatio),
@@ -85,14 +90,14 @@ public class Heal implements Powerups {
     }
 
     /**
-     * Returns true if slow is on cooldown.
+     * Returns true if heal is on cooldown.
      */
     private boolean onCooldown() {
         return (cooldown > 0);
     }
     
     /**
-     * Activate the slow, reducing the speed of all bullets on the screen.
+     * Activate the heal.
      */
     public void activate() {
         if (!onCooldown() && !inEffect()) {
@@ -104,7 +109,7 @@ public class Heal implements Powerups {
     }
 
     /**
-     * Returns true if slow is in effect.
+     * Returns true if heal is in effect.
      */
     private boolean inEffect() {
         return (remainingHeal > 0);
@@ -145,14 +150,14 @@ public class Heal implements Powerups {
     }
 
     /**
-     * Returns the shape of the power.
+     * Returns the display box of the power.
      */
     public GraphicsGroup getShape() {
         return shape;
     }
 
     /**
-     * Returns the key used to activate this power, which is E.
+     * Returns the key used to activate this power.
      */
     public Key getKey() {
         return Key.E;

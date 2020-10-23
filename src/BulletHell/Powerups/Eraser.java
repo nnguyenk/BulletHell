@@ -11,10 +11,14 @@ import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.events.Key;
 
+/**
+ * A powerup that can be activated by pressing W.
+ * Allows the player to erase any incoming bullets without taking damage.
+ */
 public class Eraser implements Powerups {
-    public static final double SIZE = 30;
-    public static final int MAX_COOLDOWN = 10;
-    public static final int MAX_DURATION = 5;
+    public static final double BOX_SIZE = 30;
+    public static final double MAX_COOLDOWN = 10;
+    public static final double MAX_DURATION = 6;
 
     private double remainingEraser;
     private double cooldown;
@@ -30,7 +34,7 @@ public class Eraser implements Powerups {
         cooldown = MAX_COOLDOWN;
 
         shape = new GraphicsGroup();
-        border = new Rectangle(0, 0, SIZE, SIZE);
+        border = new Rectangle(0, 0, BOX_SIZE, BOX_SIZE);
         remainingText = new GraphicsText("", 0, 0);
         remainingText.setFontSize(20);
 
@@ -49,7 +53,7 @@ public class Eraser implements Powerups {
             remainingCD = 0;
         }
         double cooldownRatio = remainingCD / MAX_COOLDOWN;
-        energy = new Rectangle(0, SIZE * cooldownRatio, SIZE, SIZE * (1 - cooldownRatio));
+        energy = new Rectangle(0, BOX_SIZE * cooldownRatio, BOX_SIZE, BOX_SIZE * (1 - cooldownRatio));
         energy.setStroked(false);
         energy.setFillColor(new Color(
             255,
@@ -91,7 +95,7 @@ public class Eraser implements Powerups {
     }
 
     /**
-     * Activate the eraser, allowing the player to absorb bullets at will.
+     * Activate the eraserl.
      */
     public void activate() {
         if (!onCooldown() && !inEffect()) {
@@ -138,14 +142,14 @@ public class Eraser implements Powerups {
 
 
     /**
-     * Returns the shape of the power.
+     * Returns the display box of the power.
      */
     public GraphicsGroup getShape() {
         return shape;
     }
 
     /**
-     * Returns the key used to activate this power, which is W.
+     * Returns the key used to activate this power.
      */
     public Key getKey() {
         return Key.W;

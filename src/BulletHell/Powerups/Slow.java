@@ -12,10 +12,14 @@ import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.events.Key;
 
+/**
+ * A powerup that can be activated by pressing Q.
+ * Slows all bullets currently on the screen by half.
+ */
 public class Slow implements Powerups {
-    public static final double SIZE = 30;
-    public static final int MAX_COOLDOWN = 10;
-    public static final int MAX_DURATION = 5;
+    public static final double BOX_SIZE = 30;
+    public static final double MAX_COOLDOWN = 10;
+    public static final double MAX_DURATION = 5;
 
     private double remainingSlow;
     private double cooldown;
@@ -31,7 +35,7 @@ public class Slow implements Powerups {
         cooldown = MAX_COOLDOWN;
 
         shape = new GraphicsGroup();
-        border = new Rectangle(0, 0, SIZE, SIZE);
+        border = new Rectangle(0, 0, BOX_SIZE, BOX_SIZE);
         remainingText = new GraphicsText("", 0, 0);
         remainingText.setFontSize(20);
 
@@ -50,7 +54,7 @@ public class Slow implements Powerups {
             remainingCD = 0;
         }
         double cooldownRatio = remainingCD / MAX_COOLDOWN;
-        energy = new Rectangle(0, SIZE * cooldownRatio, SIZE, SIZE * (1 - cooldownRatio));
+        energy = new Rectangle(0, BOX_SIZE * cooldownRatio, BOX_SIZE, BOX_SIZE * (1 - cooldownRatio));
         energy.setStroked(false);
         energy.setFillColor(new Color(
             (int) (255 * cooldownRatio),
@@ -92,7 +96,7 @@ public class Slow implements Powerups {
     }
     
     /**
-     * Activate the slow, reducing the speed of all bullets on the screen.
+     * Activate the slow.
      */
     public void activate() {
         if (!onCooldown() && !inEffect()) {
@@ -138,14 +142,14 @@ public class Slow implements Powerups {
     }
 
     /**
-     * Returns the shape of the power.
+     * Returns the display box of the power.
      */
     public GraphicsGroup getShape() {
         return shape;
     }
 
     /**
-     * Returns the key used to activate this power, which is Q.
+     * Returns the key used to activate this power.
      */
     public Key getKey() {
         return Key.Q;
