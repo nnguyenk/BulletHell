@@ -111,7 +111,9 @@ public class AnimateManager {
 
     public void spriteFreeze(boolean isFrozen, Player player) {
         if (isFrozen) {
-            canvas.remove(sprite);
+            if (sprite != null) {
+                canvas.remove(sprite);
+            }
             sprite = frozen.get(0);
             generateSprite(sprite, player);
             spriteWasFrozen = true;

@@ -80,7 +80,6 @@ public class BulletHell {
         createSprite();
         createPowerups();
         roundTitle = new RoundTitle(canvas);
-        
     }
 
     /**
@@ -112,7 +111,8 @@ public class BulletHell {
             } else if (currentSpriteDirection == event.getKey()) {
                 currentSpriteDirection = event.getKey();
                 moveSprite(currentSpriteDirection);
-            }});
+            }
+        });
     }
 
 
