@@ -182,21 +182,21 @@ public class BulletHell {
     }
 
     /**
-     * Return the current player of the game.
+     * Returns the current player of the game.
      */
     public Player getPlayer() {
         return player;
     }
 
     /**
-     * Return the bullet manager of the game.
+     * Returns the bullet manager of the game.
      */
     public BulletManager getBulletManager() {
         return bulletManager;
     }
 
     /**
-     * Return the heart manager of the game.
+     * Returns the heart manager of the game.
      */
     public HeartManager getHeartManager() {
         return heartManager;

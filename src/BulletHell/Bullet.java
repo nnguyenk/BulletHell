@@ -11,7 +11,7 @@ import edu.macalester.graphics.*;
 /**
  * A class that represents a bullet in the game Bullet Hell.
  * Bullets can bounce between walls and terrains, but lose one life in the process.
- * Each bullet has a type, which can give it additional activities.
+ * Each bullet has a type, which can give it additional effects.
  */
 public abstract class Bullet {
     public static final double RADIUS = 20;
@@ -72,6 +72,8 @@ public abstract class Bullet {
     /**
      * Check if the bullet collides with walls or terrains. 
      * Moves the bullet to its next position.
+     * 
+     * @param terrain The terrain that can hinder the bullet's movement.
      */
     public void updatePosition(Terrain terrain) {
         setPoints();
@@ -132,6 +134,8 @@ public abstract class Bullet {
 
     /**
      * Returns true if the bullet hits the player.
+     * 
+     * @param player The player currently on the canvas.
      */
     public boolean collidePlayer(Player player) {
         double distance = Math.hypot(xCenter - player.getCenterX(), yCenter - player.getCenterY());

@@ -102,7 +102,7 @@ public class Eraser implements Powerups {
         }
     }
 
-     /**
+    /**
      * Returns true if eraser is in effect.
      */
     private boolean inEffect() {

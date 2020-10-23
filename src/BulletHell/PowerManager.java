@@ -7,6 +7,9 @@ import BulletHell.Powerups.*;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.events.Key;
 
+/**
+ * A class responsible for adding the power boxes to the canvas, and binding the powers with their respective keys.
+ */
 public class PowerManager {
     public static final int GAP = 50;
 
@@ -14,6 +17,9 @@ public class PowerManager {
     private List<Key> activateKeys = new ArrayList<>();
     private CanvasWindow canvas;
 
+    /**
+     * Creates a manager for every game window. 
+     */
     public PowerManager(CanvasWindow canvas, BulletHell bulletHell) {
         this.canvas = canvas;
 
@@ -51,6 +57,7 @@ public class PowerManager {
         for (Powerups powerups : allPowerups) {
             powerups.reduceCooldown(dt);
         }
+        
     }
 
     /**
@@ -66,6 +73,8 @@ public class PowerManager {
 
     /**
      * Activates the power at the point if the power is off cooldown and not active.
+     * 
+     * @param key The input key.
      */
     public void activatePowerups(Key key) {
         if (activateKeys.contains(key)) {
