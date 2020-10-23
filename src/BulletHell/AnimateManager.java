@@ -44,6 +44,9 @@ public class AnimateManager {
         frozen.add(new Image("frozen.png"));
     }
 
+    /*
+     * Animates the sprite based on player inputs.
+     */
     public void animateSprite(Key key, Player player, CanvasWindow canvas, boolean isFrozen) {
         if (frameNumber == 4) {
             frameNumber = 0;
@@ -63,10 +66,16 @@ public class AnimateManager {
         getSprite();
     }
 
+    /*
+     * Gets the current sprite image.
+     */
     public Image getSprite() {
         return sprite;
     }
 
+    /*
+     * Adds the sprite to the canvas based on the player's x & y.
+     */
     private void generateSprite(Image sprite, Player player) {
         sprite.setMaxHeight(90);
         sprite.setMaxWidth(60);
@@ -78,28 +87,35 @@ public class AnimateManager {
         
     }
 
+    /*
+     * Gets the shape of the bullet.
+     */
     public void placeSprite(Player player) {
         if (sprite != null) {
-            canvas.add(sprite);
-            sprite.setCenter(player.getPlayerHitbox().getCenter());
             canvas.remove(sprite);
         }
     }
 
+    /*
+     * Adds images to image arraylists.
+     */
     private void fillImagelist(ArrayList<Image> images, String direction) {
         for(int i = 0; i < 4; i++) {
             images.add(new Image(direction + i + ".png"));
         }
     }
 
+    /*
+     * Handles animation frames for each sprite.
+     */
     private void spriteChange(Player player, Key key, ArrayList<Image> spriteSet, boolean isFrozen) {
         spriteThaw(player, isFrozen);
         if (spriteHasMoved == true && sprite != null && lastkey != key && !isFrozen) {
-            canvas.remove(sprite);
+            placeSprite(player);
             frameNumber = 0;
             spriteHasMoved = false;
         } else if (lastkey == key && sprite != null && !isFrozen && !spriteWasFrozen) {
-            canvas.remove(sprite);
+            placeSprite(player);
         }
         if (!isFrozen) {
             sprite = spriteSet.get(frameNumber);
@@ -109,6 +125,9 @@ public class AnimateManager {
         }
     }
 
+    /*
+     * Freezes the sprite if a blue bullet is hit.
+     */
     public void spriteFreeze(boolean isFrozen, Player player) {
         if (isFrozen) {
             if (sprite != null) {
@@ -120,9 +139,14 @@ public class AnimateManager {
         }
     }
 
+    /*
+     * Changes sprite image back to normal unfrozen sprite.
+     */
     private void spriteThaw(Player player, boolean isFrozen) {
-        if (spriteWasFrozen && sprite != null){
-            canvas.remove(sprite);
+        if (spriteWasFrozen){
+            if (sprite != null) {
+                canvas.remove(sprite);
+            }
             generateSprite(sprite, player);
             spriteWasFrozen = false;
         }
