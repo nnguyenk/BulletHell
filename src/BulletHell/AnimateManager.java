@@ -92,6 +92,8 @@ public class AnimateManager {
      */
     public void placeSprite(Player player) {
         if (sprite != null) {
+            canvas.add(sprite);
+            sprite.setCenter(player.getPlayerHitbox().getCenter());
             canvas.remove(sprite);
         }
     }
@@ -111,11 +113,11 @@ public class AnimateManager {
     private void spriteChange(Player player, Key key, ArrayList<Image> spriteSet, boolean isFrozen) {
         spriteThaw(player, isFrozen);
         if (spriteHasMoved == true && sprite != null && lastkey != key && !isFrozen) {
-            placeSprite(player);
+            canvas.remove(sprite);
             frameNumber = 0;
             spriteHasMoved = false;
         } else if (lastkey == key && sprite != null && !isFrozen && !spriteWasFrozen) {
-            placeSprite(player);
+            canvas.remove(sprite);
         }
         if (!isFrozen) {
             sprite = spriteSet.get(frameNumber);
