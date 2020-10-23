@@ -8,8 +8,8 @@ import BulletHell.BulletTypes.*;
 import edu.macalester.graphics.CanvasWindow;
 
 /**
- * A helper class responsible for holding and updating the positions of all bullets.
- * Also responsible for bullet/player interactions and bullets removal.
+ * A class that contains and updates the positions of all bullets.
+ * Also responsible for checking bullet/player interactions and bullets removal.
  */
 public class BulletManager {
     private CanvasWindow canvas;

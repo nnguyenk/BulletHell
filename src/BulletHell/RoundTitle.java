@@ -3,6 +3,9 @@ package BulletHell;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsText;
 
+/**
+ * The headline of each game, which changes depending on the current level.
+ */
 public class RoundTitle {
     private GraphicsText roundTitle;
     

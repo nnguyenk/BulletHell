@@ -9,8 +9,7 @@ import java.awt.Color;
 import edu.macalester.graphics.*;
 
 /**
- * A class that represents a bullet in the game Bullet Hell.
- * Bullets can bounce between walls and terrains, but lose one life in the process.
+ * A bullet that can bounce between walls and terrains, but lose one life in the process.
  * Each bullet has a type, which can give it additional effects.
  */
 public abstract class Bullet {

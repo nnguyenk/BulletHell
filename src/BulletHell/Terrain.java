@@ -7,6 +7,9 @@ import java.util.List;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Rectangle;
 
+/**
+ * A group of rectangles that allow the player to pass through, but deflect any incoming bullets.
+ */
 public class Terrain {
     private CanvasWindow canvas;
     private List<Rectangle> allTerrain = new ArrayList<>();
@@ -16,11 +19,12 @@ public class Terrain {
     }
 
     /**
-     * Spawns a number of terrain objects onto the screen corresponding to the integer parameter
-     * @param numberOfTerrainObjects
+     * Spawns a number of terrain objects onto the screen.
+     * .
+     * @param terrainNum The number of rectangles to be generated.
      */
-    public void generateTerrain(int numberOfTerrainObjects) {
-        for (int i = 0; i < numberOfTerrainObjects; i++) {
+    public void generateTerrain(int terrainNum) {
+        for (int i = 0; i < terrainNum; i++) {
             int j = Utility.randomInt(1, 2);
 
             switch (j) {
@@ -35,16 +39,16 @@ public class Terrain {
     }
 
     /**
-     * @return a list of all the terrain objects
+     * @return a list of all the terrain objects.
      */
     public List<Rectangle> getTerrain() {
         return allTerrain;
     }
 
     /**
-     * Clears all terrain rectangles from the screen and from the Terrain list
+     * Clears all terrain rectangles from the screen and from the Terrain list.
      */
-    public void clearList(){
+    public void clearList() {
         for (Rectangle rect : allTerrain){
             canvas.remove(rect);
         }
@@ -52,26 +56,24 @@ public class Terrain {
     }
 
     /**
-     * @return a vertical rectangle placed randomly on the screen
+     * Randomly places a vertical rectangle on the screen.
      */
-    private Rectangle verticalRectangle(){
+    private void verticalRectangle() {
         Rectangle rectangle = new Rectangle(Utility.randomX(canvas), Utility.randomY(canvas), 90, 30);
         rectangle.setFillColor(Color.BLACK);
         rectangle.setStrokeColor(null);
         canvas.add(rectangle);
         allTerrain.add(rectangle);
-        return rectangle;
     }
 
     /**
-     * @return a horizontal rectangle placed randomly on the screen
+     * Randomly places a horizontal rectangle on the screen.
      */
-    private Rectangle horizontalRectangle(){
+    private void horizontalRectangle(){
         Rectangle rectangle = new Rectangle(Utility.randomX(canvas), Utility.randomY(canvas), 30, 90);
         rectangle.setFillColor(Color.BLACK);
         rectangle.setStrokeColor(null);
         canvas.add(rectangle);
         allTerrain.add(rectangle);
-        return rectangle;
     }
 }

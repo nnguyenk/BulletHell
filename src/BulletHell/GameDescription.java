@@ -8,7 +8,7 @@ import edu.macalester.graphics.Image;
 import java.awt.Color;
 
 /**
- * A class to hold the tutorial text that shows up with every new Bullet Hell game.
+ * A class to hold the tutorial text at the beginning of every game.
  */
 public class GameDescription {
     private CanvasWindow canvas;

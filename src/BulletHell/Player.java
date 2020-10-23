@@ -9,7 +9,6 @@ import edu.macalester.graphics.events.Key;
 /**
  * A class that represents the player of Bullet Hell.
  * Primarily responsible for checking the player's immunity/active powerups.
- * Also has a hitbox that moves according to input keys.
  */
 public class Player {
     public static final int PLAYER_WIDTH = 50;

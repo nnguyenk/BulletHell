@@ -50,6 +50,9 @@ public class BulletHell {
         });
     }
 
+    /**
+     * Sets up the game, then animates the canvas until there are no remaining lives.
+     */
     private void start() {
         started = true;
         setUpGame();
@@ -58,11 +61,8 @@ public class BulletHell {
                 if (!bulletManager.bulletsLeft()) {
                     newRound();
                 }
-                player.move();
-                animationManager.placeSprite(player);
-                animationManager.spriteFreeze(player.isFrozen(), player);
                 reduceAllTimer(dt);
-                playerIsHit();
+                updatePlayer();
             }
             else {
                 lose();
@@ -160,6 +160,16 @@ public class BulletHell {
         bulletManager.spawnBullets(5 + currentRound * 2, player, terrain);
         canvas.draw();
         canvas.pause(1000);
+    }
+
+    /**
+     * Updates the position of the player and the sprite, and check for collision with bullets.
+     */
+    private void updatePlayer() {
+        player.move();
+        animationManager.placeSprite(player);
+        animationManager.spriteFreeze(player.isFrozen(), player);
+        playerIsHit();
     }
 
     /**
