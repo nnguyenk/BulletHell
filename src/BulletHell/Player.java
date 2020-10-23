@@ -14,7 +14,7 @@ import edu.macalester.graphics.events.Key;
 public class Player {
     public static final int PLAYER_WIDTH = 50;
     public static final int PLAYER_HEIGHT = 80;
-    public static final int HITBOX_RADIUS = 60; 
+    public static final int HITBOX_RADIUS = 45; 
     public static final int PLAYER_SPEED = 4;
     public static final double MAX_IMMUNITY = 2;
 
@@ -185,7 +185,7 @@ public class Player {
      */
     private void endImmunity() {
         thaw();
-        if (!erasing) {
+        if (!isErasing() && !isHealing()) {
             playerHitbox.setFilled(false);
         }
     }

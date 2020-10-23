@@ -26,6 +26,8 @@ public class BulletManager {
      * Adds all bullets to the canvas, makes sure that the bullets are not spawned on top of the player or terrains.
      * 
      * @param bulletsNumber The number of bullets to be added.
+     * @param player The player. The bullets must spawn far from them.
+     * @param terrain The terrain currently on the canvas. 
      */
     public void spawnBullets(int bulletsNumber, Player player, Terrain terrain) {
         for (int i = 0; i < bulletsNumber; i++) {
@@ -71,7 +73,7 @@ public class BulletManager {
      * Updates the position of all bullets.
      * When immunity is inactive, deletes any bullet that collides with the player.
      * 
-     * @return true if the player was damaged by any bullets, without eraser activated.
+     * @return True if the player was damaged by any bullets.
      */
     public boolean bulletsIntersect(Player player, Terrain terrain) {
         hitPlayer = false;
@@ -91,7 +93,7 @@ public class BulletManager {
     /**
      * When a bullet collides with the player:
      *    - If eraser IS activated, the bullet is removed, and the player is unscathed.
-     *    - If not, then if the player IS NOT immune, then they absorb the bullet and take damage.
+     *    - If not, then if the player IS NOT immune, then they take damage.
      *    - If the player IS immune, then the bullet passes straight through them. 
      */
     private void bulletCollidePlayer(Bullet bullet, Player player) {
@@ -108,12 +110,15 @@ public class BulletManager {
     /**
      * Changes the value of hitPlayer to indicate that the user is damaged.
      * Freezes the player if the bullet is cyan, or prevent immunity if it's yellow.
+     * If the bullet is not a green one, removes it.
      * The bullets also end any healing prematurely.
      */
     private void bulletDamagePlayer(Bullet bullet, Player player) {
         if (!player.isImmune()) {
             hitPlayer = true;
-            bulletsToRemove.add(bullet);
+            if (bullet.getType() != BulletType.GREEN) {
+                bulletsToRemove.add(bullet);
+            }
             if (bullet.getType() != BulletType.YELLOW) {
                 player.startImmunity();
             }
