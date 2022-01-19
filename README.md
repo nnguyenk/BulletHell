@@ -17,6 +17,6 @@
 ✔️ Wrote methods for spawning bullets
 
 ## Room for improvements
-❌ Janky sprite animations
-❌ Lags at higher levels from more moving components (incrementing no. of bullets)
+❌ Janky sprite animations<br>
+❌ Lags at higher levels from more moving components (incrementing no. of bullets)<br>
 ❌ Inaccurate hitboxes
